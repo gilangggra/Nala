@@ -369,7 +369,7 @@ fn apply_in(agent: Agent, home: &Path, relay: &Relay, install: bool, fingerprint
 // ── Shared JSON helpers ───────────────────────────────────────────────────────
 
 fn unexpected(what: &str) -> String {
-    crate::i18n::tf("{what} has an unexpected type — Coucou has not touched it.", &[("what", what)])
+    crate::i18n::tf("{what} has an unexpected type — Nala has not touched it.", &[("what", what)])
 }
 
 /// `root[key]` as an object to edit: absent is empty, anything else is refused.
@@ -554,7 +554,7 @@ fn antigravity_is_ours(group: &Value) -> bool {
 fn antigravity_install(root: &Value, block: &Value) -> Result<Value, String> {
     let mut root = root.as_object().cloned().unwrap_or_default();
     if root.get("coucou").is_some_and(|g| !antigravity_is_ours(g)) {
-        return Err(crate::i18n::t("A hook group named \"coucou\" that Coucou did not write is already there — Coucou has not touched it."));
+        return Err(crate::i18n::t("A hook group named \"coucou\" that Nala did not write is already there — Nala has not touched it."));
     }
     root.insert("coucou".into(), block.clone());
     Ok(Value::Object(root))
@@ -752,7 +752,7 @@ fn plugin_edit(path: PathBuf, content: String, install: bool) -> FileEdit<'stati
     let name = label.clone();
     let edit = config_file::text_edit(label, move |current| match (install, current) {
         (_, Some(text)) if !is_our_plugin(text) => {
-            Err(crate::i18n::tf("{name} wasn't written by Coucou — Coucou has not touched it.", &[("name", &name.to_string())]))
+            Err(crate::i18n::tf("{name} wasn't written by Nala — Nala has not touched it.", &[("name", &name.to_string())]))
         }
         (true, _) => Ok(Some(content.clone())),
         (false, _) => Ok(None),

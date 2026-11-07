@@ -62,7 +62,7 @@ export function phoneSection(on: boolean, makeToggle: Toggle, settings: Settings
       pairingBox,
       clients,
       h("div", { class: "hint", text: t("The phone connects to {address}", { address }) }),
-      h("div", { class: "hint", text: t("If Windows asks about the firewall, allow Coucou on private networks. The phone and this computer must be on the same Wi-Fi.") }),
+      h("div", { class: "hint", text: t("If Windows asks about the firewall, allow Nala on private networks. The phone and this computer must be on the same Wi-Fi.") }),
       h("div", { class: "hint", text: t("Your phone finds this computer again by itself when the network changes. It is announced on your local network only while this switch is on. Some hotspots and guest networks block this.") }),
       ...(SHOW_RELAY_SETTINGS ? [relayBlock(makeToggle, () => void refreshPairing())] : []),
       detailsBlock(makeToggle),

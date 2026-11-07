@@ -57,7 +57,7 @@ function autoSortHint(view: TriageView, redraw: () => void): HTMLElement | null 
 export async function mailOverviewPage(page: HTMLElement, ctx: HubContext) {
   const view = await load();
   page.append(ctx.hero("mailOverview", t("Overview"),
-    t("Coucou sorts your Outlook inboxes: VIPs first, then banned words, then your rules. It never deletes a message.")));
+    t("Nala sorts your Outlook inboxes: VIPs first, then banned words, then your rules. It never deletes a message.")));
   const redraw = () => ctx.navigate("mailOverview");
 
   const sortCard = card(row(t("Sort new messages automatically"),
