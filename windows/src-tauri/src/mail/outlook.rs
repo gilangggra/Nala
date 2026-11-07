@@ -296,6 +296,7 @@ pub enum RunError {
     /// Outlook is not open (or is the new Outlook, which has no COM objects).
     NotRunning,
     /// Not on Windows.
+    #[allow(dead_code)]
     Unsupported,
     Failed(String),
 }
