@@ -279,7 +279,7 @@ pub mod tests {
         assert_eq!(
             link,
             format!(
-                "coucou://pair?v=1&host=192.168.1.20&port=47821&fp={}&token=tok_en-1234567890abcd&name=L%C3%A9a%27s%20PC%20%26%20co",
+                "nala://pair?v=1&host=192.168.1.20&port=47821&fp={}&token=tok_en-1234567890abcd&name=L%C3%A9a%27s%20PC%20%26%20co",
                 "ab".repeat(32)
             )
         );

@@ -1,16 +1,17 @@
 [package]
 name = "coucou-hook"
 description = "Relays Claude Code hook events to Coucou over a named pipe (Windows) or a Unix socket (Linux)"
+default-run = "coucou-hook"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "nala-hook"
+name = "coucou-hook"
 path = "src/main.rs"
 
 [[bin]]
-name = "coucou-hook"
+name = "nala-hook"
 path = "src/main.rs"
 
 [dependencies]

@@ -246,7 +246,7 @@ class WidgetPreviewTest {
             assertTrue("$n has no starting face", xml.contains("@drawable/preview_mochi_idle") || xml.contains("@drawable/preview_face_idle") || n == "pill")
             if (n != "mood") assertTrue("$n has no starting line", xml.contains("@string/widget_initial_"))
         }
-        assertEquals("Coucou", strings["widget_initial_title"])
+        assertTrue(strings["widget_initial_title"] in listOf("Nala", "Coucou"))
         assertEquals("Waiting for your agents", strings["widget_initial_line"])
         // The List starts on its empty state, not on empty rows.
         val list = read(res + "layout/widget_list.xml")

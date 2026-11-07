@@ -189,8 +189,9 @@ const out = {
 
 const text = JSON.stringify(out, null, 2) + "\n";
 if (process.argv.includes("--check")) {
-  const have = readFileSync(OUT, "utf8");
-  if (have !== text) {
+  const have = readFileSync(OUT, "utf8").replace(/\r\n/g, "\n");
+  const want = text.replace(/\r\n/g, "\n");
+  if (have !== want) {
     console.error("android/relay/test-vectors.json is not what gen-vectors.mjs produces. Run: node android/relay/tools/gen-vectors.mjs");
     process.exit(1);
   }
