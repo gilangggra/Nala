@@ -105,7 +105,7 @@ export function phoneSection(on: boolean, makeToggle: Toggle, settings: Settings
     "section",
     {},
     h("h2", {}, h("span", { text: t("Android phone") })),
-    h("div", { class: "hint", text: t("Send your agents' sessions to Coucou for Android and answer permission requests from the phone. Off by default; it only listens on your local network.") }),
+    h("div", { class: "hint", text: t("Send your agents' sessions to Nala for Android and answer permission requests from the phone. Off by default; it only listens on your local network.") }),
     h("div", { class: "hint", text: t("Allow on the phone asks for the fingerprint or the screen lock. Deny does not.") }),
     h("div", { class: "row" }, h("label", { text: t("Phone link") }), switchEl),
     note,
@@ -540,7 +540,7 @@ function pairingRows(pairing: PhoneLinkPairing, again: () => void): HTMLElement[
   repair.addEventListener("click", again);
 
   return [
-    h("div", { class: "hint", text: t("In Coucou for Android, scan this code with the camera or paste the link.") }),
+    h("div", { class: "hint", text: t("In Nala for Android, scan this code with the camera or paste the link.") }),
     qr,
     h("div", { class: "row" }, link, copy),
     copied,
