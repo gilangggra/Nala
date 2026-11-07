@@ -30,7 +30,7 @@ const T = {
   get longestSession() { return t("Longest session"); },
   get approved() { return t("Approved"); },
   get denied() { return t("Denied"); },
-  footer: "Coucou · github.com/Louis-CFM/coucou",
+  footer: "Nala · github.com/gilangggra/Nala",
 };
 
 /**

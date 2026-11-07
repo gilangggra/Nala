@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Android-এর জন্য Nala</string>
     <string name="about_credit">Android-এর জন্য Nala, Rhytam Biswas-এর তৈরি। Louis Raillé-র Nala-র অংশ।</string>
-    <string name="about_repo">github.com/Louis-CFM/coucou</string>
+    <string name="about_repo">github.com/gilangggra/Nala</string>
     <string name="licences_title">লাইসেন্স</string>
     <string name="licences_intro">Nala-র কোড MIT লাইসেন্সের অধীনে। নাম, চরিত্র, আইকন ও শব্দগুলো Louis Raillé-র এবং এই লাইসেন্সের অন্তর্ভুক্ত নয়। লাইব্রেরিগুলো নিজ নিজ লাইসেন্সসহ তালিকাভুক্ত।</string>
     <string name="about_assets">Nala নাম, Mochi চরিত্র, আইকন ও শব্দগুলো © Louis Raillé-র এবং অনুমতি নিয়ে ব্যবহৃত। Android কোডের স্বত্ব © Rhytam Biswas-এর, MIT লাইসেন্সে প্রকাশিত।</string>

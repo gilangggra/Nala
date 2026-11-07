@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Nala for Android</string>
     <string name="about_credit">Nala for Android，作者 Rhytam Biswas。属于 Louis Raillé 的 Nala。</string>
-    <string name="about_repo">github.com/Louis-CFM/coucou</string>
+    <string name="about_repo">github.com/gilangggra/Nala</string>
     <string name="licences_title">许可证</string>
     <string name="licences_intro">Nala 的代码采用 MIT 许可证。名称、角色、图标和声音属于 Louis Raillé，不在该许可证之内。各个库及其许可证列在下方。</string>
     <string name="about_assets">Nala 这个名称、Mochi 角色、图标和声音的版权归 © Louis Raillé 所有，并经其许可使用。Android 代码版权归 © Rhytam Biswas 所有，以 MIT 许可证发布。</string>

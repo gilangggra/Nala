@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Nala لأندرويد</string>
     <string name="about_credit">Nala لأندرويد، من تطوير Rhytam Biswas. جزء من Nala لـ Louis Raillé.</string>
-    <string name="about_repo">github.com/Louis-CFM/coucou</string>
+    <string name="about_repo">github.com/gilangggra/Nala</string>
     <string name="licences_title">التراخيص</string>
     <string name="licences_intro">شيفرة Nala مرخّصة بترخيص MIT. أما الاسم والشخصية والأيقونة والأصوات فهي ملك Louis Raillé ولا يشملها هذا الترخيص. المكتبات مذكورة مع تراخيصها.</string>
     <string name="about_assets">اسم Nala وشخصية Mochi والأيقونة والأصوات © Louis Raillé وتُستخدم بإذنه. شيفرة أندرويد © Rhytam Biswas ومنشورة بموجب ترخيص MIT.</string>

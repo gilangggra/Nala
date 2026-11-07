@@ -3,7 +3,7 @@
 <resources>
     <string name="app_name">Nala untuk Android</string>
     <string name="about_credit">Nala untuk Android, oleh Rhytam Biswas. Bagian dari Nala oleh Louis Raillé.</string>
-    <string name="about_repo">github.com/Louis-CFM/coucou</string>
+    <string name="about_repo">github.com/gilangggra/Nala</string>
     <string name="licences_title">Lisensi</string>
     <string name="licences_intro">Kode Nala berlisensi MIT. Nama, karakter, ikon, dan suaranya milik Louis Raillé dan tidak termasuk dalam lisensi itu. Pustaka dicantumkan beserta lisensinya.</string>
     <string name="about_assets">Nama Nala, karakter Mochi, ikon, dan suaranya © Louis Raillé dan digunakan dengan izin. Kode Android © Rhytam Biswas, dirilis di bawah Lisensi MIT.</string>

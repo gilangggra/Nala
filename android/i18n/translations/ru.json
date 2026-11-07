@@ -2,7 +2,7 @@
   "strings": {
     "app_name": "Nala для Android",
     "about_credit": "Nala для Android, автор Rhytam Biswas. Часть Nala от Louis Raillé.",
-    "about_repo": "github.com/Louis-CFM/coucou",
+    "about_repo": "github.com/gilangggra/Nala",
     "licences_title": "Лицензии",
     "licences_intro": "Код Nala распространяется по лицензии MIT. Название, персонаж, значок и звуки принадлежат Louis Raillé и под эту лицензию не подпадают. Библиотеки перечислены вместе с их лицензиями.",
     "about_assets": "Название Nala, персонаж Mochi, значок и звуки © Louis Raillé и используются с разрешения. Код Android © Rhytam Biswas, выпущен под лицензией MIT.",
