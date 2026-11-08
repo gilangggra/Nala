@@ -18,6 +18,3 @@ class NalaApp : Application() {
         Texts.source = AppLanguage.texts(this)
     }
 }
-
-/** Compatibility alias for legacy references */
-typealias CoucouApp = NalaApp

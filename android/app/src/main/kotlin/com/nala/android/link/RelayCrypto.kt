@@ -19,7 +19,7 @@ import javax.crypto.spec.SecretKeySpec
  *  - secrets print as ".." and are wiped on [wipe]; nothing here writes them anywhere.
  */
 object RelayCrypto {
-    const val LABEL = "coucou-relay/v1"
+    const val LABEL = "nala-relay/v1"
     const val VER = 1
     const val T_INIT = 1
     const val T_ACCEPT = 2
@@ -112,7 +112,7 @@ object RelayCrypto {
     /** `K_join`: presented to the relay as a join proof; one-way from K. */
     fun kJoin(k: PairingKey): Secret = Secret(derive32(k, "join"))
 
-    /** The join proof for the `coucou.join.<…>` sub-protocol. */
+    /** The join proof for the `nala.join.<…>` sub-protocol. */
     fun joinProof(k: PairingKey): String = base64UrlEncode(kJoin(k).bytes)
 
     /** The two session keys, `(phone → host, host → phone)`. */

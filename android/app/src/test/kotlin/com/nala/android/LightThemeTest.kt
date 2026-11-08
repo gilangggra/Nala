@@ -94,7 +94,7 @@ class LightThemeTest {
         assertTrue(theme.contains("isSystemInDarkTheme()") && theme.contains("ThemePolicy.dark(theme"))
         assertTrue(theme.contains("dynamicLightColorScheme") && theme.contains("dynamicDarkColorScheme") && theme.contains("dynamicAvailable"))
         val main = File("src/main/kotlin/com/nala/android/MainActivity.kt").readText()
-        assertTrue(main.contains("CoucouTheme(model.settings.theme, model.settings.dynamicColour)"))
+        assertTrue(main.contains("NalaTheme(model.settings.theme, model.settings.dynamicColour)"))
         // Dark icons on a light page, light icons on the camera.
         assertTrue(main.contains("isAppearanceLightStatusBars = lightPage") && main.contains("screen != Screen.SCAN"))
         assertTrue(File("src/main/res/values/themes.xml").readText().contains("DeviceDefault.DayNight"))

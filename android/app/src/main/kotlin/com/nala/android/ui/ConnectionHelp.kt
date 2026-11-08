@@ -47,7 +47,7 @@ fun LinkHealthPanel(model: AppModel, onHelp: () -> Unit) {
             if (lines.second.isNotEmpty()) Text(lines.second, style = TypeScale.SECONDARY.style(t.textDim.c()))
         }
         RowDivider()
-        ListRow(stringResource(R.string.diag_title), onClick = onHelp, trailing = { CoucouIcon(IconKind.CHEVRON, tint = t.textDim.c(), size = 20.dp) })
+        ListRow(stringResource(R.string.diag_title), onClick = onHelp, trailing = { NalaIcon(IconKind.CHEVRON, tint = t.textDim.c(), size = 20.dp) })
     }
 }
 

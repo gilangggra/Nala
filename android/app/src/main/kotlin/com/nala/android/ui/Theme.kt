@@ -66,7 +66,7 @@ object StatusColors {
  * Mochi, his colours and the state colours are the same in both.
  */
 @Composable
-fun CoucouTheme(theme: ThemeChoice = ThemeChoice.SYSTEM, dynamic: Boolean = false, content: @Composable () -> Unit) {
+fun NalaTheme(theme: ThemeChoice = ThemeChoice.SYSTEM, dynamic: Boolean = false, content: @Composable () -> Unit) {
     val dark = ThemePolicy.dark(theme, isSystemInDarkTheme())
     val context = LocalContext.current
     var tokens = if (dark) Tokens.DARK else Tokens.LIGHT

@@ -427,7 +427,7 @@ class IslandOverlay(
                 if (s.canAllow) {
                     PillButton(
                         stringResource(R.string.action_allow), { tap("Allow") { onAllow(fingerprint) } }, Modifier.weight(1f), PillKind.PRIMARY, onDark = true,
-                        icon = { CoucouIcon(IconKind.LOCK, tint = Color(IslandSurface.ON_PRIMARY), size = 18.dp) },
+                        icon = { NalaIcon(IconKind.LOCK, tint = Color(IslandSurface.ON_PRIMARY), size = 18.dp) },
                     )
                 }
             }
@@ -455,5 +455,5 @@ class IslandOverlay(
         }
     }
 
-    private companion object { const val TAG = "CoucouIsland" }
+    private companion object { const val TAG = "NalaIsland" }
 }

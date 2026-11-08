@@ -128,7 +128,6 @@ class AppModel(private val context: Context) : LinkListener {
     )
 
     private val prefs = context.getSharedPreferences("nala_ui", Context.MODE_PRIVATE)
-    private val legacyPrefs = context.getSharedPreferences("coucou_ui", Context.MODE_PRIVATE)
     private val kv = object : KeyValueStore {
         override fun getBoolean(key: String, default: Boolean) = prefs.getBoolean(key, default)
         override fun getInt(key: String, default: Int) = prefs.getInt(key, default)
@@ -356,7 +355,7 @@ class AppModel(private val context: Context) : LinkListener {
         val connected = mode != Mode.PAIRED || linkState == LinkState.CONNECTED
         val why = OverlayPolicy.blocker(choice.wished, overlay.permitted(), inForeground)
             ?: if (!connected) "not connected to a computer" else null
-        if (why != null) Log.d("CoucouOverlay", "no island: $why")
+        if (why != null) Log.d("NalaOverlay", "no island: $why")
         return why == null
     }
 
@@ -491,7 +490,7 @@ class AppModel(private val context: Context) : LinkListener {
     /** A computer matching the paired fingerprint answered with the pinned certificate (checked by a bare TLS handshake). */
     private fun onAddressFound(host: String, port: Int) {
         if (mode != Mode.PAIRED || currentPairing == null) return
-        Log.d("CoucouDiscovery", "address updated")
+        Log.d("NalaDiscovery", "address updated")
         useAddress(host, port)
     }
 

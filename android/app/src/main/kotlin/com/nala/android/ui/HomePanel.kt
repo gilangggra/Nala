@@ -139,7 +139,7 @@ fun HeroCard(
                     if (onDetails != null) {
                         PillButton(
                             stringResource(R.string.session_details), onDetails, onDark = true,
-                            icon = { CoucouIcon(IconKind.CHEVRON, tint = white, size = 18.dp) },
+                            icon = { NalaIcon(IconKind.CHEVRON, tint = white, size = 18.dp) },
                         )
                     }
                 }

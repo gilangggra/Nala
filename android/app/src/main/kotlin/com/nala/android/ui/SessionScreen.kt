@@ -134,7 +134,7 @@ fun SessionScreen(model: AppModel, pillId: String, onBack: () -> Unit) {
                                 ) {
                                     // Done steps carry a check; the one being worked on carries the agent's dot.
                                     if (current) StateDot(accent, Modifier.padding(horizontal = 7.dp))
-                                    else CoucouIcon(IconKind.CHECK, tint = if (i == 0) StatusColors.online else t.textFaint.c(), size = 22.dp)
+                                    else NalaIcon(IconKind.CHECK, tint = if (i == 0) StatusColors.online else t.textFaint.c(), size = 22.dp)
                                     // Free text is never shown (it can hold a command or a path), so a step the label cannot name
                                     // gets a neutral word instead of an empty row.
                                     Text(

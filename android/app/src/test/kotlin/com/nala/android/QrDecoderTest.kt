@@ -12,7 +12,7 @@ import org.junit.Test
 /** The decoder against real QR codes made by zxing's own encoder, drawn as a camera would give them (brightness bytes). */
 class QrDecoderTest {
     private val fp = "ab".repeat(32)
-    private val text = "coucou://pair?v=1&host=192.168.1.20&port=47821&fp=$fp&token=T0ken_with-16plus_chars&name=My%20PC"
+    private val text = "nala://pair?v=1&host=192.168.1.20&port=47821&fp=$fp&token=T0ken_with-16plus_chars&name=My%20PC"
 
     private class Frame(val luma: ByteArray, val stride: Int, val w: Int, val h: Int)
 

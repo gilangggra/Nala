@@ -44,7 +44,7 @@ class KeepAliveReceiver : BroadcastReceiver() {
         // for a few seconds. A wake lock with a timeout releases itself; it is never held longer than that, and never held between checks.
         runCatching {
             context.getSystemService(PowerManager::class.java)
-                ?.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "coucou:keepalive")
+                ?.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "nala:keepalive")
                 ?.apply { setReferenceCounted(false); acquire(KeepAlivePolicy.WAKE_LOCK_MS) }
         }
         (context.applicationContext as NalaApp).model.keepAliveTick()

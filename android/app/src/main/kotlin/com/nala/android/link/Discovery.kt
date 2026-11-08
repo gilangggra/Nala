@@ -35,7 +35,7 @@ interface DiscoverySource {
 }
 
 object Discovery {
-    const val SERVICE_TYPE = "_coucou._tcp"
+    const val SERVICE_TYPE = "_nala._tcp"
     const val FP_ID_LEN = 16
     const val TXT_VERSION = "1"
     const val DEFAULT_PORT = 47821

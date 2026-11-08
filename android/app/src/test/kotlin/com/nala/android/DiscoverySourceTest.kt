@@ -17,7 +17,7 @@ class DiscoverySourceTest {
         assertTrue(nsd.contains("NsdManager") && nsd.contains("Discovery.SERVICE_TYPE"))
         val gradle = File("build.gradle.kts").readText().lowercase()
         for (bad in listOf("jmdns", "zeroconf", "play-services", "mlkit", "androidx.nsd")) assertFalse("build.gradle.kts mentions $bad", gradle.contains(bad))
-        assertEquals("_coucou._tcp", Regex("""SERVICE_TYPE\s*=\s*"([^"]+)"""").find(discovery)!!.groupValues[1])
+        assertEquals("_nala._tcp", Regex("""SERVICE_TYPE\s*=\s*"([^"]+)"""").find(discovery)!!.groupValues[1])
     }
 
     @Test fun theMulticastLockIsHeldOnlyWhileBrowsing() {

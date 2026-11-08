@@ -70,7 +70,7 @@ class RelayConnector(
                 url = url,
                 path = "/v1/room/${relay.room}?role=phone",
                 headers = listOf("Authorization" to "Bearer ${relay.access}"),
-                protocols = listOf(SUBPROTOCOL, "coucou.join.${RelayCrypto.joinProof(key)}"),
+                protocols = listOf(SUBPROTOCOL, "nala.join.${RelayCrypto.joinProof(key)}"),
                 connectTimeoutMs = timeoutMs,
                 maxMessage = RelayCrypto.MAX_FRAME + 1024,
                 sockets = sockets,
@@ -162,7 +162,7 @@ class RelayConnector(
     }
 
     companion object {
-        const val SUBPROTOCOL = "coucou.v1"
+        const val SUBPROTOCOL = "nala.v1"
     }
 }
 

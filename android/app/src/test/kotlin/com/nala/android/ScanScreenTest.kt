@@ -44,8 +44,8 @@ class ScanScreenTest {
         val m = file("src/main/AndroidManifest.xml")
         assertTrue(m.contains("android.permission.CAMERA"))
         assertTrue(Regex("""uses-feature\s+android:name="android.hardware.camera"\s+android:required="false"""").containsMatchIn(m))
-        // the camera app's own scanner opens coucou://pair
-        assertTrue(m.contains("""android:scheme="coucou" android:host="pair""""))
+        // the camera app's own scanner opens nala://pair
+        assertTrue(m.contains("""android:scheme="nala" android:host="pair""""))
         assertTrue(m.contains("android.intent.category.BROWSABLE") && m.contains("android.intent.action.VIEW"))
     }
 

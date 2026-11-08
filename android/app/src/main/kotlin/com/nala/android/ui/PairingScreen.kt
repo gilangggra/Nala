@@ -72,7 +72,7 @@ fun PairingScreen(model: AppModel, onScan: () -> Unit, onAbout: () -> Unit) {
         model.message?.let { MessagePanel(it) { model.message = null }; Spacer(Modifier.size(Gap)) }
         PillButton(
             stringResource(R.string.scan_button), onScan, Modifier.fillMaxWidth(), PillKind.PRIMARY,
-            icon = { CoucouIcon(IconKind.SCAN, tint = t.onPrimaryButton.c(), size = 20.dp) },
+            icon = { NalaIcon(IconKind.SCAN, tint = t.onPrimaryButton.c(), size = 20.dp) },
         )
         Spacer(Modifier.size(Gap))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Gap)) {

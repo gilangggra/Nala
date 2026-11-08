@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.nala.android.ui.CoucouTheme
+import com.nala.android.ui.NalaTheme
 import com.nala.android.ui.TeamConfigScreen
 
 /**
@@ -46,7 +46,7 @@ class TeamConfigActivity : ComponentActivity() {
         val store = TeamStore(this)
         enableEdgeToEdge()
         setContent {
-            CoucouTheme(model.settings.theme, model.settings.dynamicColour) {
+            NalaTheme(model.settings.theme, model.settings.dynamicColour) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     TeamConfigScreen(Modifier.windowInsetsPadding(WindowInsets.safeDrawing), store.get(widgetId)) { chosen ->
                         store.set(widgetId, chosen)

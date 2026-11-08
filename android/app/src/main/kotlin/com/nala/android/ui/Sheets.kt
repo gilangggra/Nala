@@ -178,7 +178,7 @@ fun ApprovalSheet(model: AppModel, r: ApprovalRequest, onAllow: (ApprovalRequest
             if (canAllow) {
                 PillButton(
                     stringResource(R.string.action_allow), { onAllow(r) }, Modifier.weight(1f), PillKind.PRIMARY, enabled = armed, onDark = true,
-                    icon = { CoucouIcon(IconKind.LOCK, tint = Color(tokens().heroOnPrimary), size = 18.dp) },
+                    icon = { NalaIcon(IconKind.LOCK, tint = Color(tokens().heroOnPrimary), size = 18.dp) },
                 )
             }
         }
@@ -240,7 +240,7 @@ fun QuestionSheet(model: AppModel, pillId: String, onDismiss: () -> Unit, onSend
                     stringResource(R.string.question_send),
                     { QuestionFlow.picks(request.questions, st)?.let { onSend(request, it) } }, Modifier.weight(1f), PillKind.PRIMARY,
                     enabled = armed && QuestionFlow.complete(request.questions, st), onDark = true,
-                    icon = { CoucouIcon(IconKind.LOCK, tint = Color(tokens().heroOnPrimary), size = 18.dp) },
+                    icon = { NalaIcon(IconKind.LOCK, tint = Color(tokens().heroOnPrimary), size = 18.dp) },
                 )
             } else {
                 PillButton(
@@ -277,7 +277,7 @@ private fun OptionRow(option: AskedOption, selected: Boolean, multi: Boolean, on
                 .background(if (selected) white else Color.Transparent)
                 .border(1.5.dp, if (selected) white else dim, if (multi) RoundedCornerShape(6.dp) else CircleShape),
             contentAlignment = Alignment.Center,
-        ) { if (selected) CoucouIcon(IconKind.CHECK, tint = Color(tokens().heroOnPrimary), size = 16.dp) }
+        ) { if (selected) NalaIcon(IconKind.CHECK, tint = Color(tokens().heroOnPrimary), size = 16.dp) }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(option.label, style = TypeScale.BODY.style(white).copy(fontWeight = FontWeight.SemiBold))
             if (option.description.isNotBlank()) Text(option.description, style = TypeScale.SECONDARY.style(dim))

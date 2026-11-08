@@ -109,13 +109,13 @@ fun SectionTitle(text: String) {
 /** A setting with a switch at its end. */
 @Composable
 fun SettingSwitch(title: String, hint: String?, checked: Boolean, onChange: (Boolean) -> Unit) {
-    ListRow(title, hint = hint, trailing = { CoucouSwitch(checked, onChange, label = title) })
+    ListRow(title, hint = hint, trailing = { NalaSwitch(checked, onChange, label = title) })
 }
 
 /** A row that opens another page: its title and a chevron. */
 @Composable
 private fun LinkRow(title: String, onClick: () -> Unit) {
-    ListRow(title, onClick = onClick, trailing = { CoucouIcon(IconKind.CHEVRON, tint = tokens().textDim.c(), size = 20.dp) })
+    ListRow(title, onClick = onClick, trailing = { NalaIcon(IconKind.CHEVRON, tint = tokens().textDim.c(), size = 20.dp) })
 }
 
 private fun clock(min: Int) = "%02d:%02d".format(QuietHours.wrap(min) / 60, QuietHours.wrap(min) % 60)
@@ -173,7 +173,7 @@ private fun LanguageRow() {
     val currentName = Languages.ALL.firstOrNull { it.tag == current }?.name ?: system
     ListRow(
         stringResource(R.string.settings_language), hint = currentName, onClick = { open = true },
-        trailing = { CoucouIcon(IconKind.CHEVRON, tint = t.textDim.c(), size = 20.dp) },
+        trailing = { NalaIcon(IconKind.CHEVRON, tint = t.textDim.c(), size = 20.dp) },
     )
     if (open) {
         AlertDialog(
@@ -192,7 +192,7 @@ private fun LanguageRow() {
                             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
                             Text(label, Modifier.weight(1f), style = TypeScale.BODY.style(t.text.c()))
-                            if (tag == current) CoucouIcon(IconKind.CHECK, tint = t.online.c(), size = 22.dp)
+                            if (tag == current) NalaIcon(IconKind.CHECK, tint = t.online.c(), size = 22.dp)
                         }
                     }
                 }
@@ -302,7 +302,7 @@ fun SettingsScreen(model: AppModel, onHistory: () -> Unit, onGallery: () -> Unit
                         Text(stringResource(R.string.settings_volume), Modifier.weight(1f), style = TypeScale.BODY.style(t.text.c()))
                         Text("${(s.volume / SoundVolume.MAX * 100).toInt().coerceIn(0, 100)}%", style = TypeScale.SECONDARY.style(t.textDim.c()))
                     }
-                    CoucouSlider(
+                    NalaSlider(
                         value = s.volume, onChange = { model.updateSettings(s.copy(volume = SoundVolume.clamp(it))) },
                         valueRange = 0f..SoundVolume.MAX, enabled = s.soundOn, label = stringResource(R.string.settings_volume),
                     )

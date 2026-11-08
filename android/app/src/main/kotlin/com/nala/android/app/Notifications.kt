@@ -247,7 +247,7 @@ class Notifications(private val context: Context) {
     }
 
     fun openApp() {
-        Log.d("CoucouLaunch", "open the app (tap on the pill)")
+        Log.d("NalaLaunch", "open the app (tap on the pill)")
         runCatching { open(null, false, 0).send() }
     }
 
@@ -259,7 +259,6 @@ class Notifications(private val context: Context) {
         private const val STATUS_TAG = "status"
         const val ONGOING_ID = 1
         const val ACTION_DENY = "com.nala.android.DENY"
-        const val ACTION_DENY_LEGACY = "com.coucou.android.DENY"
         const val EXTRA_FP = "fingerprint"
         const val EXTRA_ALLOW = "allow"
         /** Even ids for the request, +1 for its Allow action; never collides with ONGOING_ID. */
@@ -270,7 +269,7 @@ class Notifications(private val context: Context) {
 /** Handles the Deny button. Denying needs no biometric check: it can only make things safer. */
 class ActionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action != Notifications.ACTION_DENY && intent.action != Notifications.ACTION_DENY_LEGACY) return
+        if (intent.action != Notifications.ACTION_DENY) return
         val fp = intent.getStringExtra(Notifications.EXTRA_FP) ?: return
         (context.applicationContext as NalaApp).model.decide(fp, allow = false)
     }

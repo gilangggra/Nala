@@ -137,7 +137,7 @@ fun WardrobeScreen(model: AppModel, onBack: () -> Unit) {
                     stringResource(R.string.wardrobe_follow), hint = stringResource(R.string.wardrobe_follow_hint),
                     modifier = Modifier.clickable(role = Role.RadioButton) { model.updateSettings(s.copy(outfit = Wardrobe.FOLLOW)) }
                         .semantics { selected = following },
-                    trailing = { if (following) CoucouIcon(IconKind.CHECK, tint = t.online.c(), size = 22.dp) },
+                    trailing = { if (following) NalaIcon(IconKind.CHECK, tint = t.online.c(), size = 22.dp) },
                 )
             }
         }

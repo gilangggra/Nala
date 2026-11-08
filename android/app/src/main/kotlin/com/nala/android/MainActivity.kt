@@ -97,7 +97,7 @@ import com.nala.android.core.TypeScale
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.ui.semantics.Role
-import com.nala.android.ui.CoucouTheme
+import com.nala.android.ui.NalaTheme
 import com.nala.android.core.HomePanel
 import com.nala.android.link.DiscoveryState
 import com.nala.android.ui.AddressSheet
@@ -157,7 +157,7 @@ class MainActivity : ComponentActivity() {
         }
         model.resume()
         setContent {
-            CoucouTheme(model.settings.theme, model.settings.dynamicColour) {
+            NalaTheme(model.settings.theme, model.settings.dynamicColour) {
                 // Dark icons on a light page; the camera screen is black in both themes, so its icons are light.
                 val lightPage = !tokens().isDark && screen != Screen.SCAN
                 SideEffect {
@@ -258,12 +258,12 @@ class MainActivity : ComponentActivity() {
         handle(intent)
     }
 
-    /** A coucou://pair link (from the camera app or a browser) or a tap on an approval notification. */
+    /** A nala://pair link (from the camera app or a browser) or a tap on an approval notification. */
     private fun handle(i: Intent?) {
         i ?: return
-        Log.d("CoucouLaunch", "MainActivity intent: action=${i.action} data=${i.data != null}")
+        Log.d("NalaLaunch", "MainActivity intent: action=${i.action} data=${i.data != null}")
         i.data?.let { uri ->
-            if (uri.scheme == "coucou") {
+            if (uri.scheme == "nala") {
                 // Opened from the camera app or a browser: never paired without the user's OK.
                 if (!model.requestPairing(uri.toString())) model.message = getString(R.string.msg_bad_link)
                 i.data = null // handled once: a rotation must not ask again

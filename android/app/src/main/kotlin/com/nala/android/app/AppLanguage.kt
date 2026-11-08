@@ -18,7 +18,6 @@ import java.util.Locale
  */
 object AppLanguage {
     private const val PREFS = "nala_ui"
-    private const val LEGACY_PREFS = "coucou_ui"
     private const val KEY = "app_language"
 
     /** The language in force: a tag of [Languages.ALL], or [Languages.SYSTEM] for the phone's own. */
@@ -27,7 +26,7 @@ object AppLanguage {
             val locales = context.getSystemService(LocaleManager::class.java).applicationLocales
             if (locales.isEmpty) Languages.SYSTEM else Languages.match(locales[0].toLanguageTag())
         } else {
-            Languages.match(context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, null) ?: context.getSharedPreferences(LEGACY_PREFS, Context.MODE_PRIVATE).getString(KEY, "") ?: "")
+            Languages.match(context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "") ?: "")
         }
 
     /** Chooses [tag] ([Languages.SYSTEM] for the phone's own). An activity is recreated so its text changes at once. */

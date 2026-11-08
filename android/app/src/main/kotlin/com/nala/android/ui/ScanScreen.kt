@@ -94,7 +94,7 @@ private tailrec fun Context.activity(): Activity? = when (this) {
 fun ScanScreen(onBack: () -> Unit, onText: (String) -> Boolean) {
     val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
-    val prefs = remember { context.getSharedPreferences("coucou_ui", Context.MODE_PRIVATE) }
+    val prefs = remember { context.getSharedPreferences("nala_ui", Context.MODE_PRIVATE) }
     fun hasCamera() = context.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
     var granted by remember { mutableStateOf(hasCamera()) }
     var asked by remember { mutableStateOf(prefs.getBoolean(ASKED_KEY, false)) }
@@ -128,7 +128,7 @@ fun ScanScreen(onBack: () -> Unit, onText: (String) -> Boolean) {
             Box(
                 Modifier.size(Spacing.MIN_TOUCH.dp).clip(CircleShape).clickable(role = Role.Button, onClick = onBack).semantics { contentDescription = backLabel },
                 contentAlignment = Alignment.Center,
-            ) { CoucouIcon(IconKind.BACK, tint = Color(IslandSurface.TEXT), size = 24.dp) }
+            ) { NalaIcon(IconKind.BACK, tint = Color(IslandSurface.TEXT), size = 24.dp) }
             Text(stringResource(R.string.scan_title), style = TypeScale.TITLE.style(Color(IslandSurface.TEXT)), maxLines = 1)
         }
         when {

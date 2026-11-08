@@ -45,7 +45,7 @@ import com.nala.android.core.TypeStep
 
 // The app's building blocks: panels, pill buttons, the hero panel, the tokens of the (dark) theme.
 
-/** The tokens of the current theme; CoucouTheme provides them. */
+/** The tokens of the current theme; NalaTheme provides them. */
 val LocalTokens = staticCompositionLocalOf { Tokens.DARK }
 
 @Composable

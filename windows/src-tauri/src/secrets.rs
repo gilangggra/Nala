@@ -7,7 +7,6 @@ use std::sync::{LazyLock, Mutex};
 use keyring::Entry;
 
 const SERVICE: &str = "fr.louisraille.nala";
-const LEGACY_SERVICE: &str = "fr.louisraille.coucou";
 
 /// Every key Nala may store. Anything outside this list is refused.
 pub const KNOWN_KEYS: &[&str] = &[
@@ -39,13 +38,6 @@ fn entry(key: &str) -> Option<Entry> {
     Entry::new(SERVICE, key).ok()
 }
 
-fn legacy_entry(key: &str) -> Option<Entry> {
-    if !KNOWN_KEYS.contains(&key) {
-        return None;
-    }
-    Entry::new(LEGACY_SERVICE, key).ok()
-}
-
 /// Whether each key is stored, as last seen. Each Secret Service lookup opens a
 /// D-Bus session of its own (tens of milliseconds), and the settings ask about
 /// every key on every page: a page switch took seconds. Only presence is kept,
@@ -60,15 +52,6 @@ pub fn get(key: &str) -> Option<String> {
     if let Some(e) = entry(key) {
         if let Ok(value) = e.get_password() {
             if !value.is_empty() {
-                remember(key, true);
-                return Some(value);
-            }
-        }
-    }
-    if let Some(legacy) = legacy_entry(key) {
-        if let Ok(value) = legacy.get_password() {
-            if !value.is_empty() {
-                let _ = set(key, &value);
                 remember(key, true);
                 return Some(value);
             }
@@ -152,22 +135,9 @@ fn internal_entry(key: &str) -> Result<Entry, String> {
     Entry::new(SERVICE, key).map_err(|e| e.to_string())
 }
 
-fn legacy_internal_entry(key: &str) -> Option<Entry> {
-    if !is_internal(key) {
-        return None;
-    }
-    Entry::new(LEGACY_SERVICE, key).ok()
-}
-
 pub fn get_internal(key: &str) -> Option<String> {
     if let Some(entry) = internal_entry(key).ok() {
         if let Some(v) = entry.get_password().ok().filter(|v| !v.is_empty()) {
-            return Some(v);
-        }
-    }
-    if let Some(legacy) = legacy_internal_entry(key) {
-        if let Some(v) = legacy.get_password().ok().filter(|v| !v.is_empty()) {
-            let _ = set_internal(key, &v);
             return Some(v);
         }
     }

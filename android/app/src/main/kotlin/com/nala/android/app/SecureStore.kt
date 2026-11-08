@@ -18,14 +18,13 @@ import javax.crypto.spec.GCMParameterSpec
  */
 class SecureStore(context: Context) {
     private val prefs = context.getSharedPreferences("nala_link", Context.MODE_PRIVATE)
-    private val legacyPrefs = context.getSharedPreferences("coucou_link", Context.MODE_PRIVATE)
 
-    private fun key(alias: String = ALIAS): SecretKey {
+    private fun key(): SecretKey {
         val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
         (ks.getKey(ALIAS, null) as? SecretKey)?.let { return it }
         return KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore").apply {
             init(
-                KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                KeyGenParameterSpec.Builder(ALIAS, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
                     .setKeySize(256)
@@ -43,7 +42,7 @@ class SecureStore(context: Context) {
     }
 
     fun loadPairing(): PairingPayload? {
-        val blob = prefs.getString(PREF, null) ?: legacyPrefs.getString(PREF, null) ?: return null
+        val blob = prefs.getString(PREF, null) ?: return null
         return try {
             val raw = Base64.decode(blob, Base64.NO_WRAP)
             val c = Cipher.getInstance("AES/GCM/NoPadding").apply {
@@ -59,7 +58,7 @@ class SecureStore(context: Context) {
     fun clearPairing() = prefs.edit().remove(PREF).apply()
 
     private companion object {
-        const val ALIAS = "coucou_pairing_key"
+        const val ALIAS = "nala_pairing_key"
         const val PREF = "pairing"
         const val IV_BYTES = 12
     }

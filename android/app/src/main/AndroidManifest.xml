@@ -41,13 +41,12 @@
             </intent-filter>
             <!-- Long-press the icon: Chat, Recent decisions, Pair again (res/xml/shortcuts.xml). They start LaunchActivity, not this one. -->
             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
-            <!-- Scanning the pairing QR code with the camera app opens nala://pair?... (or coucou://pair) here. -->
+            <!-- Scanning the pairing QR code with the camera app opens nala://pair?... here. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="nala" android:host="pair" />
-                <data android:scheme="coucou" android:host="pair" />
             </intent-filter>
         </activity>
 
