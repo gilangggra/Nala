@@ -22,9 +22,9 @@ const TEXT = {
   get relayMissing() { return t("The relay isn't installed yet. Restart Nala."); },
   // Antigravity: the Mac's own strings (hooks.antigravity.approvals*, Settings → Antigravity).
   get agyApprovals() { return t("Approve commands from the notch"); },
-  get agyApprovalsOn() { return t("Before Antigravity runs a shell command that none of its rules covers, the notch asks you first: Allow, Deny or Reply in terminal. Antigravity waits up to 2 min, then asks in its terminal. Coucou can't see Antigravity's mode, so in Auto mode the notch also asks about commands Antigravity would have run on its own."); },
+  get agyApprovalsOn() { return t("Before Antigravity runs a shell command that none of its rules covers, the notch asks you first: Allow, Deny or Reply in terminal. Antigravity waits up to 2 min, then asks in its terminal. Nala can't see Antigravity's mode, so in Auto mode the notch also asks about commands Antigravity would have run on its own."); },
   get agyApprovalsOff() { return t("Antigravity asks for permission in its terminal, as usual."); },
-  get agyApprovalsUpdate() { return t("Click Install hooks once more, then restart Antigravity: hooks from an older Coucou don't let it wait for your answer."); },
+  get agyApprovalsUpdate() { return t("Click Install hooks once more, then restart Antigravity: hooks from an older Nala don't let it wait for your answer."); },
   previewInstall: (name: string) => t("This is exactly what changes for {name}. Nothing else is touched.", { name }),
   get previewRemove() { return t("This removes Nala's entries only. Everything else stays."); },
   backup: (to: string) => (to ? t("Backup → {path}", { path: to }) : t("No existing file — nothing to back up.")),

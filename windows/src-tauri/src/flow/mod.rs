@@ -351,7 +351,7 @@ fn begin(app: &AppHandle, flow: &Arc<Flow>) -> Option<Listening> {
                 app,
                 "mic",
                 "#FF6B6B",
-                t("Coucou can't hear you: the microphone is not allowed or not available."),
+                t("Nala can't hear you: the microphone is not allowed or not available."),
                 None,
                 8,
             );

@@ -290,7 +290,7 @@ fn start_inner(app: &AppHandle, taker: &Arc<NoteTaker>) -> Result<String, String
     .map_err(|err| {
         crate::log::line(format!("notes: microphone: {err}"));
         let _ = std::fs::remove_dir_all(&dir);
-        t("Coucou can't hear you: the microphone is not allowed or not available.")
+        t("Nala can't hear you: the microphone is not allowed or not available.")
     })?;
     // Without the computer's sound, the call is noted from the microphone alone.
     let (system, system_channel) = match Channel::new(&dir.join("system.wav")) {

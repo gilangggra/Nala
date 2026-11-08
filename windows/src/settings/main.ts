@@ -413,7 +413,7 @@ function subscriptionsSection(): HTMLElement {
     h("h2", { text: t("Your AI subscriptions") }),
     h("div", {
       class: "hint",
-      text: t("Chat on the plan you already pay for. Coucou asks your AI's official terminal tool, signed in with your own account: it never sees your password or your key."),
+      text: t("Chat on the plan you already pay for. Nala asks your AI's official terminal tool, signed in with your own account: it never sees your password or your key."),
     }),
     list,
   );
@@ -574,7 +574,7 @@ function activePillsSection(connected: Record<string, boolean>): HTMLElement {
     "section",
     {},
     h("h2", {}, h("span", { text: t("Active pills") })),
-    h("div", { class: "hint", text: t("Choose the tools you use. Coucou only shows what you declare here.") }),
+    h("div", { class: "hint", text: t("Choose the tools you use. Nala only shows what you declare here.") }),
     slots,
     h("div", { class: "row" }, h("label", { text: t("Main tool") }), main),
     groups,
