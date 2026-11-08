@@ -10,16 +10,16 @@ plugins {
 // from a file in this repository. Without all of them the release build is made unsigned (it cannot be installed) rather than
 // signed with a debug key.
 fun signingValue(name: String): String? = (System.getenv(name) ?: providers.gradleProperty(name).orNull)?.takeIf { it.isNotBlank() }
-val releaseKeystore = signingValue("COUCOU_KEYSTORE_FILE")
-val releaseStorePassword = signingValue("COUCOU_KEYSTORE_PASSWORD")
-val releaseKeyAlias = signingValue("COUCOU_KEY_ALIAS")
-val releaseKeyPassword = signingValue("COUCOU_KEY_PASSWORD") ?: releaseStorePassword
+val releaseKeystore = signingValue("NALA_KEYSTORE_FILE") ?: signingValue("COUCOU_KEYSTORE_FILE")
+val releaseStorePassword = signingValue("NALA_KEYSTORE_PASSWORD") ?: signingValue("COUCOU_KEYSTORE_PASSWORD")
+val releaseKeyAlias = signingValue("NALA_KEY_ALIAS") ?: signingValue("COUCOU_KEY_ALIAS")
+val releaseKeyPassword = signingValue("NALA_KEY_PASSWORD") ?: signingValue("COUCOU_KEY_PASSWORD") ?: releaseStorePassword
 
 android {
-    namespace = "com.coucou.android"
+    namespace = "com.nala.android"
     compileSdk = 35
     defaultConfig {
-        applicationId = "com.coucou.android"
+        applicationId = "com.nala.android"
         minSdk = 30
         targetSdk = 35
         versionCode = 4
@@ -90,7 +90,7 @@ val verifyReleaseNoLogs by tasks.registering {
     doLast {
         val apks = apkDir.get().asFile.walkTopDown().filter { it.extension == "apk" }.toList()
         check(apks.size == 1) { "expected one release APK, found ${apks.size}" }
-        val leftovers = listOf("CoucouOverlay", "CoucouLaunch", "CoucouDiscovery", "CoucouIsland", "island failed", "cannot browse", "ignored an early tap")
+        val leftovers = listOf("NalaOverlay", "NalaLaunch", "NalaDiscovery", "NalaIsland", "CoucouOverlay", "CoucouLaunch", "CoucouDiscovery", "CoucouIsland", "island failed", "cannot browse", "ignored an early tap")
         ZipFile(apks.single()).use { zip ->
             for (entry in zip.entries().asSequence().filter { it.name.endsWith(".dex") }) {
                 val text = String(zip.getInputStream(entry).readBytes(), Charsets.ISO_8859_1)

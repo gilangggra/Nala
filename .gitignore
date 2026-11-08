@@ -26,3 +26,13 @@ NotchBuddy/Sources/App/Voice/GitHash.generated.swift
 # Workspace migration bridge
 coucou/
 
+# Android local
+android/local.properties
+.gradle/
+android/.gradle/
+android/build/
+android/app/build/
+
+# Editor
+.vscode/
+
