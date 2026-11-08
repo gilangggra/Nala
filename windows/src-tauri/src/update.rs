@@ -212,11 +212,17 @@ pub fn install_kind(exe: &str, has_uninstaller: bool, local_app_data: Option<&st
     let exe = win_path(exe);
     let Some((dir, _)) = exe.rsplit_once('\\') else { return InstallKind::Manual };
     if let Some(local) = local_app_data.filter(|l| !l.trim().is_empty()) {
-        if dir == format!("{}\\coucou", win_path(local)) {
+        let l_coucou = format!("{}\\coucou", win_path(local));
+        let l_nala = format!("{}\\nala", win_path(local));
+        if dir == l_coucou || dir == l_nala {
             return if has_uninstaller { InstallKind::Setup } else { InstallKind::Manual };
         }
     }
-    if program_files.iter().filter(|p| !p.trim().is_empty()).any(|p| dir == format!("{}\\coucou", win_path(p))) {
+    if program_files.iter().filter(|p| !p.trim().is_empty()).any(|p| {
+        let p_coucou = format!("{}\\coucou", win_path(p));
+        let p_nala = format!("{}\\nala", win_path(p));
+        dir == p_coucou || dir == p_nala
+    }) {
         return InstallKind::Msi;
     }
     InstallKind::Manual
@@ -226,15 +232,26 @@ pub fn install_kind(exe: &str, has_uninstaller: bool, local_app_data: Option<&st
 /// workflow publishes, nothing else.
 pub fn asset_name(kind: InstallKind, version: &str) -> Option<String> {
     match kind {
-        InstallKind::Setup => Some(format!("Coucou-Windows-{version}-setup.exe")),
-        InstallKind::Msi => Some(format!("Coucou-Windows-{version}.msi")),
+        InstallKind::Setup => Some(format!("Nala-Windows-{version}-setup.exe")),
+        InstallKind::Msi => Some(format!("Nala-Windows-{version}.msi")),
         InstallKind::Manual => None,
     }
 }
 
 pub fn pick_asset(release: &Release, kind: InstallKind) -> Option<&Asset> {
-    let name = asset_name(kind, &release.version)?;
-    release.assets.iter().find(|a| a.name == name && allowed_url(&a.url))
+    let version = &release.version;
+    let expected: Vec<String> = match kind {
+        InstallKind::Setup => vec![
+            format!("Nala-Windows-{version}-setup.exe"),
+            format!("Coucou-Windows-{version}-setup.exe"),
+        ],
+        InstallKind::Msi => vec![
+            format!("Nala-Windows-{version}.msi"),
+            format!("Coucou-Windows-{version}.msi"),
+        ],
+        InstallKind::Manual => vec![],
+    };
+    release.assets.iter().find(|a| expected.iter().any(|exp| &a.name == exp) && allowed_url(&a.url))
 }
 
 /// What runs the downloaded installer. The setup.exe with Tauri's own update
@@ -378,7 +395,7 @@ fn load_prefs() -> Prefs {
 fn save_prefs(prefs: &Prefs) {
     let path = prefs_path();
     let Some(dir) = path.parent() else { return };
-    let temp = path.with_extension(format!("json.coucou-{}", std::process::id()));
+    let temp = path.with_extension(format!("json.nala-{}", std::process::id()));
     let written = crate::platform::ensure_private_dir(dir)
         .and_then(|()| serde_json::to_vec(prefs).map_err(std::io::Error::other))
         .and_then(|json| std::fs::write(&temp, json))
@@ -591,7 +608,8 @@ pub async fn check(app: &AppHandle, manual: bool) {
 fn remove_old_downloads() {
     let Ok(entries) = std::fs::read_dir(std::env::temp_dir()) else { return };
     for entry in entries.flatten() {
-        if entry.file_name().to_string_lossy().starts_with("coucou-update-") {
+        let name = entry.file_name().to_string_lossy().to_string();
+        if name.starts_with("nala-update-") || name.starts_with("coucou-update-") {
             let _ = std::fs::remove_dir_all(entry.path());
         }
     }
@@ -643,7 +661,7 @@ async fn run(app: &AppHandle, release: &Release, kind: InstallKind) -> Result<()
         return Err(t("The download isn't the file GitHub published for this version, so nothing was installed."));
     }
     let nonce = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.subsec_nanos()).unwrap_or(0);
-    let dir = std::env::temp_dir().join(format!("coucou-update-{}-{nonce}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("nala-update-{}-{nonce}", std::process::id()));
     std::fs::create_dir_all(&dir).map_err(|_| t("The download failed. Try again, or get the new version on GitHub."))?;
     let path = dir.join(&asset.name);
 
@@ -928,10 +946,12 @@ mod tests {
         let kind = |exe: &str, uninst: bool| install_kind(exe, uninst, local, &pf);
         assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Coucou\coucou.exe", true), InstallKind::Setup);
         assert_eq!(kind(r"c:\users\ana\appdata\local\COUCOU\Coucou.exe", true), InstallKind::Setup);
+        assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Nala\nala.exe", true), InstallKind::Setup);
         // A portable exe copied there: no NSIS uninstaller next to it.
         assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Coucou\coucou.exe", false), InstallKind::Manual);
         assert_eq!(kind(r"C:\Program Files\Coucou\coucou.exe", false), InstallKind::Msi);
         assert_eq!(kind(r"C:\Program Files (x86)\Coucou\coucou.exe", false), InstallKind::Msi);
+        assert_eq!(kind(r"C:\Program Files\Nala\nala.exe", false), InstallKind::Msi);
         // The portable exe, a build, a folder that only looks alike.
         assert_eq!(kind(r"C:\Users\Ana\Downloads\coucou.exe", true), InstallKind::Manual);
         assert_eq!(kind(r"C:\dev\coucou\windows\target\release\coucou.exe", false), InstallKind::Manual);

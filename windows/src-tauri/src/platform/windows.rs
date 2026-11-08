@@ -56,20 +56,32 @@ const CREATE_NO_WINDOW: u32 = 0x0800_0000;
 
 // ── Files ─────────────────────────────────────────────────────────────────────
 
-/// %APPDATA%\Coucou — preferences.
+/// %APPDATA%\Nala — preferences.
 pub fn config_dir() -> PathBuf {
     let base = std::env::var_os("APPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."));
-    base.join("Coucou")
+    let nala = base.join("Nala");
+    let coucou = base.join("Coucou");
+    if coucou.exists() && !nala.exists() {
+        coucou
+    } else {
+        nala
+    }
 }
 
-/// %LOCALAPPDATA%\Coucou — where coucou-hook.exe, the inbox and the log live.
+/// %LOCALAPPDATA%\Nala — where hook, inbox and log live.
 pub fn local_dir() -> PathBuf {
     let base = std::env::var_os("LOCALAPPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."));
-    base.join("Coucou")
+    let nala = base.join("Nala");
+    let coucou = base.join("Coucou");
+    if coucou.exists() && !nala.exists() {
+        coucou
+    } else {
+        nala
+    }
 }
 
 /// Where a saved image goes, best first: Pictures (also where OneDrive moves
