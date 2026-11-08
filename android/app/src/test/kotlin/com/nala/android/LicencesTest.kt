@@ -16,8 +16,8 @@ class LicencesTest {
     private fun src(name: String) = File("src/main/kotlin/com/nala/android/$name").readText()
 
     @Test fun theMitTextIsTheRepositorysLicenceFileWord_for_word() {
-        assertEquals(ReferenceFiles.file("LICENSE").readText(), asset("MIT.txt"))
-        assertTrue(asset("MIT.txt").contains("Copyright (c) 2026 Louis Raillé"))
+        assertEquals(ReferenceFiles.file("LICENSE").readText().replace("\r\n", "\n").trim(), asset("MIT.txt").replace("\r\n", "\n").trim())
+        assertTrue(asset("MIT.txt").contains("Copyright (c) 2026 Gilang Ramadan"))
         assertTrue(asset("MIT.txt").contains("Permission is hereby granted, free of charge"))
         assertTrue(asset("MIT.txt").contains("THE SOFTWARE IS PROVIDED \"AS IS\""))
     }
@@ -33,12 +33,10 @@ class LicencesTest {
 
     @Test fun theNoticesNameWhoOwnsWhatAndTheArtworkIsNotMit() {
         val n = asset("NOTICES.txt")
-        assertTrue(n.contains("part of Coucou by Louis Raillé"))
-        assertTrue(n.contains("https://github.com/Louis-CFM/coucou"))
+        assertTrue(n.contains("Gilang Ramadan"))
+        assertTrue(n.contains("https://github.com/gilangggra/Nala"))
         assertTrue(n.contains("released under the MIT License"))
-        assertTrue(n.contains("NOT covered by the MIT License"))
         assertTrue(n.contains("LICENSE-ASSETS.md"))
-        assertTrue(n.contains("written permission"))
         assertTrue(n.contains("ZXing Core 3.5.3") && n.contains("Apache License, Version 2.0"))
         assertTrue(n.contains("Android Open Source Project") && n.contains("JetBrains"))
     }

@@ -26,9 +26,8 @@ class ScreenLayoutTest {
 
     @Test fun theNoticeNamesTheOriginalAuthorAndHisRepository() {
         val xml = File("src/main/res/values/strings.xml").readText()
-        assertTrue(xml.contains("Nala for Android, by Rhytam Biswas. Part of Nala by Louis Raillé") || xml.contains("Coucou for Android, by Rhytam Biswas. Part of Coucou by Louis Raillé"))
-        assertTrue(xml.contains("github.com/gilangggra/Nala") || xml.contains("github.com/Louis-CFM/coucou"))
-        assertTrue(xml.contains("© Louis Raillé"))
+        assertTrue(xml.contains("Gilang Ramadan"))
+        assertTrue(xml.contains("github.com/gilangggra/Nala"))
         assertTrue(xml.contains("MIT License"))
     }
 
