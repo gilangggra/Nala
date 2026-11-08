@@ -24,7 +24,7 @@ pub fn normalize(text: &str) -> String {
 
 /// How Parakeet may write "OK".
 fn is_ok(word: &str) -> bool {
-    matches!(word, "ok" | "okay" | "oke" | "okey" | "hey")
+    matches!(word, "ok" | "okay" | "oke" | "okey" | "hey" | "hi" | "hai" | "halo" | "hello")
 }
 
 /// How Parakeet may write "coucou", in one word. Said with a Brazilian
@@ -56,12 +56,40 @@ fn is_coucou(word: &str) -> bool {
     )
 }
 
+/// How Parakeet may write "nala", in one word.
+fn is_nala(word: &str) -> bool {
+    matches!(
+        word,
+        "nala"
+            | "nahla"
+            | "nalla"
+            | "nalah"
+            | "nallah"
+            | "nalas"
+            | "mala"
+            | "malla"
+    )
+}
+
+/// Matches either target name (Coucou or Nala).
+fn is_wake_name(word: &str) -> bool {
+    is_coucou(word) || is_nala(word)
+}
+
 /// …or in two.
 fn is_coucou_pair(a: &str, b: &str) -> bool {
     matches!(
         (a, b),
         ("cou", "cou") | ("coo", "coo") | ("ku", "ku") | ("cu", "cu") | ("koo", "koo") | ("cuck", "oo") | ("co", "co")
     )
+}
+
+fn is_nala_pair(a: &str, b: &str) -> bool {
+    matches!((a, b), ("na", "la") | ("nah", "la"))
+}
+
+fn is_wake_pair(a: &str, b: &str) -> bool {
+    is_coucou_pair(a, b) || is_nala_pair(a, b)
 }
 
 /// When `text` holds the wake phrase, what was said after it (maybe nothing).
@@ -79,24 +107,32 @@ pub fn after_wake(text: &str) -> Option<String> {
             ok_end = Some(if norm[i] == "o" { i + 2 } else { i + 1 });
         }
         if let Some(j) = ok_end {
-            // A word made of two ("ok coucou" written as one token is rare but happens).
+            // A word made of two ("ok coucou" / "ok nala" written as one token is rare but happens).
             if let Some(w) = norm.get(j) {
                 let parts: Vec<&str> = w.split(' ').collect();
-                if parts.len() == 1 && is_coucou(parts[0]) {
+                if parts.len() == 1 && is_wake_name(parts[0]) {
                     return Some(words[j + 1..].join(" ").trim_start_matches([',', '.', '!', ' ']).trim().to_string());
                 }
                 if let Some(next) = norm.get(j + 1) {
-                    if is_coucou_pair(w, next) {
+                    if is_wake_pair(w, next) {
                         return Some(words[j + 2..].join(" ").trim_start_matches([',', '.', '!', ' ']).trim().to_string());
                     }
                 }
             }
         }
-        // "okcoucou" in one piece.
-        if let Some(rest) = norm[i].strip_prefix("okay").or_else(|| norm[i].strip_prefix("ok")) {
-            if is_coucou(rest.trim()) {
+        // "okcoucou" / "oknala" / "heynala" in one piece.
+        if let Some(rest) = norm[i]
+            .strip_prefix("okay")
+            .or_else(|| norm[i].strip_prefix("ok"))
+            .or_else(|| norm[i].strip_prefix("hey"))
+        {
+            if is_wake_name(rest.trim()) {
                 return Some(words[i + 1..].join(" ").trim().to_string());
             }
+        }
+        // Direct invocation at sentence start, e.g. "Nala, play music" or "Nala! What's the time"
+        if i == 0 && words.len() > 1 && is_nala(&norm[0]) {
+            return Some(words[1..].join(" ").trim_start_matches([',', '.', '!', ' ']).trim().to_string());
         }
         i += 1;
     }
@@ -240,6 +276,14 @@ mod tests {
         assert_eq!(after_wake("Okay, Google."), None);
         assert_eq!(after_wake("on a dit coucou à Paul"), None);
         assert_eq!(after_wake("ok let's go"), None);
+        // Nala wake phrases
+        assert_eq!(after_wake("OK Nala, play some music.").as_deref(), Some("play some music."));
+        assert_eq!(after_wake("Hey Nala, apa kabar?").as_deref(), Some("apa kabar?"));
+        assert_eq!(after_wake("Okay, Nala!").as_deref(), Some(""));
+        assert_eq!(after_wake("O.K. Nahla what's the weather").as_deref(), Some("what's the weather"));
+        assert_eq!(after_wake("ok na la buka VS Code").as_deref(), Some("buka VS Code"));
+        assert_eq!(after_wake("Nala, play some jazz.").as_deref(), Some("play some jazz."));
+        assert_eq!(after_wake("Nala! Bukakan file laporan.").as_deref(), Some("Bukakan file laporan."));
         assert_eq!(normalize("Ça VA, Élodie ?"), "ca va elodie");
     }
 
