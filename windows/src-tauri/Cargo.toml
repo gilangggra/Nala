@@ -1,5 +1,5 @@
 [package]
-name = "coucou"
+name = "nala"
 description = "Nala for Windows and Linux — Mochi lives at the top of your screen"
 authors = ["Louis Raille"]
 version.workspace = true
@@ -7,7 +7,7 @@ edition.workspace = true
 license.workspace = true
 
 [lib]
-name = "coucou_lib"
+name = "nala_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

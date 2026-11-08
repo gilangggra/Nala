@@ -38,8 +38,13 @@ pub const HOOK_EVENTS: &[(&str, u64)] = &[
     ("SubagentStop", 10),
 ];
 
-/// Marker that identifies a Coucou entry inside settings.json.
-const MARKER: &str = "coucou-hook";
+/// Marker that identifies a Nala (or legacy Coucou) entry inside settings.json.
+const MARKER: &str = "nala-hook";
+const LEGACY_MARKER: &str = "coucou-hook";
+
+fn is_marker(c: &str) -> bool {
+    c.contains(MARKER) || c.contains(LEGACY_MARKER)
+}
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -101,17 +106,17 @@ fn entry_is_ours(entry: &Value) -> bool {
             hooks.iter().any(|h| {
                 h.get("command")
                     .and_then(Value::as_str)
-                    .map(|c| c.contains(MARKER))
+                    .map(is_marker)
                     .unwrap_or(false)
             })
         })
         .unwrap_or(false)
 }
 
-/// The status line in settings.json is Coucou's relay (old installs wrote
-/// `coucou-hook StatusLine`, new ones `coucou-hook --statusline`; both match).
+/// The status line in settings.json is Nala's relay (old installs wrote
+/// `coucou-hook StatusLine`, new ones `nala-hook --statusline`; both match).
 fn status_line_is_ours(v: &Value) -> bool {
-    v.get("command").and_then(Value::as_str).is_some_and(|c| c.contains(MARKER))
+    v.get("command").and_then(Value::as_str).is_some_and(is_marker)
 }
 
 /// Settings with Coucou's hooks added; everything else is left untouched. A
@@ -427,6 +432,9 @@ fn install_relay(src: &Path, dest: &Path) {
         if !dest.exists() {
             crate::log::line(format!("could not install {}: {err}", platform::HOOK_EXE));
         }
+    } else if let Some(parent) = dest.parent() {
+        let legacy = parent.join(platform::LEGACY_HOOK_EXE);
+        let _ = std::fs::copy(src, &legacy);
     }
 }
 
@@ -447,6 +455,9 @@ fn install_relay(src: &Path, dest: &Path) {
     if let Err(err) = result {
         let _ = std::fs::remove_file(&temp);
         crate::log::line(format!("could not install {}: {err}", platform::HOOK_EXE));
+    } else if let Some(parent) = dest.parent() {
+        let legacy = parent.join(platform::LEGACY_HOOK_EXE);
+        let _ = std::fs::copy(dest, &legacy);
     }
 }
 
@@ -584,7 +595,7 @@ mod tests {
     /// the home directory at a temp directory, and that is process-wide.
     #[test]
     fn writing_backs_up_preserves_and_refuses_a_changed_file() {
-        let tmp = std::env::temp_dir().join(format!("coucou-hooks-{}", std::process::id()));
+        let tmp = std::env::temp_dir().join(format!("nala-hooks-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&tmp);
         std::fs::create_dir_all(tmp.join(".claude")).unwrap();
         std::env::set_var(platform::HOME_VAR, &tmp);
@@ -602,7 +613,7 @@ mod tests {
 
         // Install.
         let plan = preview(true).expect("a BOM must not stop the preview");
-        assert!(plan.diff.contains("coucou-hook"), "the diff must show what changes");
+        assert!(plan.diff.contains(MARKER), "the diff must show what changes");
         let backup = write(true, &plan.fingerprint).expect("install should succeed");
 
         // The backup holds the original bytes, BOM and all.

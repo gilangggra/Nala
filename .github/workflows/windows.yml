@@ -67,7 +67,7 @@ jobs:
           if ($tag -ne $cargo) { $bad += "Cargo.toml says $cargo" }
           if ($bad) { throw "tag says $tag but $($bad -join '; ')" }
 
-      # `npm run build` (run by tauri as beforeBuildCommand) builds coucou-hook
+      # `npm run build` (run by tauri as beforeBuildCommand) builds nala-hook
       # first, which tauri.conf.json then bundles as a resource. `pack` then
       # copies the installer out of target/ under its shipping name.
       - name: Build and pack the installer
@@ -108,8 +108,8 @@ jobs:
         with:
           name: Nala-Windows-portable
           path: |
-            windows/target/release/coucou.exe
-            windows/target/release/coucou-hook.exe
+            windows/target/release/Nala.exe
+            windows/target/release/nala-hook.exe
           retention-days: 3
 
       - name: Publish the release

@@ -6,9 +6,10 @@ use std::sync::{LazyLock, Mutex};
 
 use keyring::Entry;
 
-const SERVICE: &str = "fr.louisraille.coucou";
+const SERVICE: &str = "fr.louisraille.nala";
+const LEGACY_SERVICE: &str = "fr.louisraille.coucou";
 
-/// Every key Coucou may store. Anything outside this list is refused.
+/// Every key Nala may store. Anything outside this list is refused.
 pub const KNOWN_KEYS: &[&str] = &[
     "anthropic-api-key",
     "openai-api-key",
@@ -38,6 +39,13 @@ fn entry(key: &str) -> Option<Entry> {
     Entry::new(SERVICE, key).ok()
 }
 
+fn legacy_entry(key: &str) -> Option<Entry> {
+    if !KNOWN_KEYS.contains(&key) {
+        return None;
+    }
+    Entry::new(LEGACY_SERVICE, key).ok()
+}
+
 /// Whether each key is stored, as last seen. Each Secret Service lookup opens a
 /// D-Bus session of its own (tens of milliseconds), and the settings ask about
 /// every key on every page: a page switch took seconds. Only presence is kept,
@@ -49,18 +57,25 @@ fn remember(key: &str, present: bool) {
 }
 
 pub fn get(key: &str) -> Option<String> {
-    match entry(key)?.get_password() {
-        Ok(value) if !value.is_empty() => {
-            remember(key, true);
-            Some(value)
+    if let Some(e) = entry(key) {
+        if let Ok(value) = e.get_password() {
+            if !value.is_empty() {
+                remember(key, true);
+                return Some(value);
+            }
         }
-        Ok(_) | Err(keyring::Error::NoEntry) => {
-            remember(key, false);
-            None
-        }
-        // A locked or unreachable store says nothing about the key.
-        Err(_) => None,
     }
+    if let Some(legacy) = legacy_entry(key) {
+        if let Ok(value) = legacy.get_password() {
+            if !value.is_empty() {
+                let _ = set(key, &value);
+                remember(key, true);
+                return Some(value);
+            }
+        }
+    }
+    remember(key, false);
+    None
 }
 
 pub fn set(key: &str, value: &str) -> Result<(), String> {
@@ -137,8 +152,26 @@ fn internal_entry(key: &str) -> Result<Entry, String> {
     Entry::new(SERVICE, key).map_err(|e| e.to_string())
 }
 
+fn legacy_internal_entry(key: &str) -> Option<Entry> {
+    if !is_internal(key) {
+        return None;
+    }
+    Entry::new(LEGACY_SERVICE, key).ok()
+}
+
 pub fn get_internal(key: &str) -> Option<String> {
-    internal_entry(key).ok()?.get_password().ok().filter(|v| !v.is_empty())
+    if let Some(entry) = internal_entry(key).ok() {
+        if let Some(v) = entry.get_password().ok().filter(|v| !v.is_empty()) {
+            return Some(v);
+        }
+    }
+    if let Some(legacy) = legacy_internal_entry(key) {
+        if let Some(v) = legacy.get_password().ok().filter(|v| !v.is_empty()) {
+            let _ = set_internal(key, &v);
+            return Some(v);
+        }
+    }
+    None
 }
 
 pub fn set_internal(key: &str, value: &str) -> Result<(), String> {
@@ -186,7 +219,7 @@ mod tests {
     #[cfg(windows)]
     #[test]
     fn a_certificate_sized_secret_round_trips_through_credential_manager() {
-        let entry = keyring::Entry::new("fr.louisraille.coucou.test", "phone-link-size-check").unwrap();
+        let entry = keyring::Entry::new("fr.louisraille.nala.test", "phone-link-size-check").unwrap();
         let big: String = (0..1_200).map(|i| char::from(b"0123456789abcdef"[i % 16])).collect();
         entry.set_password(&big).expect("Credential Manager refused a certificate-sized secret");
         let back = entry.get_password().expect("could not read it back");

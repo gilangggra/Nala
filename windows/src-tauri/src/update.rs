@@ -230,6 +230,7 @@ pub fn install_kind(exe: &str, has_uninstaller: bool, local_app_data: Option<&st
 
 /// The release asset for an install kind: exactly the name the release
 /// workflow publishes, nothing else.
+#[allow(dead_code)]
 pub fn asset_name(kind: InstallKind, version: &str) -> Option<String> {
     match kind {
         InstallKind::Setup => Some(format!("Nala-Windows-{version}-setup.exe")),

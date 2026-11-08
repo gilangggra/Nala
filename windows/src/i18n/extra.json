@@ -3421,20 +3421,20 @@
    "ko": "전부 통과",
    "ja": "すべて正常"
   },
-  "coucou-hook.exe is not in place yet. Restart Nala; if it still fails, build it with `cargo build -p coucou-hook`.": {
-   "zh-Hans": "coucou-hook.exe 尚未就位。请重启 Nala；如果仍然失败，请用 `cargo build -p coucou-hook` 构建它。",
-   "hi": "coucou-hook.exe अभी अपनी जगह पर नहीं है। Nala फिर से शुरू करें; अगर फिर भी न हो, तो इसे `cargo build -p coucou-hook` से बनाएँ।",
-   "es": "coucou-hook.exe aún no está en su sitio. Reinicia Nala; si sigue fallando, compílalo con `cargo build -p coucou-hook`.",
-   "ar": "coucou-hook.exe ليس في مكانه بعد. أعد تشغيل Nala؛ وإن استمر الفشل فابنِه بالأمر `cargo build -p coucou-hook`.",
-   "fr": "coucou-hook.exe n'est pas encore en place. Redémarre Nala ; si ça échoue encore, compile-le avec `cargo build -p coucou-hook`.",
-   "bn": "coucou-hook.exe এখনো জায়গামতো নেই। Nala আবার চালু করুন; তবুও না হলে `cargo build -p coucou-hook` দিয়ে এটি বানান।",
-   "pt-BR": "O coucou-hook.exe ainda não está no lugar. Reinicie o Nala; se continuar falhando, compile-o com `cargo build -p coucou-hook`.",
-   "ru": "coucou-hook.exe ещё не на месте. Перезапустите Nala; если не поможет, соберите его командой `cargo build -p coucou-hook`.",
-   "id": "coucou-hook.exe belum ada di tempatnya. Mulai ulang Nala; jika masih gagal, build dengan `cargo build -p coucou-hook`.",
-   "de": "coucou-hook.exe ist noch nicht vorhanden. Starte Nala neu; falls es weiterhin fehlschlägt, erstelle die Datei mit `cargo build -p coucou-hook`.",
-   "tr": "coucou-hook.exe henüz yerinde değil. Nala'yu yeniden başlat; sorun sürerse `cargo build -p coucou-hook` ile derle.",
-   "ko": "coucou-hook.exe가 아직 제자리에 없어요. Coucou를 재시작해 주세요. 그래도 안 되면 `cargo build -p coucou-hook`로 빌드해 주세요.",
-   "ja": "coucou-hook.exe がまだ配置されていません。Nala を再起動してください。それでも失敗する場合は `cargo build -p coucou-hook` でビルドしてください。"
+  "nala-hook.exe is not in place yet. Restart Nala; if it still fails, build it with `cargo build -p nala-hook`.": {
+   "zh-Hans": "nala-hook.exe 尚未就位。请重启 Nala；如果仍然失败，请用 `cargo build -p nala-hook` 构建它。",
+   "hi": "nala-hook.exe अभी अपनी जगह पर नहीं है। Nala फिर से शुरू करें; अगर फिर भी न हो, तो इसे `cargo build -p nala-hook` से बनाएँ।",
+   "es": "nala-hook.exe aún no está en su sitio. Reinicia Nala; si sigue fallando, compílalo con `cargo build -p nala-hook`.",
+   "ar": "nala-hook.exe ليس في مكانه بعد. أعد تشغيل Nala؛ وإن استمر الفشل فابنِه بالأمر `cargo build -p nala-hook`.",
+   "fr": "nala-hook.exe n'est pas encore en place. Redémarre Nala ; si ça échoue encore, compile-le avec `cargo build -p nala-hook`.",
+   "bn": "nala-hook.exe এখনো জায়গামতো নেই। Nala আবার চালু করুন; তবুও না হলে `cargo build -p nala-hook` দিয়ে এটি বানান।",
+   "pt-BR": "O nala-hook.exe ainda não está no lugar. Reinicie o Nala; se continuar falhando, compile-o com `cargo build -p nala-hook`.",
+   "ru": "nala-hook.exe ещё не на месте. Перезапустите Nala; если не поможет, соберите его командой `cargo build -p nala-hook`.",
+   "id": "nala-hook.exe belum ada di tempatnya. Mulai ulang Nala; jika masih gagal, build dengan `cargo build -p nala-hook`.",
+   "de": "nala-hook.exe ist noch nicht vorhanden. Starte Nala neu; falls es weiterhin fehlschlägt, erstelle die Datei mit `cargo build -p nala-hook`.",
+   "tr": "nala-hook.exe henüz yerinde değil. Nala'yu yeniden başlat; sorun sürerse `cargo build -p nala-hook` ile derle.",
+   "ko": "nala-hook.exe가 아직 제자리에 없어요. Nala를 재시작해 주세요. 그래도 안 되면 `cargo build -p nala-hook`로 빌드해 주세요.",
+   "ja": "nala-hook.exe がまだ配置されていません。Nala を再起動してください。それでも失敗する場合は `cargo build -p nala-hook` でビルドしてください。"
   },
   "failing": {
    "zh-Hans": "失败",

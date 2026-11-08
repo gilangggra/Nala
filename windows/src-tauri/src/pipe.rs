@@ -226,7 +226,13 @@ async fn handle(app: AppHandle, mut pipe: impl Relay) {
     crate::recap::observe(&app, &payload);
 
     // Antigravity's PreToolUse: its relay waits for one line (agy_approvals.rs).
-    if event == "PreToolUse" && payload.get("coucou_kind").and_then(Value::as_str) == Some(agy_approvals::KIND) {
+    if event == "PreToolUse"
+        && payload
+            .get("nala_kind")
+            .or_else(|| payload.get("coucou_kind"))
+            .and_then(Value::as_str)
+            == Some(agy_approvals::KIND)
+    {
         agy_pre_tool(app, pipe, payload).await;
         return;
     }

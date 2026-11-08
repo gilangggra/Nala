@@ -23,7 +23,8 @@ use tauri::{AppHandle, WebviewWindow};
 use super::{home_dir, LocalTime};
 
 /// File name of the Claude Code relay.
-pub const HOOK_EXE: &str = "coucou-hook";
+pub const HOOK_EXE: &str = "nala-hook";
+pub const LEGACY_HOOK_EXE: &str = "coucou-hook";
 
 /// Environment variable holding the home directory.
 pub const HOME_VAR: &str = "HOME";

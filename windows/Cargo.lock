@@ -803,52 +803,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "coucou"
-version = "0.5.9"
-dependencies = [
- "arboard",
- "cpal",
- "dbus",
- "futures-util",
- "gtk",
- "keyring",
- "libc",
- "lopdf",
- "mdns-sd",
- "miniz_oxide 0.8.9",
- "qrcode",
- "rcgen",
- "reqwest 0.12.28",
- "ring",
- "rustls",
- "serde",
- "serde_json",
- "sherpa-onnx",
- "tauri",
- "tauri-build",
- "tauri-plugin-autostart",
- "tauri-plugin-global-shortcut",
- "tauri-plugin-single-instance",
- "tokio",
- "tokio-rustls",
- "tokio-tungstenite",
- "webpki-roots 1.0.9",
- "webview2-com",
- "windows 0.61.3",
- "windows-core 0.62.2",
- "x11rb",
-]
-
-[[package]]
-name = "coucou-hook"
-version = "0.5.9"
-dependencies = [
- "libc",
- "serde_json",
- "windows 0.61.3",
-]
-
-[[package]]
 name = "cpal"
 version = "0.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2880,6 +2834,52 @@ name = "multiversion_no_op"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "743fb55ba31b18fb1ecef6bdc9aa2743314978ac084044301a7eee33fb99a20d"
+
+[[package]]
+name = "nala"
+version = "0.5.9"
+dependencies = [
+ "arboard",
+ "cpal",
+ "dbus",
+ "futures-util",
+ "gtk",
+ "keyring",
+ "libc",
+ "lopdf",
+ "mdns-sd",
+ "miniz_oxide 0.8.9",
+ "qrcode",
+ "rcgen",
+ "reqwest 0.12.28",
+ "ring",
+ "rustls",
+ "serde",
+ "serde_json",
+ "sherpa-onnx",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-autostart",
+ "tauri-plugin-global-shortcut",
+ "tauri-plugin-single-instance",
+ "tokio",
+ "tokio-rustls",
+ "tokio-tungstenite",
+ "webpki-roots 1.0.9",
+ "webview2-com",
+ "windows 0.61.3",
+ "windows-core 0.62.2",
+ "x11rb",
+]
+
+[[package]]
+name = "nala-hook"
+version = "0.5.9"
+dependencies = [
+ "libc",
+ "serde_json",
+ "windows 0.61.3",
+]
 
 [[package]]
 name = "ndk"
