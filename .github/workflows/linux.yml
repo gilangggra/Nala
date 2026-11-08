@@ -111,7 +111,7 @@ jobs:
           npm run pack
           echo "version=$(node -p "require('./src-tauri/tauri.conf.json').version")" >> "$GITHUB_OUTPUT"
           cd release
-          sha256sum Coucou-Linux-* > SHA256SUMS
+          sha256sum Nala-Linux-* > SHA256SUMS
           ls -la
           cat SHA256SUMS
 
@@ -125,9 +125,9 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.publish == 'true'
         with:
-          name: Coucou-Linux
+          name: Nala-Linux
           path: |
-            windows/release/Coucou-Linux-*
+            windows/release/Nala-Linux-*
             windows/release/SHA256SUMS
           retention-days: 3
 
@@ -146,7 +146,7 @@ jobs:
 
       - uses: actions/download-artifact@v8
         with:
-          name: Coucou-Linux
+          name: Nala-Linux
           path: release
 
       - name: Publish the release

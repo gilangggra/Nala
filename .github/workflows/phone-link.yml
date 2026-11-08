@@ -76,6 +76,7 @@ jobs:
       - name: Kotlin client against the Rust desktop
         working-directory: android
         env:
+          NALA_RUST_INTEROP: '1'
           COUCOU_RUST_INTEROP: '1'
         run: ./gradlew testDebugUnitTest --tests '*RustDesktopInteropTest' --console=plain
 
@@ -154,6 +155,7 @@ jobs:
         run: npm ci
       - name: Tests, debug build, lint
         env:
+          NALA_NODE_RELAY: '1'
           COUCOU_NODE_RELAY: '1'
         run: ./gradlew test assembleDebug lint --console=plain
       - name: No ads, billing or analytics (condition of the author's permission)
