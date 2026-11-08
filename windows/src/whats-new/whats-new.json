@@ -180,7 +180,7 @@
             "id": "Saat ditutup, Mochi atau jam tetap di atas. Arahkan penunjuk untuk memunculkan Nala.",
             "de": "Geschlossen zeigt sie oben Mochi oder die Uhrzeit. Zeiger darüber holt Nala zurück.",
             "tr": "Kapalıyken üstte Mochi ya da saat kalır. Nala'yu geri getirmek için üzerine gelin.",
-            "ko": "닫혀도 화면 위에 Mochi나 시간이 남아요. 포인터를 올리면 Coucou가 돌아와요.",
+            "ko": "닫혀도 화면 위에 Mochi나 시간이 남아요. 포인터를 올리면 Nala가 돌아와요.",
             "ja": "閉じても上部に Mochi か時刻が残ります。ポインタを乗せると Nala が戻ります。"
           }
         },
@@ -285,7 +285,7 @@
             "id": "Di Windows, video, musik, dan panggilan senyap saat Nala mendengar, lalu kembali.",
             "de": "Unter Windows verstummen Videos, Musik und Anrufe, während Nala zuhört.",
             "tr": "Windows'ta Nala dinlerken videolar, müzik ve aramalar susar, sonra geri gelir.",
-            "ko": "Windows에서 Coucou가 듣는 동안 영상·음악·통화가 조용해졌다가 돌아와요.",
+            "ko": "Windows에서 Nala가 듣는 동안 영상·음악·통화가 조용해졌다가 돌아와요.",
             "ja": "Windows では Nala が聞く間、動画・音楽・通話が静かになり、その後戻ります。"
           }
         }
@@ -580,7 +580,7 @@
             "id": "Nala kini berbicara 14 bahasa. Bahasa Korea berkat @lovyestar.",
             "de": "Nala spricht jetzt 14 Sprachen. Koreanisch dank @lovyestar.",
             "tr": "Nala artık 14 dil konuşuyor. Korece @lovyestar sayesinde.",
-            "ko": "Coucou가 이제 14개 언어를 지원합니다. 한국어는 @lovyestar 덕분이에요.",
+            "ko": "Nala가 이제 14개 언어를 지원합니다. 한국어는 @lovyestar 덕분이에요.",
             "ja": "Nala は 14 言語に対応しました。韓国語は @lovyestar のおかげです。"
           }
         }
@@ -766,7 +766,7 @@
             "id": "Nala memasang gateway, memeriksanya, dan menampilkan kode QR.",
             "de": "Nala installiert das Gateway, prüft es und zeigt den QR-Code.",
             "tr": "Nala ağ geçidini kurar, doğrular ve taranacak QR kodunu gösterir.",
-            "ko": "Coucou가 게이트웨이를 설치하고 확인한 다음, 스캔할 QR 코드까지 보여 줘요.",
+            "ko": "Nala가 게이트웨이를 설치하고 확인한 다음, 스캔할 QR 코드까지 보여 줘요.",
             "ja": "Nala がゲートウェイをインストールして確認し、読み取る QR コードを表示します。"
           }
         },
@@ -801,7 +801,7 @@
             "id": "Pesan hanya di memori dan hilang saat Nala ditutup.",
             "de": "Nachrichten bleiben im Speicher und sind weg, wenn Nala beendet wird.",
             "tr": "Mesajlar bellekte kalır, Nala kapanınca silinir.",
-            "ko": "메시지는 메모리에만 남고, Coucou를 끄면 사라져요.",
+            "ko": "메시지는 메모리에만 남고, Nala를 끄면 사라져요.",
             "ja": "メッセージはメモリ上にだけあり、Nala を終了すると消えます。"
           }
         }
@@ -876,7 +876,7 @@
             "id": "Setelah tiap pembaruan: isinya, lalu Nala-mu sejauh ini.",
             "de": "Nach jedem Update: was es bringt, dann dein Nala bisher.",
             "tr": "Her güncellemeden sonra: getirdikleri, ardından şimdiye kadar Nala’n.",
-            "ko": "업데이트할 때마다 새로 뭐가 생겼는지 보여 주고, 지금까지의 Coucou도 알려 줘요.",
+            "ko": "업데이트할 때마다 새로 뭐가 생겼는지 보여 주고, 지금까지의 Nala도 알려 줘요.",
             "ja": "アップデートのたびに、新しい内容とこれまでのあなたの Nala を表示します。"
           }
         },
