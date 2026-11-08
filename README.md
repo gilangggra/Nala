@@ -31,7 +31,7 @@ Approve permissions, watch your agents work, drop a file, chat with Claude — a
 ## Why
 
 Some studios showed off gorgeous notch companions… and never let anyone use them.
-**Nala is the open version.** Every line of code is open source under the MIT License: read it, fork it, learn from it. The Nala name, Mochi and the sounds stay © Louis Raillé (see [License](#license)).
+**Nala is the open version.** Every line of code is open source under the MIT License: read it, fork it, learn from it. The Nala name, character and the sounds stay © Gilang Ramadan (see [License](#license)).
 
 Meet **Mochi**: a soft little squircle with big eyes that pops out of your notch, waves hello, follows your cursor with its eyes, gets annoyed when you poke it (and dizzy if you insist), and tells you the moment Claude Code needs you.
 
@@ -89,7 +89,7 @@ Flow dictation and the Notetaker are on the Mac for now; Windows and Linux are n
 - 🫥 **Invisible when idle** — hides away when nothing is running, peeks out when you hover the notch (the top edge of the screen on Windows and Linux).
 - 🖥️ **Any Mac, notch or not** — on an iMac, a Mac mini, or a MacBook with its lid closed on an external display, Mochi sits in a small bar at the top of the screen. With several displays, pick his screen in Settings → General, or let him follow your mouse *(macOS)*.
 - 📱 **Nala on iPhone** — your sessions, approvals and services in your pocket, with Live Activities, widgets and Siri. See [Nala on iPhone](#coucou-on-iphone).
-- 🤖 **Nala for Android** — your agents, approvals with your fingerprint, questions, chat and home-screen widgets on an Android phone, linked to Nala on Windows or Linux over your Wi-Fi. By [@Rhytam23](https://github.com/Rhytam23). See [Nala for Android](#coucou-for-android).
+- 🤖 **Nala for Android** — your agents, approvals with your fingerprint, questions, chat and home-screen widgets on an Android phone, linked to Nala on Windows or Linux over your Wi-Fi. See [Nala for Android](#coucou-for-android).
 - 📅 **Weekly recap** *(macOS)* — every Monday morning Nala shows a summary of the past week: time coding, sessions, files, lines changed, commands, permissions, top agent and project, busiest day and longest session. Share it as a 1080 × 1920 image with Mochi — project names optional. All local, no sync.
 - 🌍 **16 languages** — English, 简体中文, 繁體中文, हिन्दी, Español, العربية, Français, বাংলা, Português, Русский, Bahasa Indonesia, Deutsch, Türkçe, ไทย, 한국어, 日本語. Pick one in Settings → General → Language; Traditional Chinese and Thai are on the Mac only for now. Community translations welcome.
 - 🔒 **Private by design** — no telemetry, no account. Keys live in your macOS Keychain, Windows Credential Manager or Linux Secret Service (GNOME Keyring, KWallet). The app only talks to the services you plug in (and, once you agree, to GitHub's releases API to tell you about new versions).
@@ -123,7 +123,7 @@ The Mac app does the work; the iPhone app keeps you in the loop when you step aw
 
 ## Nala for Android
 
-**Nala for Android** brings Mochi to Android phones. It was built by [Rhytam Biswas (@Rhytam23)](https://github.com/Rhytam23) and lives in [`android/`](android/).
+**Nala for Android** brings Mochi to Android phones. It lives in [`android/`](android/).
 
 - 🔐 **Approve from your phone** — a permission request rises over any screen, even on a locked phone; **Allow** needs your fingerprint or screen lock, **Deny** doesn't. A command too long to show in full can only be allowed on the computer.
 - 🧑‍💻 **Your agents at a glance** — the agent that needs you, the others below, plan usage and your services when the computer shares them.
@@ -191,12 +191,12 @@ Windows and Linux are released together, under the `windows-v*` and `linux-v*` t
 | 0.5.2 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.2) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.2) | Oct 22, 2026 | Mochi turns blue when a new version waits, What's new after each update; GitLab and Gitea pills; the weekly recap on Android |
 | 0.5.1 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.1) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.1) | Oct 20, 2026 | New version in the island, one click to install it on Windows; German and Turkish; an optional clock; Linux idle CPU fixed |
 | 0.5.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.0) | Oct 15, 2026 | Catches up with the Mac: the Nala window, Flow dictation with Parakeet offline (X11 and Wayland), the Notetaker, « OK Nala » |
-| 0.4.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.4.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.4.0) | Oct 11, 2026 | Your Android phone: the link for Nala for Android, by @Rhytam23 — approvals with your fingerprint, answers, chat, off by default |
+| 0.4.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.4.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.4.0) | Oct 11, 2026 | Your Android phone: the link for Nala for Android — approvals with your fingerprint, answers, chat, off by default |
 | 0.3.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.3.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.3.0) | Oct 9, 2026 | Linux catches up: Spotify with Mochi dancing, global shortcuts on Wayland, Open terminal brings the terminal back; open on hover, your own sounds, a colour per Mochi |
 | 0.2.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.2.0) | Oct 8, 2026 | Catches up with the Mac: nine agents with approvals, chat with any AI, plan usage, GitHub, wardrobe, 10 languages |
 | 0.1.1 · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.1.1) | Oct 1, 2026 | First Linux build (beta) |
 
-Nala for Android, by [@Rhytam23](https://github.com/Rhytam23), is released under the `android-v*` tags.
+Nala for Android is released under the `android-v*` tags.
 
 | Android | Date | Highlights |
 |---------|------|------------|
@@ -547,22 +547,17 @@ Issues and PRs are very welcome — new integrations, new emotes, new sounds, bu
 
 Want to add or improve a translation? Open a PR with changes to `NotchBuddy/Resources/Localizable.xcstrings`.
 
-## Credits
+## Author
 
-Built by [Louis Raillé](https://louisraille.fr) with Claude Code.
-Nala for Android and the phone link by [Rhytam Biswas (@Rhytam23)](https://github.com/Rhytam23).
-Thanks to everyone who sent a pull request — see [contributors](https://github.com/Louis-CFM/coucou/graphs/contributors).
-Inspired by the notch-companion concepts shared by design studios — this project is independent and not affiliated with any of them.
+Built and maintained by [Gilang Ramadan](https://github.com/gilangggra).
 
 ## License
 
-- **Code:** [MIT](LICENSE) — use it, fork it, learn from it, just keep the copyright notice. The Android app and the phone link are © Rhytam Biswas, also under MIT ([android/LICENSE](android/LICENSE)).
-- **Name, Mochi character, icon, sounds and media:** © Louis Raillé, all rights reserved — see [LICENSE-ASSETS.md](LICENSE-ASSETS.md). Shipping your own fork? Give it your own name and character.
+- **Code:** [MIT](LICENSE) — Copyright (c) 2026 Gilang Ramadan.
+- **Name, character, icon, sounds and media:** © Gilang Ramadan, all rights reserved — see [LICENSE-ASSETS.md](LICENSE-ASSETS.md).
 
 <div align="center">
 
-**If Mochi made you smile, a ⭐ helps a lot.**
-
-[Website](https://louis-cfm.github.io/coucou/) · [Privacy](https://louis-cfm.github.io/coucou/privacy.html) · [Terms](https://louis-cfm.github.io/coucou/terms.html) · [Support](https://louis-cfm.github.io/coucou/support.html)
+**If Nala made you smile, a ⭐ helps a lot.**
 
 </div>

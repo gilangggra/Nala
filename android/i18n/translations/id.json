@@ -1,11 +1,11 @@
 {
   "strings": {
     "app_name": "Nala untuk Android",
-    "about_credit": "Nala untuk Android, oleh Rhytam Biswas. Bagian dari Nala oleh Louis Raillé.",
+    "about_credit": "Nala untuk Android, oleh Gilang Ramadan.",
     "about_repo": "github.com/gilangggra/Nala",
     "licences_title": "Lisensi",
-    "licences_intro": "Kode Nala berlisensi MIT. Nama, karakter, ikon, dan suaranya milik Louis Raillé dan tidak termasuk dalam lisensi itu. Pustaka dicantumkan beserta lisensinya.",
-    "about_assets": "Nama Nala, karakter Mochi, ikon, dan suaranya © Louis Raillé dan digunakan dengan izin. Kode Android © Rhytam Biswas, dirilis di bawah Lisensi MIT.",
+    "licences_intro": "Kode dan aset Nala berlisensi MIT oleh Gilang Ramadan. Pustaka dicantumkan beserta lisensinya.",
+    "about_assets": "Nama Nala, karakter, ikon, dan suaranya © Gilang Ramadan. Dirilis di bawah Lisensi MIT.",
     "action_allow": "Izinkan",
     "action_deny": "Tolak",
     "action_close": "Tutup",
@@ -85,7 +85,7 @@
     "pair_paste_short": "Tempel tautan",
     "pairing_headline": "Hubungkan ke komputermu",
     "pairing_help": "Di komputer, buka Nala, lalu Pengaturan, Ponsel Android, dan pindai kode yang ditampilkan.",
-    "pairing_credit": "Nala untuk Android, oleh Rhytam Biswas.",
+    "pairing_credit": "Nala untuk Android, oleh Gilang Ramadan.",
     "pairing_about": "Tentang",
     "paste_title": "Tempel tautan pemasangan",
     "paste_hint": "Salin dari Nala di komputermu (Pengaturan, Ponsel Android).",

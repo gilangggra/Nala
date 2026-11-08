@@ -49,7 +49,7 @@
       "icons/icon.ico"
     ],
     "resources": { "../target/release/nala-hook.exe": "nala-hook.exe" },
-    "copyright": "© Louis Raille",
+    "copyright": "© Gilang Ramadan",
     "category": "DeveloperTool",
     "shortDescription": "Mochi lives at the top of your screen",
     "longDescription": "Nala puts Mochi at the top of your screen: it shows your Claude Code sessions and a few integrations, and lets you approve, answer, chat and drop files without leaving what you are doing.",

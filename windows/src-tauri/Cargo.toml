@@ -1,7 +1,7 @@
 [package]
 name = "nala"
 description = "Nala for Windows and Linux — Mochi lives at the top of your screen"
-authors = ["Louis Raille"]
+authors = ["Gilang Ramadan"]
 version.workspace = true
 edition.workspace = true
 license.workspace = true

@@ -415,7 +415,7 @@ at most if you leave the card unanswered, never over a permission or a question)
 looks once even with the switch off.
 
 Once allowed, Nala asks GitHub at launch and every 6 hours:
-`GET https://api.github.com/repos/Louis-CFM/coucou/releases?per_page=30`,
+`GET https://api.github.com/repos/gilangggra/Nala/releases?per_page=30`,
 unauthenticated, no cookies, nothing about you. It keeps the published
 `windows-vX.Y.Z` releases (`linux-vX.Y.Z` on Linux — never the rolling
 `windows-latest` / `linux-latest`, drafts or prereleases) and takes the highest.
@@ -747,7 +747,7 @@ npm run pack           # AppImage, .deb and .rpm in windows/release/
 On Arch Linux, build and install the package from `linux/arch/`:
 
 ```bash
-git clone https://github.com/Louis-CFM/coucou.git
+git clone https://github.com/gilangggra/Nala.git
 cd coucou/linux/arch
 makepkg -si
 ```
