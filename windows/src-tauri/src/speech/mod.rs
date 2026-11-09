@@ -1,8 +1,8 @@
-// Speech to text on this computer: NVIDIA's Parakeet (25 languages) through
-// sherpa-onnx, and the small models that tell the voices of a call apart. The
-// Mac runs the same Parakeet through FluidAudio (ParakeetEngine.swift).
+// Speech to text on this computer: OpenAI's Whisper (multilingual with Indonesian)
+// or NVIDIA's Parakeet (25 languages) through sherpa-onnx, and the small models
+// that tell the voices of a call apart. The Mac runs Parakeet through FluidAudio.
 //
-// Nothing is downloaded until the user clicks Download in Coucou → Settings.
+// Nothing is downloaded until the user clicks Download in Nala → Settings.
 // The files come from Hugging Face at a pinned revision, are checked against
 // their SHA-256 and kept in %LOCALAPPDATA%\Coucou\Models (Windows) or
 // ~/.local/share/coucou/Models (Linux). From then on everything runs offline.
@@ -17,7 +17,7 @@ use std::time::{Duration, Instant};
 use serde::Serialize;
 use sherpa_onnx::{
     OfflineRecognizer, OfflineRecognizerConfig, OfflineSpeakerDiarization, OfflineSpeakerDiarizationConfig,
-    OfflineTransducerModelConfig,
+    OfflineTransducerModelConfig, OfflineWhisperModelConfig,
 };
 use tauri::{AppHandle, Emitter};
 
@@ -57,6 +57,32 @@ impl ModelSet {
         self.files.iter().all(|f| std::fs::metadata(self.dir().join(f.name)).map(|m| m.len() == f.size).unwrap_or(false))
     }
 }
+
+/// OpenAI Whisper Base int8: multilingual speech recognition supporting Indonesian
+/// and 99+ languages with high accuracy and automatic punctuation (about 160 MB).
+pub static WHISPER: ModelSet = ModelSet {
+    id: "whisper-base-int8",
+    files: &[
+        ModelFile {
+            name: "base-encoder.int8.onnx",
+            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/base-encoder.int8.onnx",
+            size: 29_120_534,
+            sha256: "0b8fb1304b6109976038efff5ace81720e00386f3ff6b54ee8c75291ca0a1e11",
+        },
+        ModelFile {
+            name: "base-decoder.int8.onnx",
+            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/base-decoder.int8.onnx",
+            size: 130_672_026,
+            sha256: "9759d217388a01b3a4c7c15533201067b48ae819c4daafc8624e64b9409dc02d",
+        },
+        ModelFile {
+            name: "base-tokens.txt",
+            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/base-tokens.txt",
+            size: 816_730,
+            sha256: "b34b360dbb493e781e479794586d661700670d65564001f23024971d1f2fa126",
+        },
+    ],
+};
 
 /// Parakeet TDT 0.6B v3, int8: the dictation and the calls' words (about 670 MB).
 pub static PARAKEET: ModelSet = ModelSet {
@@ -129,7 +155,10 @@ pub enum ModelState {
 #[serde(rename_all = "camelCase")]
 pub struct ModelsStatus {
     pub parakeet: ModelState,
-    /// Size of the whole download in MB, both sets.
+    pub whisper: ModelState,
+    pub active_engine: String,
+    pub language: String,
+    /// Size of the active download in MB.
     pub download_mb: u64,
 }
 
@@ -137,30 +166,76 @@ struct Downloads {
     running: bool,
     fraction: f64,
     error: Option<String>,
+    target: String,
 }
 
 fn downloads() -> &'static Mutex<Downloads> {
     static D: OnceLock<Mutex<Downloads>> = OnceLock::new();
-    D.get_or_init(|| Mutex::new(Downloads { running: false, fraction: 0.0, error: None }))
+    D.get_or_init(|| Mutex::new(Downloads {
+        running: false,
+        fraction: 0.0,
+        error: None,
+        target: "whisper".into(),
+    }))
 }
 
-/// Both sets count as one download: dictation and the Notetaker are ready together.
+/// Computes the state of models for settings and status events.
 pub fn status() -> ModelsStatus {
     let d = downloads().lock().unwrap();
-    let parakeet = if d.running {
+
+    let parakeet = if d.running && d.target == "parakeet" {
         ModelState::Downloading { fraction: d.fraction }
     } else if PARAKEET.is_present() && DIARIZER.is_present() {
         ModelState::Ready
-    } else if let Some(error) = &d.error {
-        ModelState::Failed { error: error.clone() }
+    } else if d.target == "parakeet" {
+        if let Some(error) = &d.error {
+            ModelState::Failed { error: error.clone() }
+        } else {
+            ModelState::Missing
+        }
     } else {
         ModelState::Missing
     };
-    ModelsStatus { parakeet, download_mb: (PARAKEET.total_size() + DIARIZER.total_size()) / 1_000_000 }
+
+    let whisper = if d.running && d.target == "whisper" {
+        ModelState::Downloading { fraction: d.fraction }
+    } else if WHISPER.is_present() && DIARIZER.is_present() {
+        ModelState::Ready
+    } else if d.target == "whisper" {
+        if let Some(error) = &d.error {
+            ModelState::Failed { error: error.clone() }
+        } else {
+            ModelState::Missing
+        }
+    } else {
+        ModelState::Missing
+    };
+
+    let active_engine = if WHISPER.is_present() {
+        "whisper".to_string()
+    } else if PARAKEET.is_present() {
+        "parakeet".to_string()
+    } else {
+        "whisper".to_string()
+    };
+
+    let download_mb = if active_engine == "whisper" {
+        (WHISPER.total_size() + DIARIZER.total_size()) / 1_000_000
+    } else {
+        (PARAKEET.total_size() + DIARIZER.total_size()) / 1_000_000
+    };
+
+    ModelsStatus {
+        parakeet,
+        whisper,
+        active_engine,
+        language: "id".into(),
+        download_mb,
+    }
 }
 
 pub fn is_ready() -> bool {
-    PARAKEET.is_present()
+    WHISPER.is_present() || PARAKEET.is_present()
 }
 
 fn emit_status(app: &AppHandle) {
@@ -168,8 +243,15 @@ fn emit_status(app: &AppHandle) {
     crate::voice::sync(app);
 }
 
-/// Downloads what is missing, with the progress in `speech-models` events.
+/// Downloads what is missing for the default/whisper engine, with progress in `speech-models` events.
+#[allow(dead_code)]
 pub fn download(app: AppHandle) {
+    download_engine(app, "whisper");
+}
+
+/// Downloads what is missing for the given engine ("whisper" or "parakeet").
+pub fn download_engine(app: AppHandle, engine: &str) {
+    let target = if engine == "parakeet" { "parakeet" } else { "whisper" }.to_string();
     {
         let mut d = downloads().lock().unwrap();
         if d.running {
@@ -178,10 +260,11 @@ pub fn download(app: AppHandle) {
         d.running = true;
         d.fraction = 0.0;
         d.error = None;
+        d.target = target.clone();
     }
     emit_status(&app);
     tauri::async_runtime::spawn(async move {
-        let result = download_all(&app).await;
+        let result = download_all(&app, &target).await;
         {
             let mut d = downloads().lock().unwrap();
             d.running = false;
@@ -191,26 +274,31 @@ pub fn download(app: AppHandle) {
         }
         match result {
             Ok(()) => {
-                crate::log::line("speech models downloaded");
+                crate::log::line(format!("{target} speech models downloaded"));
                 preload();
             }
-            Err(err) => crate::log::line(format!("speech models download failed: {err}")),
+            Err(err) => crate::log::line(format!("{target} speech models download failed: {err}")),
         }
         emit_status(&app);
     });
 }
 
-async fn download_all(app: &AppHandle) -> Result<(), String> {
-    let total = PARAKEET.total_size() + DIARIZER.total_size();
+async fn download_all(app: &AppHandle, target_engine: &str) -> Result<(), String> {
+    let sets: &[&ModelSet] = if target_engine == "parakeet" {
+        &[&PARAKEET, &DIARIZER]
+    } else {
+        &[&WHISPER, &DIARIZER]
+    };
+    let total: u64 = sets.iter().map(|s| s.total_size()).sum();
     let mut done: u64 = 0;
     let client = reqwest::Client::builder()
         .connect_timeout(Duration::from_secs(20))
         .read_timeout(Duration::from_secs(60))
-        .user_agent(concat!("Coucou/", env!("CARGO_PKG_VERSION")))
+        .user_agent(concat!("Nala/", env!("CARGO_PKG_VERSION")))
         .build()
         .map_err(|e| e.to_string())?;
     let mut last_emit = Instant::now();
-    for set in [&PARAKEET, &DIARIZER] {
+    for set in sets {
         let dir = set.dir();
         std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
         for file in set.files {
@@ -259,6 +347,7 @@ async fn download_all(app: &AppHandle) -> Result<(), String> {
 pub fn remove(app: &AppHandle) {
     unload();
     let _ = std::fs::remove_dir_all(PARAKEET.dir());
+    let _ = std::fs::remove_dir_all(WHISPER.dir());
     let _ = std::fs::remove_dir_all(DIARIZER.dir());
     downloads().lock().unwrap().error = None;
     emit_status(app);
@@ -266,12 +355,18 @@ pub fn remove(app: &AppHandle) {
 
 // ── Recognition ───────────────────────────────────────────────────────────────
 
-fn recognizer_slot() -> &'static Mutex<Option<Arc<OfflineRecognizer>>> {
-    static R: OnceLock<Mutex<Option<Arc<OfflineRecognizer>>>> = OnceLock::new();
+struct ActiveRecognizer {
+    engine: String,
+    language: String,
+    recognizer: Arc<OfflineRecognizer>,
+}
+
+fn recognizer_slot() -> &'static Mutex<Option<ActiveRecognizer>> {
+    static R: OnceLock<Mutex<Option<ActiveRecognizer>>> = OnceLock::new();
     R.get_or_init(|| Mutex::new(None))
 }
 
-/// Serialises loading: two callers never load the 650 MB model twice.
+/// Serialises loading: two callers never load the model twice.
 fn load_lock() -> &'static Mutex<()> {
     static L: OnceLock<Mutex<()>> = OnceLock::new();
     L.get_or_init(|| Mutex::new(()))
@@ -283,38 +378,109 @@ fn threads() -> i32 {
 
 /// The loaded recognizer, loading it on first use (about 2 s).
 pub fn recognizer() -> Option<Arc<OfflineRecognizer>> {
-    if let Some(r) = recognizer_slot().lock().unwrap().clone() {
-        return Some(r);
-    }
-    if !PARAKEET.is_present() {
-        return None;
-    }
-    let _guard = load_lock().lock().unwrap();
-    if let Some(r) = recognizer_slot().lock().unwrap().clone() {
-        return Some(r);
-    }
-    let mut config = OfflineRecognizerConfig::default();
-    config.model_config.transducer = OfflineTransducerModelConfig {
-        encoder: Some(PARAKEET.path("encoder.int8.onnx")),
-        decoder: Some(PARAKEET.path("decoder.int8.onnx")),
-        joiner: Some(PARAKEET.path("joiner.int8.onnx")),
+    recognizer_with(None, None)
+}
+
+/// The loaded recognizer for a given engine and language.
+pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<Arc<OfflineRecognizer>> {
+    let eng = match engine {
+        Some("parakeet") => "parakeet",
+        Some("whisper") => "whisper",
+        _ => {
+            if WHISPER.is_present() {
+                "whisper"
+            } else if PARAKEET.is_present() {
+                "parakeet"
+            } else {
+                "whisper"
+            }
+        }
     };
-    config.model_config.tokens = Some(PARAKEET.path("tokens.txt"));
-    config.model_config.model_type = Some("nemo_transducer".into());
-    config.model_config.num_threads = threads();
-    let started = Instant::now();
-    let r = OfflineRecognizer::create(&config).map(Arc::new);
-    match &r {
-        Some(_) => crate::log::line(format!("Parakeet loaded in {:?}", started.elapsed())),
-        None => crate::log::line("Parakeet could not be loaded"),
+    let lang = language.unwrap_or("id");
+
+    {
+        let slot = recognizer_slot().lock().unwrap();
+        if let Some(active) = slot.as_ref() {
+            if active.engine == eng && active.language == lang {
+                return Some(active.recognizer.clone());
+            }
+        }
     }
-    *recognizer_slot().lock().unwrap() = r.clone();
+
+    let _guard = load_lock().lock().unwrap();
+    {
+        let slot = recognizer_slot().lock().unwrap();
+        if let Some(active) = slot.as_ref() {
+            if active.engine == eng && active.language == lang {
+                return Some(active.recognizer.clone());
+            }
+        }
+    }
+
+    let r = if eng == "whisper" {
+        if !WHISPER.is_present() {
+            return None;
+        }
+        let mut config = OfflineRecognizerConfig::default();
+        let whisper_lang = if lang == "auto" {
+            None
+        } else {
+            Some(lang.to_string())
+        };
+        config.model_config.whisper = OfflineWhisperModelConfig {
+            encoder: Some(WHISPER.path("base-encoder.int8.onnx")),
+            decoder: Some(WHISPER.path("base-decoder.int8.onnx")),
+            language: whisper_lang,
+            task: Some("transcribe".into()),
+            tail_paddings: 0,
+            enable_segment_timestamps: true,
+            enable_token_timestamps: true,
+        };
+        config.model_config.tokens = Some(WHISPER.path("base-tokens.txt"));
+        config.model_config.model_type = Some("whisper".into());
+        config.model_config.num_threads = threads();
+        let started = Instant::now();
+        let rec = OfflineRecognizer::create(&config).map(Arc::new);
+        match &rec {
+            Some(_) => crate::log::line(format!("Whisper ({lang}) loaded in {:?}", started.elapsed())),
+            None => crate::log::line("Whisper could not be loaded"),
+        }
+        rec
+    } else {
+        if !PARAKEET.is_present() {
+            return None;
+        }
+        let mut config = OfflineRecognizerConfig::default();
+        config.model_config.transducer = OfflineTransducerModelConfig {
+            encoder: Some(PARAKEET.path("encoder.int8.onnx")),
+            decoder: Some(PARAKEET.path("decoder.int8.onnx")),
+            joiner: Some(PARAKEET.path("joiner.int8.onnx")),
+        };
+        config.model_config.tokens = Some(PARAKEET.path("tokens.txt"));
+        config.model_config.model_type = Some("nemo_transducer".into());
+        config.model_config.num_threads = threads();
+        let started = Instant::now();
+        let rec = OfflineRecognizer::create(&config).map(Arc::new);
+        match &rec {
+            Some(_) => crate::log::line(format!("Parakeet loaded in {:?}", started.elapsed())),
+            None => crate::log::line("Parakeet could not be loaded"),
+        }
+        rec
+    };
+
+    if let Some(loaded) = &r {
+        *recognizer_slot().lock().unwrap() = Some(ActiveRecognizer {
+            engine: eng.to_string(),
+            language: lang.to_string(),
+            recognizer: loaded.clone(),
+        });
+    }
     r
 }
 
 /// Loads the model in the background, so the first dictation is not slowed down.
 pub fn preload() {
-    if !PARAKEET.is_present() || recognizer_slot().lock().unwrap().is_some() {
+    if !is_ready() || recognizer_slot().lock().unwrap().is_some() {
         return;
     }
     std::thread::spawn(|| {
@@ -341,11 +507,8 @@ const MAX_CHUNK_SECONDS: f64 = 28.0;
 /// Silence given to the model before and after each stretch, in samples.
 ///
 /// A dictation starts the moment the key goes down: the microphone opens with
-/// a little click and the first word is already under way. Parakeet, which
-/// guesses the language by itself, then often starts in English and keeps
-/// going ("Okay, that marche plutôt bien. Moi, le truc is that…"). Half a
-/// second of silence first, as a call always has, and it hears the language
-/// that is spoken (tests: `a_sudden_start_keeps_its_language`).
+/// a little click and the first word is already under way. Half a second of
+/// silence first helps model hearing the correct start of speech.
 const LEAD_SILENCE: usize = SAMPLE_RATE as usize / 2;
 const TAIL_SILENCE: usize = SAMPLE_RATE as usize * 3 / 10;
 
@@ -358,9 +521,14 @@ pub fn padded(chunk: &[f32]) -> Vec<f32> {
     out
 }
 
-/// Transcribes 16 kHz mono audio.
+/// Transcribes 16 kHz mono audio using the default or active model.
 pub fn transcribe(samples: &[f32]) -> Option<Transcript> {
-    let rec = recognizer()?;
+    transcribe_with(samples, None, None)
+}
+
+/// Transcribes 16 kHz mono audio with a specified engine and language.
+pub fn transcribe_with(samples: &[f32], engine: Option<&str>, language: Option<&str>) -> Option<Transcript> {
+    let rec = recognizer_with(engine, language)?;
     let mut out = Transcript::default();
     for (offset, chunk) in audio::split_for_model(samples, SAMPLE_RATE, MAX_CHUNK_SECONDS) {
         if chunk.len() < (SAMPLE_RATE as usize) / 4 {
@@ -381,6 +549,21 @@ pub fn transcribe(samples: &[f32]) -> Option<Transcript> {
             w.end = w.end.max(w.start);
         }
         let text = result.text.trim();
+        // If words is empty (e.g. models without token timestamps), approximate from text
+        if words.is_empty() && !text.is_empty() {
+            let split_words: Vec<&str> = text.split_whitespace().collect();
+            let duration = chunk.len() as f64 / SAMPLE_RATE as f64;
+            let word_dur = duration / split_words.len().max(1) as f64;
+            for (idx, w) in split_words.into_iter().enumerate() {
+                let w_start = from + idx as f64 * word_dur;
+                let w_end = w_start + word_dur;
+                words.push(TimedWord {
+                    text: w.to_string(),
+                    start: w_start,
+                    end: w_end,
+                });
+            }
+        }
         if !text.is_empty() {
             if !out.text.is_empty() {
                 out.text.push(' ');
@@ -392,15 +575,15 @@ pub fn transcribe(samples: &[f32]) -> Option<Transcript> {
     Some(out)
 }
 
-/// Parakeet's tokens (" Ne", " vous", " dem", "ande", "z") → words with times.
-/// A token starting with a space starts a word; a word ends where the next
+/// Tokens (" Ne", " vous", " dem", "ande", "z", "Ġhalo") → words with times.
+/// A token starting with a space, '▁' or 'Ġ' starts a word; a word ends where the next
 /// token begins (or a moment after its last token, for the last word).
 pub fn words_from_tokens(tokens: &[String], timestamps: &[f32], offset: f64, length: f64) -> Vec<TimedWord> {
     let mut out: Vec<TimedWord> = Vec::new();
     for (i, token) in tokens.iter().enumerate() {
         let at = offset + timestamps.get(i).copied().unwrap_or(0.0) as f64;
-        let starts_word = token.starts_with(' ') || token.starts_with('▁') || out.is_empty();
-        let piece = token.trim_start_matches([' ', '▁']);
+        let starts_word = token.starts_with(' ') || token.starts_with('▁') || token.starts_with('Ġ') || out.is_empty();
+        let piece = token.trim_start_matches([' ', '▁', 'Ġ']);
         if starts_word {
             if let Some(last) = out.last_mut() {
                 last.end = last.end.max(at);
@@ -474,8 +657,9 @@ mod tests {
     #[test]
     fn the_downloads_add_up() {
         assert_eq!(PARAKEET.total_size(), 652_184_281 + 11_845_275 + 6_355_277 + 93_939);
+        assert_eq!(WHISPER.total_size(), 29_120_534 + 130_672_026 + 816_730);
         assert!(DIARIZER.total_size() < 40_000_000);
-        for set in [&PARAKEET, &DIARIZER] {
+        for set in [&PARAKEET, &WHISPER, &DIARIZER] {
             for f in set.files {
                 assert_eq!(f.sha256.len(), 64, "{}", f.name);
                 assert!(f.url.starts_with("https://huggingface.co/"), "{}", f.name);

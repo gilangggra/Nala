@@ -59,7 +59,7 @@ fn system(style: Style, app: Option<&str>, words: &[String]) -> String {
     };
     let mut lines = vec![
         "You turn raw speech-to-text into the text the speaker meant to type.".to_string(),
-        "Remove filler words (euh, hum, uh, um, like, tu vois…), stutters and repeated words.".into(),
+        "Remove filler words (euh, hum, uh, um, like, tu vois, anu, nganu, eh, hmm, kayak, gitu…), stutters and repeated words.".into(),
         "When the speaker corrects themselves (\"at 3, no, at 4\"), keep only the correction.".into(),
         "Fix punctuation, capitals and obvious recognition mistakes. Format spoken lists as lists.".into(),
         tone.into(),

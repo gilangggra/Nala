@@ -56,6 +56,10 @@ export interface FlowPrefs {
   muteOthers: boolean;
   /** One short press of the key starts hands-free dictation, instead of two. */
   oneTapHandsFree: boolean;
+  /** Speech recognition engine: "whisper" or "parakeet". */
+  engine?: "whisper" | "parakeet";
+  /** Speech recognition language: "id", "en", "auto", etc. */
+  language?: string;
 }
 
 export type ModelState =
@@ -66,6 +70,9 @@ export type ModelState =
 
 export interface ModelsStatus {
   parakeet: ModelState;
+  whisper?: ModelState;
+  activeEngine?: "whisper" | "parakeet";
+  language?: string;
   downloadMb: number;
 }
 
@@ -218,7 +225,7 @@ export const FlowBridge = {
   runningApps: () => call<{ id: string; name: string }[]>("flow_running_apps"),
   copy: (text: string) => call<boolean>("flow_copy", { text }),
   pasteAgain: () => call<void>("flow_paste_again"),
-  download: () => call<void>("flow_models_download"),
+  download: (engine?: string) => call<void>("flow_models_download", { engine }),
   removeModels: () => call<void>("flow_models_remove"),
 
   notes: () => call<NotesState>("notes_state"),

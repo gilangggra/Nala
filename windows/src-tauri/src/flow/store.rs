@@ -116,6 +116,10 @@ pub struct Prefs {
     pub voice_gender: String,
     /// One short press of the key starts hands-free dictation, instead of two.
     pub one_tap_hands_free: bool,
+    /// Speech recognition engine: "whisper" or "parakeet".
+    pub engine: String,
+    /// Speech recognition language: "id" (Indonesian), "en" (English), "auto" (detect), etc.
+    pub language: String,
 }
 
 impl Default for Prefs {
@@ -136,6 +140,8 @@ impl Default for Prefs {
             voice_output: "system".into(),
             voice_gender: "female".into(),
             one_tap_hands_free: false,
+            engine: "whisper".into(),
+            language: "id".into(),
         }
     }
 }

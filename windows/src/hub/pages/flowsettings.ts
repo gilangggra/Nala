@@ -15,17 +15,26 @@ import { anchor, button, card, divider, keyKeycap, keycap, keyLabel, label, numb
 export function modelsControl(ctx: HubContext, onReady?: () => void): HTMLElement {
   const el = h("div", { style: "display:flex;align-items:center;gap:8px" });
   let confirming = false;
+  const getActiveState = (models: ModelsStatus): import("../../core/flow").ModelState => {
+    const engine = ctx.status.prefs.engine || models.activeEngine || "whisper";
+    if (engine === "parakeet") {
+      return models.parakeet;
+    }
+    return models.whisper ?? models.parakeet;
+  };
+
   const draw = (models: ModelsStatus) => {
     clear(el);
-    const m = models.parakeet;
+    const m = getActiveState(models);
+    const engine = ctx.status.prefs.engine || models.activeEngine || "whisper";
     if (m.state === "missing") {
-      el.append(button(t("Download"), () => void FlowBridge.download(), "primary"));
+      el.append(button(t("Download"), () => void FlowBridge.download(engine), "primary"));
     } else if (m.state === "downloading") {
       const bar = h("div", { class: "hub-progress" }, h("i", { style: `width:${Math.round(m.fraction * 100)}%` }));
       el.append(bar, h("span", { class: "hub-note", text: `${Math.round(m.fraction * 100)} %` }));
     } else if (m.state === "failed") {
       el.append(h("span", { class: "hub-note", text: m.error, title: m.error, style: "max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" }));
-      el.append(button(t("Retry"), () => void FlowBridge.download()));
+      el.append(button(t("Retry"), () => void FlowBridge.download(engine)));
     } else if (confirming) {
       el.append(
         button(t("Remove the models"), () => {
@@ -49,10 +58,10 @@ export function modelsControl(ctx: HubContext, onReady?: () => void): HTMLElemen
   draw(ctx.status.models);
   void onEvent<ModelsStatus>("speech-models", (models) => {
     if (!el.isConnected) return;
-    const wasReady = ctx.status.models.parakeet.state === "ready";
+    const wasReady = getActiveState(ctx.status.models).state === "ready";
     ctx.status.models = models;
     draw(models);
-    if (!wasReady && models.parakeet.state === "ready") onReady?.();
+    if (!wasReady && getActiveState(models).state === "ready") onReady?.();
   });
   return el;
 }
@@ -132,7 +141,24 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
 
   // ── Recognition ──
   page.append(label(t("Recognition")));
+  const engines: [string, string][] = [
+    ["whisper", "Whisper (Multilingual / Indonesian)"],
+    ["parakeet", "Parakeet (NVIDIA)"],
+  ];
+  const languages: [string, string][] = [
+    ["id", "Bahasa Indonesia"],
+    ["en", "English"],
+    ["auto", "Auto-detect"],
+  ];
+  const activeEngine = prefs.engine || status.models.activeEngine || "whisper";
+
   page.append(anchor("flow.recognition", card(
+    row(t("Model"), null,
+      select(engines, activeEngine, (eng) => void ctx.setPrefs((p) => (p.engine = eng as "whisper" | "parakeet")).then(() => ctx.navigate("flowsettings")))),
+    divider(),
+    row(t("Dictation language"), null,
+      select(languages, prefs.language || "id", (lang) => void ctx.setPrefs((p) => (p.language = lang)).then(() => ctx.navigate("flowsettings")))),
+    divider(),
     row(t("Parakeet, on your computer"), t("The most accurate, offline, 25 languages. Downloaded once (about {0} MB).", { 0: number(status.models.downloadMb) }), modelsControl(ctx)),
     h("div", { class: "hub-note", text: t("Your voice never leaves this computer: Parakeet turns it into text here, and the recording is dropped as soon as it is pasted.") }),
   )));
