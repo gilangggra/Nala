@@ -29,7 +29,7 @@ interface Peer {
 export interface Relay {
   port: number;
   /** Change (or remove) the access key while running, as `wrangler secret put` does. */
-  setAccessKey(key: string | undefined): void;
+  setAccessKey(key: string | undefined): Promise<void> | void;
   /** How many rooms have a live socket. A room with none leaves nothing behind. */
   rooms(): number;
   close(): Promise<void>;
@@ -37,6 +37,7 @@ export interface Relay {
 
 export async function startRelay(options: { port?: number; host?: string; accessKey?: string; connectsPerMinute?: number } = {}): Promise<Relay> {
   let accessKey = options.accessKey;
+  let currentGen = await accessGeneration(accessKey);
   const rooms = new Map<string, Partial<Record<Role, Peer>> & { verifier?: string }>();
   const connects = new Map<string, number[]>();
   const wss = new WebSocketServer({
@@ -73,7 +74,7 @@ export async function startRelay(options: { port?: number; host?: string; access
     const proof = parseJoinProof((req.headers["sec-websocket-protocol"] as string | undefined) ?? null);
     if (!proof) return refuse(socket, 400, "Bad Request");
     const verifier = await joinVerifier(proof);
-    const gen = await accessGeneration(accessKey);
+    const gen = currentGen;
 
     wss.handleUpgrade(req, socket, head, (ws) => {
       const room = rooms.get(target.room) ?? {};
@@ -96,8 +97,8 @@ export async function startRelay(options: { port?: number; host?: string; access
         peer.ws.send(PEER_ONLINE);
       }
 
-      ws.on("message", async (data, isBinary) => {
-        if ((await accessGeneration(accessKey)) !== me.gen || !me.gen) return ws.close(1008, "access key changed");
+      ws.on("message", (data, isBinary) => {
+        if (currentGen !== me.gen || !me.gen) return ws.close(1008, "access key changed");
         if (!isBinary) {
           if (data.toString() === "ping") return ws.send("pong"); // the platform's auto-response in the Worker
           return ws.close(1003, "binary only");
@@ -127,7 +128,10 @@ export async function startRelay(options: { port?: number; host?: string; access
   const port = typeof address === "object" && address ? address.port : 0;
   return {
     port,
-    setAccessKey: (key) => void (accessKey = key),
+    setAccessKey: async (key) => {
+      accessKey = key;
+      currentGen = await accessGeneration(key);
+    },
     rooms: () => rooms.size,
     close: () =>
       new Promise<void>((resolve) => {

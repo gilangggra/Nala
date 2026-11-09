@@ -192,7 +192,7 @@ class RelayStreamSocket(
     private var pending: ByteArray = EMPTY
     private var pendingAt = 0
 
-    private val reader = Thread({ pump() }, "coucou-relay-reader").apply { isDaemon = true; start() }
+    private val reader = Thread({ pump() }, "nala-relay-reader").apply { isDaemon = true; start() }
 
     private fun pump() {
         try {
