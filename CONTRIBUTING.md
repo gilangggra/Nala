@@ -1,6 +1,6 @@
-# Contributing to Coucou
+# Contributing to Nala
 
-Thanks for wanting to help Mochi grow up! 🫶
+Thanks for wanting to help Mochi and Nala grow! 🫶
 
 ## Getting started
 

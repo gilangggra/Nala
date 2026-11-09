@@ -1,11 +1,11 @@
-# « OK Coucou » : commande vocale mains libres (Mac)
+# « OK Nala » : commande vocale mains libres (Mac)
 
 Plan de travail pour Claude Code. Mac uniquement : ne toucher ni à `windows/`, ni à l'app iPhone (`Sources/Phone/`).
 Chaque phase = une PR, avec ses tests, et rien ne sort de ce qui est demandé dans la phase.
 
 ## L'idée
 
-Coucou écoute en permanence (si l'utilisateur l'a activé). On dit « OK Coucou » : l'île compacte s'ouvre, Mochi fait
+Coucou écoute en permanence (si l'utilisateur l'a activé). On dit « OK Nala » : l'île compacte s'ouvre, Mochi fait
 une petite émote d'écoute et affiche « À l'écoute… » avec la transcription en direct. On dit ce qu'on veut, Coucou le fait,
 Mochi réagit (content, ou « je n'ai pas compris »), l'île se referme. Coucou ne parle pas (pas de synthèse vocale pour l'instant).
 
@@ -32,7 +32,7 @@ Nouveau dossier `NotchBuddy/Sources/App/Voice/` :
 
 | Fichier | Rôle |
 |---|---|
-| `VoiceSettings.swift` | Interrupteur, phrase de réveil (« OK Coucou » par défaut, « Dis Coucou », « Hey Coucou »), langues (réutiliser `MacDictation.automaticLocales()`), raccourci pour couper le micro. |
+| `VoiceSettings.swift` | Interrupteur, phrase de réveil (« OK Nala » par défaut, « Dis Coucou », « Hey Coucou »), langues (réutiliser `MacDictation.automaticLocales()`), raccourci pour couper le micro. |
 | `VoiceAudio.swift` | `AVAudioEngine`, entrée 16 kHz mono. Détection de voix par énergie (seuil adaptatif au bruit de fond) qui ne réveille la reconnaissance que quand quelqu'un parle. |
 | `WakeSpotter.swift` | Protocole + implémentations : `SpeechWakeSpotter` (SFSpeechRecognizer, macOS 15, `contextualStrings = ["Coucou", "OK Coucou"]`) et `AnalyzerWakeSpotter` (SpeechAnalyzer, macOS 26). Correspondance tolérante : « ok coucou », « okay coucou », « OK cuckoo », « ok kuku »… |
 | `CommandListener.swift` | Après le réveil : capture la commande, transcription partielle en direct, fin sur 1,2 s de silence ou 10 s max. « Annule » / « laisse tomber » ferme. |
@@ -86,7 +86,7 @@ routines (« mode focus » = playlist + ne pas déranger + pilules de travail).
 **Phase 1 : écoute et réveil.** Réglages → Voix (désactivé par défaut, explication du point orange), permission micro
 et reconnaissance vocale, `VoiceAudio` + détection de voix, `SpeechWakeSpotter`, état `listening` de l'île avec
 l'émote de Mochi et la transcription. Pas encore d'actions : la commande s'affiche, c'est tout.
-Critères : réveil en moins de ~1 s après « OK Coucou », pas de déclenchement sur « coucou » tout seul dans une phrase,
+Critères : réveil en moins de ~1 s après « OK Nala », pas de déclenchement sur « coucou » tout seul dans une phrase,
 CPU au repos mesuré et < 1 %, 0 % et micro fermé quand c'est éteint, pause écran verrouillé / Économie d'énergie / dictée du chat.
 Tests : correspondance de la phrase de réveil (table de variantes), transitions de l'île.
 
@@ -109,7 +109,7 @@ Passer aussi la détection sur `SpeechAnalyzer` quand macOS 26 est là.
 
 **Phase 7 : finitions.** Réglage de la sensibilité, liste des faux déclenchements, traductions (le catalogue de chaînes
 existant), `docs/SPEC.md`, section README, CHANGELOG, puis release (règles de release de CLAUDE.md).
-Piste pour plus tard : un petit modèle Core ML dédié à « OK Coucou » sur le Neural Engine, pour descendre encore le CPU.
+Piste pour plus tard : un petit modèle Core ML dédié à « OK Nala » sur le Neural Engine, pour descendre encore le CPU.
 
 ## Build App Store (sandbox)
 

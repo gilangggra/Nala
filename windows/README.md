@@ -64,7 +64,7 @@ You can also [build it yourself](#build-it-yourself).
 | The terminal tab in the island's header | **New Claude Code session**: pick a project (the folders your sessions ran in, or **Choose a folder…**), type what Claude should do, and your terminal opens there running `claude` with it |
 | Click a file in the session ticker | Its diff opens in the island; ↗ opens the file in VS Code, ‹ or `Esc` goes back |
 | `Esc` | Closes the island |
-| Put a file named like one of Mochi's sounds (`finish.wav`, `approval.mp3`, `greet.m4a`…) in the sounds folder | It replaces that sound after **Settings → General → Reload sounds**. **Open sounds folder** shows the folder: `~/.config/coucou/sounds` on Linux, `%APPDATA%\Nala\sounds` on Windows |
+| Put a file named like one of Mochi's sounds (`finish.wav`, `approval.mp3`, `greet.m4a`…) in the sounds folder | It replaces that sound after **Settings → General → Reload sounds**. **Open sounds folder** shows the folder: `~/.config/nala/sounds` on Linux, `%APPDATA%\Nala\sounds` on Windows |
 | Tray icon | Open, Weekly recap, Wardrobe…, Settings…, Pause, Quit — and **Update Nala to X…** while a new version is out |
 | `Ctrl+Alt+Space` | Opens the chat, from any app |
 | `Ctrl+Alt+A` | Jumps to the waiting permission or question |
@@ -175,7 +175,7 @@ will change in `%USERPROFILE%\.claude\settings.json`, the path of the dated back
 that will be taken, and nothing is written until you click. Your own hooks are
 never touched, and uninstalling removes only Nala's entries.
 
-The relay is a tiny executable, `coucou-hook.exe`, copied to
+The relay is a tiny executable, `nala-hook.exe`, copied to
 `%LOCALAPPDATA%\Nala\bin\` at launch. It is given 300 ms to reach Nala and
 exits cleanly if the app is closed, slow or crashed — **a Claude Code session is
 never blocked or slowed down by Nala.** If nobody answers a permission request
@@ -193,7 +193,7 @@ reset times. Both are off by default; turn them on in **Settings… → Plan usa
 - **Claude** (Pro and Max plans): the numbers come from Claude Code's own status
   line. **Show in notch** first shows you the diff of the `statusLine` change in
   `%USERPROFILE%\.claude\settings.json`, takes a dated backup and writes only
-  after your click, with the same writer as the hooks: the status line becomes `coucou-hook --statusline`, which
+  after your click, with the same writer as the hooks: the status line becomes `nala-hook --statusline`, which
   passes only the limits on (300 ms at most) and runs the status line you had
   before — kept in `statusline-previous.json` outside `bin` in Nala's data folder — with the same
   input, printing what it prints. On Windows that one runs through Git Bash, as
@@ -359,7 +359,7 @@ account only, because WhatsApp may restrict accounts that abuse it.
   system (Windows or Linux, amd64 or arm64) and checks it against the SHA-256
   GOWA publishes; nothing is installed if they differ.
 - Nala then unpacks GOWA into `%LOCALAPPDATA%\Nala\GOWA` (Windows) or
-  `~/.local/share/coucou/GOWA` (Linux) and starts it on `127.0.0.1` only, with
+  `~/.local/share/nala/GOWA` (Linux) and starts it on `127.0.0.1` only, with
   media downloads off. It stops GOWA when Nala quits.
 - Scan the QR code in Settings with your phone: **WhatsApp › Settings › Linked
   devices › Link a device**.
@@ -475,7 +475,7 @@ Nala-Windows-X.Y.Z-setup.exe    the versioned installer
 Nala-Windows-setup.exe          the same file under the rolling name
 ```
 
-Installing is optional — `target/release/coucou.exe` runs on its own. There is no
+Installing is optional — `target/release/nala.exe` runs on its own. There is no
 window in the taskbar and no console: the island at the top of the screen and the
 Mochi in the notification area are the whole app, and Quit lives in its menu.
 
@@ -500,13 +500,13 @@ windows/
     views/             every island view
     settings/          the settings window
   src-tauri/           Rust backend: window, named pipe, Claude API, pollers
-  hook/                coucou-hook.exe, the Claude Code relay
+  hook/                nala-hook.exe, the Claude Code relay
   scripts/             icon generator
 ```
 
 ### Log
 
-`%LOCALAPPDATA%\Nala\coucou.log` — hook events, permission decisions, poller
+`%LOCALAPPDATA%\Nala\nala.log` — hook events, permission decisions, poller
 problems. It stays on your machine. The weekly recap's history sits beside it in
 `recap.json`.
 
@@ -524,16 +524,16 @@ Linux.
 |---|---|---|
 | Claude Code | `.claude\settings.json` (**Settings → Claude Code**) | Allow / Deny and questions in the island |
 | Codex | `.codex\hooks.json` — then trust the hooks once with `/hooks` in Codex | Allow / Deny in the island |
-| GitHub Copilot CLI | `.copilot\hooks\coucou.json` | Allow / Deny in the island |
+| GitHub Copilot CLI | `.copilot\hooks\nala.json` | Allow / Deny in the island |
 | Muse Code | `.config\muse\settings.json` | Allow / Deny in the island |
 | Gemini CLI | `.gemini\settings.json` | asked in Gemini CLI |
-| Antigravity | `.gemini\config\hooks.json` (a `coucou` hook group) | asked in Antigravity; or, with **Approve commands from the notch** on, Allow / Deny / Reply in terminal in the island for the shell commands none of its rules covers |
+| Antigravity | `.gemini\config\hooks.json` (a `nala` hook group) | asked in Antigravity; or, with **Approve commands from the notch** on, Allow / Deny / Reply in terminal in the island for the shell commands none of its rules covers |
 | Cursor Agent | `.cursor\hooks.json` — Claude Code in Cursor's terminal also goes on the Cursor pill, through the Claude Code hooks | asked in Cursor |
 | Claude Desktop | nothing to install: Claude Code sessions from the Claude app are tagged by the relay | asked in the Claude app |
-| OpenCode | plugin `.config\opencode\plugins\coucou.js` | asked in OpenCode |
-| Amp | plugin `.config\amp\plugins\coucou.ts` | asked in Amp |
-| Hermes Agent | plugin `.hermes\plugins\coucou\` — then `hermes plugins enable coucou` once | asked in Hermes |
-| Any other | run `coucou-hook --agent <name> [<Event>]` from your tool's hooks | asked in the tool |
+| OpenCode | plugin `.config\opencode\plugins\nala.js` | asked in OpenCode |
+| Amp | plugin `.config\amp\plugins\nala.ts` | asked in Amp |
+| Hermes Agent | plugin `.hermes\plugins\nala\` — then `hermes plugins enable nala` once | asked in Hermes |
+| Any other | run `nala-hook --agent <name> [<Event>]` from your tool's hooks | asked in the tool |
 
 The relay maps every agent's event and field names onto Claude Code's (Gemini
 CLI's `BeforeTool`, Copilot's `preToolUse`, Cursor's `beforeSubmitPrompt`…), and
@@ -561,7 +561,7 @@ a verdict, and Nala never gives one.
 
 **How each agent runs the relay on Windows.** Hook commands are written for the
 shell that runs them: Git Bash for Claude Code (quoted, forward slashes),
-PowerShell for Gemini CLI and Copilot CLI (`& '…\coucou-hook.exe'`), `cmd /C`
+PowerShell for Gemini CLI and Copilot CLI (`& '…\nala-hook.exe'`), `cmd /C`
 for Codex. Cursor, Antigravity and Muse Code do not document theirs: the relay
 path is written bare when it has no space or special character — which works in
 cmd, PowerShell and when started directly — and in double quotes otherwise.
@@ -617,7 +617,7 @@ on; other agents and Claude Desktop ask in their own window.
   `WSL_DISTRO_NAME`. In WSL, a Windows program only sees the variables that
   `WSLENV` names, so the hook command in the distro's
   `~/.claude/settings.json` passes them on:
-  `WSLENV=$WSLENV:HERDR_PANE_ID:HERDR_BIN_PATH:WSL_DISTRO_NAME /mnt/c/Users/<you>/AppData/Local/Nala/bin/coucou-hook.exe`.
+  `WSLENV=$WSLENV:HERDR_PANE_ID:HERDR_BIN_PATH:WSL_DISTRO_NAME /mnt/c/Users/<you>/AppData/Local/Nala/bin/nala-hook.exe`.
 - Global keyboard shortcuts are hot keys on Windows, key grabs on Linux under
   X11, and go through the desktop's GlobalShortcuts portal under Wayland (see
   [Linux](#linux)). A waiting card is also folded with its **⌃** or `Esc` in
@@ -726,7 +726,7 @@ on; other agents and Claude Desktop ask in their own window.
 ## Linux
 
 To check toolbar collapse even when WebKitGTK loses the pointer-leave event,
-run `python3 scripts/test-linux-pill-hover.py target/release/coucou` from
+run `python3 scripts/test-linux-pill-hover.py target/release/nala` from
 `windows/` after building. This native regression test uses a separate Xvfb
 display and temporary preferences; it requires Xvfb, xdotool, xwd, a C compiler
 and GTK3 development headers. It leaves captures under `target/pill-hover-test/`.
@@ -748,7 +748,7 @@ On Arch Linux, build and install the package from `linux/arch/`:
 
 ```bash
 git clone https://github.com/gilangggra/Nala.git
-cd coucou/linux/arch
+cd linux/arch
 makepkg -si
 ```
 
@@ -777,8 +777,8 @@ What changes on Linux:
   anywhere. **GNOME on Wayland** has no layer-shell and lets no app place its
   own window, so there Mochi can't leave the island: dragging him does nothing,
   and the desktop shortcut only makes him grumble.
-- **Claude Code hooks** go through `~/.local/share/coucou/bin/coucou-hook` and a
-  Unix socket at `$XDG_RUNTIME_DIR/coucou.sock`. Both ends check that the other
+- **Claude Code hooks** go through `~/.local/share/nala/bin/nala-hook` and a
+  Unix socket at `$XDG_RUNTIME_DIR/nala.sock`. Both ends check that the other
   runs as the same user. Every other agent uses the same relay, single-quoted
   for `sh`, and its config under `~` (see Supported agents). A config that is a
   symlink (dotfiles) is written through to its target, with its permissions
@@ -804,7 +804,7 @@ What changes on Linux:
   and **Settings → Shortcuts** lists commands to bind in your
   desktop's own keyboard settings instead (they are shown with the portal too,
   for any shortcut that doesn't work):
-  `coucou --shortcut openChat` (or the AppImage's path) runs the action in the
+  `nala --shortcut openChat` (or the AppImage's path) runs the action in the
   Nala that is already open. The ids are `toggleIsland`, `openChat`,
   `goToAlert`, `jumpToTerminal`, `nextPill`, `prevPill`, `muteToggle`,
   `desktopToggle` and `wardrobeToggle`.
@@ -823,15 +823,15 @@ What changes on Linux:
   Spotify builds that don't report the position over MPRIS show the bar
   from where the track started; the Mac's Automation prompt has no
   equivalent here.
-- **Plan usage**: the status line relay is `~/.local/share/coucou/bin/coucou-hook
+- **Plan usage**: the status line relay is `~/.local/share/nala/bin/nala-hook
   --statusline` and runs your previous status line with `/bin/sh -c`, like Claude
   Code. Codex is found on `$PATH`, in `~/.local/bin`, npm's global prefix, Volta,
   Bun, pnpm, or nvm (newest Node first), since a desktop launch often has a
   shorter `$PATH` than your shell.
 - **Mochi's greeting** uses the full name in your account's GECOS field
   (`chfn` sets it); without one the chat stays neutral.
-- **Files**: preferences in `~/.config/coucou/`, the log at
-  `~/.local/share/coucou/coucou.log`, the weekly recap history beside it in
+- **Files**: preferences in `~/.config/nala/`, the log at
+  `~/.local/share/nala/nala.log`, the weekly recap history beside it in
   `recap.json`. A saved recap image goes to the pictures folder named in
   `~/.config/user-dirs.dirs`, else `~/Pictures`, else `~/Downloads`.
 - **Languages**: Hindi, Bengali, Chinese and Arabic need fonts that carry those

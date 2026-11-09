@@ -8,14 +8,14 @@ Your Mac does the work, your iPhone keeps you in the loop when you step away: yo
 
 | | |
 |---|---|
-| **Mac** | Coucou **0.1.9 or later** on macOS 15+: the [GitHub build](https://github.com/Louis-CFM/coucou/releases/latest), or the Mac App Store version once it is out |
+| **Mac** | Coucou **0.1.9 or later** on macOS 15+: the [GitHub build](https://github.com/gilangggra/Nala/releases/latest), or the Mac App Store version once it is out |
 | **iPhone** | iOS 18 or later. The Lock Screen and Dynamic Island need an iPhone with a Dynamic Island for the island part; every iPhone gets the Lock Screen |
 | **iCloud** | The **same Apple Account** signed in to iCloud on the Mac and the iPhone. That's the whole link: no account to create, no server, no pairing code |
 | **Coucou on iPhone** | From the App Store (coming soon) or [Join the TestFlight beta](https://testflight.apple.com/join/3GpeHv2b) — free, up to 10,000 testers |
 
 ## Get it on your iPhone
 
-1. **Install Coucou on your iPhone.**
+1. **Install Nala on your iPhone.**
    - **App Store:** coming soon, the link will be here.
    - **TestFlight beta:** install [TestFlight](https://apps.apple.com/app/testflight/id899247664) from the App Store, then [Join the TestFlight beta](https://testflight.apple.com/join/3GpeHv2b). The beta is free; Apple limits it to 10,000 testers.
 2. **Update Coucou on your Mac** to 0.1.9 or later.
@@ -52,13 +52,13 @@ Nothing shows up? See [Troubleshooting](#troubleshooting).
 - The Live Activity goes through a small relay ([`relay/`](../relay/)) that holds Apple's push key. It only sees the agent's name and state, never a project name, a command or a path, and it stores and logs nothing.
 - No account, no analytics. Turning the iPhone switch off on the Mac deletes your sessions from iCloud.
 
-Details in the [privacy policy](https://louis-cfm.github.io/coucou/privacy.html).
+Details in the [privacy policy](https://gilangggra.github.io/Nala/privacy.html).
 
 ## Troubleshooting
 
 **Nothing shows up on the iPhone**
 - The Mac and the iPhone must use the **same Apple Account** in iCloud (Settings → your name on the iPhone, System Settings → your name on the Mac).
-- On the Mac, **Settings → General → iPhone → Show my agent sessions on my iPhone** must be on, with Coucou 0.1.9 or later.
+- On the Mac, **Settings → General → iPhone → Show my agent sessions on my iPhone** must be on, with Nala 0.1.9 or later.
 - Pull down on the Agents tab to refresh.
 
 **No notifications**
@@ -78,7 +78,7 @@ Details in the [privacy policy](https://louis-cfm.github.io/coucou/privacy.html)
 **I can't send instructions**
 - Instructions need the GitHub build of the Mac app, with **Let my iPhone send instructions to Claude Code** on.
 
-Still stuck? [Open an issue](https://github.com/Louis-CFM/coucou/issues) or see [Support](https://louis-cfm.github.io/coucou/support.html).
+Still stuck? [Open an issue](https://github.com/gilangggra/Nala/issues) or see [Support](https://gilangggra.github.io/Nala/support.html).
 
 ## Build it yourself (developers)
 

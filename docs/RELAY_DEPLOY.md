@@ -8,7 +8,7 @@ connect *out* to a relay on the internet that passes encrypted messages between 
 (wire details: `docs/RELAY_LINK.md`, reasoning and threats: `android/RELAY_PLAN.md`, `android/RELAY_THREAT_CHECK.md`).
 
 You need: a free Cloudflare account, Node 22 or newer on the computer, this repository, and a phone with a debug build of
-Coucou for Android (`cd android && ./gradlew assembleDebug`, then `adb install -r app/build/outputs/apk/debug/app-debug.apk`).
+Nala for Android (`cd android && ./gradlew assembleDebug`, then `adb install -r app/build/outputs/apk/debug/app-debug.apk`).
 
 ## 1. Deploy the relay
 
@@ -60,7 +60,7 @@ If you change the address or the key later, press **Show pairing code** again an
 ## 3. Pair the phone (the real test: mobile data, not Wi-Fi)
 
 1. On the phone, **turn Wi-Fi off** (mobile data only) and make sure the data connection works.
-2. Open Coucou for Android, scan the code on the computer's screen (the camera does not need a network). The confirmation names
+2. Open Nala for Android, scan the code on the computer's screen (the camera does not need a network). The confirmation names
    the computer **and the relay's host**: check that it is yours, then pair.
 3. Within a few seconds Home should show the computer as connected, and Settings > **Away from home Wi-Fi** should say
    **Connected through your relay (coucou-link...)**. The computer's block says **The phone is connected through the relay.**

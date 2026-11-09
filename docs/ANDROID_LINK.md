@@ -1,6 +1,6 @@
 # Android link (protocol v1)
 
-How *Coucou for Android* talks to a desktop Coucou. The iPhone uses iCloud (CloudKit) and Apple
+How *Nala for Android* talks to a desktop Coucou. The iPhone uses iCloud (CloudKit) and Apple
 push, neither of which exists on Android, so the Android app connects to the desktop directly over
 the local network.
 
