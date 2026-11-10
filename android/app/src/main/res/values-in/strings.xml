@@ -20,8 +20,8 @@
     <string name="widget_badge_description">%1$d menunggumu</string>
     <string name="widget_big_label">Mochi, besar</string>
     <string name="widget_big_description">Mochi, pemakaian paketmu, dan tombol cepat.</string>
-    <string name="widget_pill_label">Status satu baris</string>
-    <string name="widget_pill_description">Agenmu yang paling mendesak dalam satu baris.</string>
+    <string name="widget_pill_label">Pill status satu baris</string>
+    <string name="widget_pill_description">Status agen terpenting dalam satu baris pill.</string>
     <string name="widget_alert_label">Persetujuan menunggu</string>
     <string name="widget_alert_description">Tenang, sampai ada agen yang butuh persetujuanmu.</string>
     <string name="widget_ring_label">Penggunaan paket</string>
@@ -95,8 +95,8 @@
     <string name="approval_too_long">Perintah lebih panjang daripada yang ditampilkan</string>
     <string name="approval_on_computer">Jawab permintaan ini di komputermu. Izinkan tidak ditawarkan di sini, karena seluruh perintah tidak muat di ponsel.</string>
     <string name="approval_caution">Izinkan hanya jika kamu yang memintanya.</string>
-    <string name="approval_show_cmd">Tampilkan perintah persisnya</string>
-    <string name="approval_hide_cmd">Sembunyikan perintah persisnya</string>
+    <string name="approval_show_cmd">Tampilkan perintah lengkap</string>
+    <string name="approval_hide_cmd">Sembunyikan perintah lengkap</string>
     <string name="question_title">%1$s punya pertanyaan</string>
     <string name="question_body">Jawab di komputermu. Untuk menjawab di sini, aktifkan \"Biarkan ponsel menjawab pertanyaan Claude Code\" di Nala pada komputermu (Pengaturan &gt; Ponsel Android).</string>
     <string name="question_see_answer">Jawab pertanyaan</string>
@@ -147,15 +147,15 @@
     <string name="msg_need_lock">Atur kunci layar untuk menyetujui dari ponselmu.</string>
     <string name="approval_hint">Izinkan di ponsel meminta sidik jari atau kunci layar. Tolak tidak.</string>
     <string name="overlay_title">Tampilkan Mochi di atas aplikasi lain</string>
-    <string name="overlay_hint">Sebuah pulau turun dari atas layar saat agen bekerja, lalu naik kembali.</string>
+    <string name="overlay_hint">Dynamic Island muncul dari atas layar saat agen bekerja, lalu menutup kembali.</string>
     <string name="msg_overlay_permission">Izinkan \"tampil di atas aplikasi lain\" untuk Nala, lalu kembali.</string>
     <string name="settings_title">Pengaturan</string>
     <string name="settings_sound">Suara Mochi</string>
     <string name="settings_volume">Volume</string>
     <string name="notify_done">Saat agen selesai atau gagal</string>
-    <string name="notify_done_hint">Pemberitahuan tenang di bilah notifikasi, dan pil jika diaktifkan. Permintaan izin dan pertanyaan selalu memberitahumu.</string>
+    <string name="notify_done_hint">Notifikasi senyap di bilah notifikasi, dan pill jika diaktifkan. Permintaan izin dan pertanyaan selalu memberi tahu Anda.</string>
     <string name="quiet_hours">Jam tenang</string>
-    <string name="quiet_hint">Tanpa suara dan tanpa pil untuk agen yang selesai atau gagal. Permintaan dan pertanyaan tetap masuk.</string>
+    <string name="quiet_hint">Tanpa suara dan tanpa pill untuk agen yang selesai atau gagal. Permintaan dan pertanyaan tetap masuk.</string>
     <string name="quiet_from">Dari</string>
     <string name="quiet_to">Kepada</string>
     <string name="history_title">Aktivitas</string>
@@ -184,7 +184,7 @@
     <string name="agent_kind">Agen</string>
     <string name="link_pair">Pasangkan dengan komputermu</string>
     <string name="link_approval">Tinjau permintaan</string>
-    <string name="overlay_missing">Izinkan \"tampil di atas aplikasi lain\" agar pulau bisa muncul.</string>
+    <string name="overlay_missing">Izinkan \"tampil di atas aplikasi lain\" agar Dynamic Island bisa muncul.</string>
     <string name="overlay_allow">Izinkan</string>
     <string name="settings_section_computer">Komputer</string>
     <string name="settings_section_away">Di luar Wi-Fi rumah</string>
@@ -206,7 +206,7 @@
     <string name="channel_updates">Pembaruan</string>
     <string name="channel_updates_description">Agen selesai, gagal, atau punya pertanyaan</string>
     <string name="channel_approvals_quiet">Persetujuan (tenang)</string>
-    <string name="channel_approvals_quiet_description">Permintaan yang menunggu, disimpan di bilah notifikasi saat pil menampilkannya</string>
+    <string name="channel_approvals_quiet_description">Permintaan yang menunggu, disimpan di bilah notifikasi saat pill menampilkannya</string>
     <string name="channel_approvals">Persetujuan</string>
     <string name="channel_approvals_description">Ada agen yang menunggu izinmu</string>
     <string name="settings_language">Bahasa</string>
@@ -222,7 +222,7 @@
     <string name="motion_system">Sistem</string>
     <string name="motion_on">Aktif</string>
     <string name="motion_off">Nonaktif</string>
-    <string name="settings_motion_hint">\"Sistem\" mengikuti \"Hapus animasi\" milik Android. Saat aktif, Mochi berhenti bergerak dan pulau serta lembar hanya muncul begitu saja.</string>
+    <string name="settings_motion_hint">\"Sistem\" mengikuti \"Hapus animasi\" milik Android. Saat aktif, Mochi berhenti bergerak dan Island serta sheet muncul tanpa animasi.</string>
     <string name="settings_section_notices">Pemberitahuan</string>
     <string name="settings_section_requests">Permintaan izin</string>
     <string name="settings_no_wake">Jangan nyalakan layar untuk permintaan</string>

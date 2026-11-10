@@ -19,8 +19,8 @@
     "widget_badge_description": "%1$d menunggumu",
     "widget_big_label": "Mochi, besar",
     "widget_big_description": "Mochi, pemakaian paketmu, dan tombol cepat.",
-    "widget_pill_label": "Status satu baris",
-    "widget_pill_description": "Agenmu yang paling mendesak dalam satu baris.",
+    "widget_pill_label": "Pill status satu baris",
+    "widget_pill_description": "Status agen terpenting dalam satu baris pill.",
     "widget_alert_label": "Persetujuan menunggu",
     "widget_alert_description": "Tenang, sampai ada agen yang butuh persetujuanmu.",
     "widget_ring_label": "Penggunaan paket",
@@ -94,8 +94,8 @@
     "approval_too_long": "Perintah lebih panjang daripada yang ditampilkan",
     "approval_on_computer": "Jawab permintaan ini di komputermu. Izinkan tidak ditawarkan di sini, karena seluruh perintah tidak muat di ponsel.",
     "approval_caution": "Izinkan hanya jika kamu yang memintanya.",
-    "approval_show_cmd": "Tampilkan perintah persisnya",
-    "approval_hide_cmd": "Sembunyikan perintah persisnya",
+    "approval_show_cmd": "Tampilkan perintah lengkap",
+    "approval_hide_cmd": "Sembunyikan perintah lengkap",
     "question_title": "%1$s punya pertanyaan",
     "question_body": "Jawab di komputermu. Untuk menjawab di sini, aktifkan \"Biarkan ponsel menjawab pertanyaan Claude Code\" di Nala pada komputermu (Pengaturan > Ponsel Android).",
     "question_see_answer": "Jawab pertanyaan",
@@ -146,15 +146,15 @@
     "msg_need_lock": "Atur kunci layar untuk menyetujui dari ponselmu.",
     "approval_hint": "Izinkan di ponsel meminta sidik jari atau kunci layar. Tolak tidak.",
     "overlay_title": "Tampilkan Mochi di atas aplikasi lain",
-    "overlay_hint": "Sebuah pulau turun dari atas layar saat agen bekerja, lalu naik kembali.",
+    "overlay_hint": "Dynamic Island muncul dari atas layar saat agen bekerja, lalu menutup kembali.",
     "msg_overlay_permission": "Izinkan \"tampil di atas aplikasi lain\" untuk Nala, lalu kembali.",
     "settings_title": "Pengaturan",
     "settings_sound": "Suara Mochi",
     "settings_volume": "Volume",
     "notify_done": "Saat agen selesai atau gagal",
-    "notify_done_hint": "Pemberitahuan tenang di bilah notifikasi, dan pil jika diaktifkan. Permintaan izin dan pertanyaan selalu memberitahumu.",
+    "notify_done_hint": "Notifikasi senyap di bilah notifikasi, dan pill jika diaktifkan. Permintaan izin dan pertanyaan selalu memberi tahu Anda.",
     "quiet_hours": "Jam tenang",
-    "quiet_hint": "Tanpa suara dan tanpa pil untuk agen yang selesai atau gagal. Permintaan dan pertanyaan tetap masuk.",
+    "quiet_hint": "Tanpa suara dan tanpa pill untuk agen yang selesai atau gagal. Permintaan dan pertanyaan tetap masuk.",
     "quiet_from": "Dari",
     "quiet_to": "Kepada",
     "history_title": "Aktivitas",
@@ -183,7 +183,7 @@
     "agent_kind": "Agen",
     "link_pair": "Pasangkan dengan komputermu",
     "link_approval": "Tinjau permintaan",
-    "overlay_missing": "Izinkan \"tampil di atas aplikasi lain\" agar pulau bisa muncul.",
+    "overlay_missing": "Izinkan \"tampil di atas aplikasi lain\" agar Dynamic Island bisa muncul.",
     "overlay_allow": "Izinkan",
     "settings_section_computer": "Komputer",
     "settings_section_away": "Di luar Wi-Fi rumah",
@@ -205,7 +205,7 @@
     "channel_updates": "Pembaruan",
     "channel_updates_description": "Agen selesai, gagal, atau punya pertanyaan",
     "channel_approvals_quiet": "Persetujuan (tenang)",
-    "channel_approvals_quiet_description": "Permintaan yang menunggu, disimpan di bilah notifikasi saat pil menampilkannya",
+    "channel_approvals_quiet_description": "Permintaan yang menunggu, disimpan di bilah notifikasi saat pill menampilkannya",
     "channel_approvals": "Persetujuan",
     "channel_approvals_description": "Ada agen yang menunggu izinmu",
     "settings_language": "Bahasa",
@@ -221,7 +221,7 @@
     "motion_system": "Sistem",
     "motion_on": "Aktif",
     "motion_off": "Nonaktif",
-    "settings_motion_hint": "\"Sistem\" mengikuti \"Hapus animasi\" milik Android. Saat aktif, Mochi berhenti bergerak dan pulau serta lembar hanya muncul begitu saja.",
+    "settings_motion_hint": "\"Sistem\" mengikuti \"Hapus animasi\" milik Android. Saat aktif, Mochi berhenti bergerak dan Island serta sheet muncul tanpa animasi.",
     "settings_section_notices": "Pemberitahuan",
     "settings_section_requests": "Permintaan izin",
     "settings_no_wake": "Jangan nyalakan layar untuk permintaan",
@@ -456,12 +456,23 @@
     "mute_agents_hint": "Pemberitahuan selesai, gagal, dan batas dari agen yang kamu pilih tetap senyap. Permintaan dan pertanyaan selalu masuk."
   },
   "plurals": {
-    "widget_n_waiting": {"other": "%1$d menunggu"},
-    "glance_requests": {"other": "%1$d permintaan untuk disetujui"},
-    "glance_questions": {"other": "%1$d pertanyaan dari agen"},
-    "glance_stopped": {"other": "%1$d agen berhenti"},
-    "glance_working_many": {"other": "%1$d agen sedang bekerja"},
-    "spoken_waiting_you": {"other": "%1$d menunggumu"}
+    "widget_n_waiting": {
+      "other": "%1$d menunggu"
+    },
+    "glance_requests": {
+      "other": "%1$d permintaan untuk disetujui"
+    },
+    "glance_questions": {
+      "other": "%1$d pertanyaan dari agen"
+    },
+    "glance_stopped": {
+      "other": "%1$d agen berhenti"
+    },
+    "glance_working_many": {
+      "other": "%1$d agen sedang bekerja"
+    },
+    "spoken_waiting_you": {
+      "other": "%1$d menunggumu"
+    }
   }
 }
-
