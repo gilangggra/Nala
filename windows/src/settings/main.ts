@@ -390,16 +390,18 @@ function subscriptionsSection(): HTMLElement {
       } else {
         lines.push(h("div", { class: "row" },
           h("span", { class: "hint", text: t("{tool} not found.", { tool: row.tool }) }),
+          h("span", { class: "spacer" }),
           h("button", { text: t("Install it"), onclick: () => void Bridge.openUrl(row.installUrl) }),
         ));
       }
       if (!row.subscriptionOnly && !row.on) {
         lines.push(h("div", { class: "hint", text: t("Off: the chat uses your API key below.") }));
       }
-      list.append(h("div", {},
+      list.append(h("div", { style: "display:flex;flex-direction:column;gap:6px" },
         h("div", { class: "row" },
           h("i", { class: "dot", style: `background:${p.accent}` }),
           h("label", { text: SUBSCRIPTION_NAMES[row.provider] ?? p.name }),
+          h("span", { class: "spacer" }),
           sw,
         ),
         ...lines,
