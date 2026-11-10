@@ -58,26 +58,26 @@ impl ModelSet {
     }
 }
 
-/// OpenAI Whisper Base int8: multilingual speech recognition supporting Indonesian
-/// and 99+ languages with high accuracy and automatic punctuation (about 160 MB).
+/// OpenAI Whisper Large-v3-Turbo int8: state-of-the-art multilingual speech recognition
+/// supporting Indonesian and 99+ languages with high accuracy and automatic punctuation (about 1000 MB).
 pub static WHISPER: ModelSet = ModelSet {
-    id: "whisper-base-int8",
+    id: "whisper-large-v3-turbo-int8",
     files: &[
         ModelFile {
-            name: "base-encoder.int8.onnx",
-            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/base-encoder.int8.onnx",
-            size: 29_120_534,
-            sha256: "0b8fb1304b6109976038efff5ace81720e00386f3ff6b54ee8c75291ca0a1e11",
+            name: "turbo-encoder.int8.onnx",
+            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-turbo/resolve/2ca6ff69fc878651b770880507669577ac41c2ff/turbo-encoder.int8.onnx",
+            size: 674_716_297,
+            sha256: "b02dcdf54f348741e93fe732b67d933c8dcb6735655f710640143081db38878b",
         },
         ModelFile {
-            name: "base-decoder.int8.onnx",
-            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/base-decoder.int8.onnx",
-            size: 130_672_026,
-            sha256: "9759d217388a01b3a4c7c15533201067b48ae819c4daafc8624e64b9409dc02d",
+            name: "turbo-decoder.int8.onnx",
+            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-turbo/resolve/2ca6ff69fc878651b770880507669577ac41c2ff/turbo-decoder.int8.onnx",
+            size: 361_080_764,
+            sha256: "20accd02388482eb3a46bd615631adfdc85e1eb2c7db9ea3f02a40ffe6b81547",
         },
         ModelFile {
-            name: "base-tokens.txt",
-            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/base-tokens.txt",
+            name: "turbo-tokens.txt",
+            url: "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-turbo/resolve/2ca6ff69fc878651b770880507669577ac41c2ff/turbo-tokens.txt",
             size: 816_730,
             sha256: "b34b360dbb493e781e479794586d661700670d65564001f23024971d1f2fa126",
         },
@@ -428,15 +428,15 @@ pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<A
             Some(lang.to_string())
         };
         config.model_config.whisper = OfflineWhisperModelConfig {
-            encoder: Some(WHISPER.path("base-encoder.int8.onnx")),
-            decoder: Some(WHISPER.path("base-decoder.int8.onnx")),
+            encoder: Some(WHISPER.path("turbo-encoder.int8.onnx")),
+            decoder: Some(WHISPER.path("turbo-decoder.int8.onnx")),
             language: whisper_lang,
             task: Some("transcribe".into()),
             tail_paddings: 0,
             enable_segment_timestamps: true,
             enable_token_timestamps: true,
         };
-        config.model_config.tokens = Some(WHISPER.path("base-tokens.txt"));
+        config.model_config.tokens = Some(WHISPER.path("turbo-tokens.txt"));
         config.model_config.model_type = Some("whisper".into());
         config.model_config.num_threads = threads();
         let started = Instant::now();
@@ -657,7 +657,7 @@ mod tests {
     #[test]
     fn the_downloads_add_up() {
         assert_eq!(PARAKEET.total_size(), 652_184_281 + 11_845_275 + 6_355_277 + 93_939);
-        assert_eq!(WHISPER.total_size(), 29_120_534 + 130_672_026 + 816_730);
+        assert_eq!(WHISPER.total_size(), 674_716_297 + 361_080_764 + 816_730);
         assert!(DIARIZER.total_size() < 40_000_000);
         for set in [&PARAKEET, &WHISPER, &DIARIZER] {
             for f in set.files {

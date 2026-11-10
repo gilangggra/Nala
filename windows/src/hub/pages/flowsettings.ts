@@ -142,8 +142,8 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
   // ── Recognition ──
   page.append(label(t("Recognition")));
   const engines: [string, string][] = [
-    ["whisper", "Whisper (Multilingual / Indonesian)"],
-    ["parakeet", "Parakeet (NVIDIA)"],
+    ["whisper", "Whisper Large-v3 Turbo (Bahasa Indonesia & Multilingual)"],
+    ["parakeet", "Parakeet TDT (English & Western Languages)"],
   ];
   const languages: [string, string][] = [
     ["id", "Bahasa Indonesia"],
