@@ -45,7 +45,8 @@ export async function voicePage(page: HTMLElement, ctx: HubContext) {
   const prefs = status.prefs;
   page.append(ctx.hero("voice", "OK Nala", t("Say « OK Nala », then ask anything: add a pill, play music, the weather, an email to prepare.")));
 
-  const ready = status.models.parakeet.state === "ready";
+  const activeModel = prefs.engine === "parakeet" ? status.models.parakeet : (status.models.whisper ?? status.models.parakeet);
+  const ready = activeModel.state === "ready";
   page.append(label(t("Listening")));
   const main = card(
     row(t("Listen for « OK Nala »"), t("The microphone stays open; only what follows « OK Nala » goes further."),

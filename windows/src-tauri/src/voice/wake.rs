@@ -240,13 +240,25 @@ impl Vad {
     }
 }
 
-/// "fr-FR" for a French answer, else None (the system's language).
+/// "fr-FR" for a French answer, "id-ID" for an Indonesian answer, else None (the system's language).
 pub fn speech_lang(text: &str) -> Option<&'static str> {
     let n = normalize(text);
     let words: Vec<&str> = n.split(' ').collect();
     let french = ["le", "la", "les", "est", "tu", "vous", "je", "un", "une", "des", "pour", "pas", "c", "et", "sur", "avec", "ton", "ta"];
     let count = words.iter().filter(|w| french.contains(w)).count();
-    (count * 6 >= words.len().max(1) && count >= 1).then_some("fr-FR")
+    if count * 6 >= words.len().max(1) && count >= 1 {
+        return Some("fr-FR");
+    }
+    let indonesian = [
+        "yang", "dan", "di", "ini", "itu", "untuk", "saya", "kamu", "bisa", "sudah",
+        "tidak", "ada", "dengan", "akan", "dari", "ke", "pada", "oleh", "juga", "hanya",
+        "tentang", "atau", "baik", "lagu", "hari", "catatan", "telah", "anda"
+    ];
+    let count_id = words.iter().filter(|w| indonesian.contains(w)).count();
+    if count_id * 6 >= words.len().max(1) && count_id >= 1 {
+        return Some("id-ID");
+    }
+    None
 }
 
 #[cfg(test)]
@@ -306,5 +318,11 @@ mod tests {
     fn french_answers_are_spoken_in_french() {
         assert_eq!(speech_lang("C'est fait, j'ai ajouté Stripe pour toi."), Some("fr-FR"));
         assert_eq!(speech_lang("Done, Stripe is in the island."), None);
+    }
+
+    #[test]
+    fn indonesian_answers_are_spoken_in_indonesian() {
+        assert_eq!(speech_lang("Sudah saya tambahkan catatan untuk kamu."), Some("id-ID"));
+        assert_eq!(speech_lang("Baik, musik sedang diputar di Spotify."), Some("id-ID"));
     }
 }
