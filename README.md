@@ -86,9 +86,9 @@ Developers spend their days interacting with autonomous AI coding agents like Cl
 
 Nala includes a complete desktop voice suite built right in:
 
-- 🎙️ **Flow Dictation** — Hold a hotkey anywhere on your system (Right ⌥, fn, Right Ctrl, etc.), speak naturally, and release: your words are instantly pasted into whichever app is active. Includes double-tap hands-free mode, Esc to cancel, and clipboard preservation.
+- 🎙️ **Flow Dictation** — Hold a hotkey anywhere on your system (Right ⌥, fn, Right Ctrl, etc.), speak naturally, and release: your words are instantly pasted into whichever app is active. Includes one-tap/double-tap hands-free mode, Esc to cancel, and clipboard preservation.
 - 💊 **Floating Pill** — A subtle, translucent pill resting on your screen edge. Hover to access quick actions: dictate, record, or open settings. Nine reactive dots dance to your voice as you speak.
-- 🦜 **Offline Parakeet Engine** — Run NVIDIA's Parakeet model directly on your device via neural hardware acceleration. Highly accurate across 25 languages with zero audio ever leaving your machine.
+- 🦜 **Dual Offline Speech Engines (Whisper Large-v3 Turbo & Parakeet)** — Run **OpenAI Whisper Large-v3 Turbo (INT8)** for high-accuracy Bahasa Indonesia and 99+ multilingual support, or **NVIDIA Parakeet TDT** across 25 Western languages — 100% locally on your device via `sherpa-onnx` and neural hardware acceleration with zero audio ever leaving your machine.
 - ✍️ **Intelligent Text Polishing** — Configure a custom dictionary of names and technical terms, define snippet expansions, and optionally polish text with AI (as said, natural, or professional).
 - 📝 **Private Call Notetaker** — Record your microphone and computer audio with zero awkward third-party meeting bots. Generates speaker-separated transcripts, summaries, and actionable to-do lists locally or via your preferred AI provider. Audio is deleted once the transcript is complete.
 - 📊 **Local Analytics** — Track dictated word counts, time saved, typing speed (WPM), and app usage — all calculated locally and never synced externally.
@@ -116,7 +116,7 @@ Nala includes a complete desktop voice suite built right in:
 - 📎 **Drag-and-Drop Ingestion** — Drop any file onto Mochi to summarize it, ask questions, or attach it to an email. Drag Mochi onto an app window to include it as context.
 - 🔌 **Productivity Integrations** — Dedicated pills for GitHub (PRs, reviews, CI status), Stripe revenue, Vercel deployments, Resend, Notion, and Cal.com.
 - 🎵 **Media Controller** — Apple Music and Spotify pills with album artwork, interactive seek bars, and playback controls while Mochi dances along.
-- 🗣️ **« OK Nala » Voice Control** — Voice interaction for system control, querying service balances, controlling music, and drafting emails.
+- 🗣️ **« OK Nala » Voice Control** — Multilingual voice interaction (including Bahasa Indonesia, English, and French) for system control, querying service balances, controlling music, and drafting emails, with localized speech synthesis (`id-ID`, `en-US`, `fr-FR`) and ElevenLabs support.
 - 🌍 **Internationalization** — Native localization in 16 languages, including English, 简体中文, 繁體中文, हिन्दी, Español, العربية, Français, বাংলা, Português, Русский, Bahasa Indonesia, Deutsch, Türkçe, ไทย, 한국어, and 日本語.
 - 🔒 **Zero Telemetry, Private by Design** — No user accounts, no tracking. Credentials stay in your OS Keychain, Windows Credential Manager, or Linux Secret Service.
 
@@ -370,8 +370,8 @@ Access the settings window via the Dock/menu bar on macOS (⌘,), or via the sys
 | **Codex CLI** | Live sessions & approvals | Settings → Codex → **Install hooks** |
 | **API Keys** | AI Chat (Claude, OpenAI, Gemini, etc.) | Settings → Chat (stored in OS Credential Vault) |
 | **Local LLMs** | Ollama / LM Studio connection | Settings → Chat → Local models → **Connect** |
-| **Flow Dictation** | Speech-to-text hotkey | Settings → Flow → Settings |
-| **Offline Parakeet** | Local voice recognition | Settings → Flow → Recognition → **Download** (~650 MB) |
+| **Flow Dictation** | Speech-to-text hotkey & language | Settings → Flow → Settings |
+| **Offline Speech Models** | Local voice recognition (Whisper Large-v3 Turbo / Parakeet) | Settings → Flow → Recognition → **Download** |
 | **iPhone Link** | iOS Live Activity & approvals | Settings → General → iPhone (iCloud CloudKit) |
 | **Android Link** | Android approvals & widgets | Settings → Android phone (Local Wi-Fi pairing) |
 | **Services** | GitHub, Stripe, Vercel, Resend, Notion | Settings → Active pills |
@@ -435,8 +435,8 @@ Messages are processed entirely in memory, verified with HMAC-SHA256, and never 
             ▼               ▼               ▼
 ┌───────────────────┐ ┌───────────┐ ┌───────────────────┐
 │ Agent IPC Relays  │ │ Flow Voice│ │  Mobile Link      │
-│ (Unix Sockets /   │ │ (Parakeet │ │ (iCloud CloudKit /│
-│   Named Pipes)    │ │  Offline) │ │  Local TLS Wi-Fi) │
+│ (Unix Sockets /   │ │ (Whisper /│ │ (iCloud CloudKit /│
+│   Named Pipes)    │ │  Parakeet)│ │  Local TLS Wi-Fi) │
 └───────────────────┘ └───────────┘ └───────────────────┘
 ```
 

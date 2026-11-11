@@ -1,6 +1,48 @@
-# « OK Nala » : commande vocale mains libres (Mac)
+# « OK Nala » : Voice Control & Offline Speech Architecture
 
-Plan de travail pour Claude Code. Mac uniquement : ne toucher ni à `windows/`, ni à l'app iPhone (`Sources/Phone/`).
+This document covers the architecture of **« OK Nala »** hands-free voice control and **Flow Dictation** across **Windows, Linux, and macOS**.
+
+---
+
+## 1. Windows & Linux Architecture (`windows/src-tauri/src/`)
+
+On Windows and Linux, speech recognition runs 100% locally via statically linked `sherpa-onnx` (`v1.13.8`, ONNX Runtime CPU INT8) with dual-engine support and synchronized preferences between **Flow Dictation**, **Call Notetaker**, and **« OK Nala » Voice Control**.
+
+### Offline Speech Engines (`speech/mod.rs`)
+
+| Engine ID | Model | Size | Target Languages |
+|---|---|---|---|
+| `whisper` *(Default)* | **OpenAI Whisper Large-v3-Turbo (INT8)** (`sherpa-onnx-whisper-turbo`) | ~1.03 GB | **Bahasa Indonesia (`id`)** and 99+ languages (with dynamic auto-detection) |
+| `parakeet` | **NVIDIA Parakeet TDT 0.6B v3 (INT8)** (`sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8`) | ~670 MB | English and 25 Western/European languages |
+| `diarizer` | **Pyannote Segmentation 3.0 + 3D-Speaker Embedding** | ~37 MB | Speaker separation for Call Notetaker |
+
+### Language Resolution & Preference Synchronization
+
+1. **Dynamic Language Resolution (`speech::resolve_whisper_language`)**:
+   - Default preference in `flow::store::Prefs` is `"auto"`.
+   - When `language == "auto"`:
+     - If the active Nala UI/system language (`crate::i18n::current()`) is Indonesian (`"id"`), Whisper pins `Some("id")` so short utterances (such as *« OK Nala »* or brief commands) are never misclassified.
+     - For other UI languages (`"en"`, `"fr"`, `"de"`, etc.), Whisper receives `None`, enabling native multilingual language identification.
+   - When the user explicitly selects a language (`"id"`, `"en"`, `"zh-Hans"`, `"pt-BR"`, etc.), the tag is normalized to its 2-letter ISO-639-1 code (`"id"`, `"en"`, `"zh"`, `"pt"`, etc.) and passed to `OfflineWhisperModelConfig`.
+2. **Unified Recognizer Cache (`speech::set_prefs`)**:
+   - `flow::setup`, `flow::flow_set_prefs`, and `lib::language_changed` keep `speech` synchronized with `prefs.engine` and `prefs.language`.
+   - `flow`, `voice`, and `notes` share the single cached `OfflineRecognizer` slot without model eviction/reload thrashing.
+
+### « OK Nala » Voice Pipeline (`voice/`)
+
+| File | Responsibility |
+|---|---|
+| `voice/mod.rs` | Background microphone loop (`cpal` 16 kHz mono), pause-on-dictation/call/lock, wake word spotting, command capture, and execution dispatch |
+| `voice/wake.rs` | Energy-based adaptive VAD (`Detector`), wake-phrase matcher (`match_wake` for *"OK Nala"*, *"Hey Nala"*, *"Dis Nala"*, *"Halo Nala"*, plus phonetic variants), cancel phrase matcher (*"batal"*, *"batalkan"*, *"cancel"*, *"annule"*), and reply language detector (`speech_lang` → `"id-ID"`, `"fr-FR"`, or `"en-US"`) |
+| `voice/intent.rs` | Deterministic local intent parser (Indonesian, English, French) for music/Spotify, pills, mail, opening apps/URLs, agent status, approvals, timers, and queries |
+| `voice/brain.rs` | Fallback AI reasoning and tool-calling when a command requires conversational context or web search |
+| `voice/tts.rs` | Spoken replies via ElevenLabs (optional) or native WebView `speechSynthesis` using the detected locale (`id-ID`, `fr-FR`, `en-US`) |
+
+---
+
+## 2. macOS Architecture (`NotchBuddy/Sources/App/Voice/`)
+
+Plan de travail et architecture pour macOS (`NotchBuddy/`).
 Chaque phase = une PR, avec ses tests, et rien ne sort de ce qui est demandé dans la phase.
 
 ## L'idée

@@ -13,7 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2026-11-11
+## [0.6.0] - 2026-11-12
+
+### Added
+- **Dual Offline Speech Engines (Whisper Large-v3 Turbo & Parakeet)**:
+  - Integrated **OpenAI Whisper Large-v3-Turbo (INT8)** via `sherpa-onnx` on Windows and Linux for high-accuracy **Bahasa Indonesia (`id`)** and 99+ language dictation and voice control alongside **NVIDIA Parakeet TDT**.
+  - Dynamic dictation language resolution (`auto` mode automatically pins `"id"` when the Nala interface is in Bahasa Indonesia and uses Whisper native language identification for other UI languages, while supporting explicit selection across all supported languages).
+  - Synchronized speech engine and language preferences across **Flow Dictation**, **Call Notetaker**, and **« OK Nala » Voice Control** to prevent model reload thrashing.
+- **« OK Nala » Bahasa Indonesia & Accent Support**:
+  - Added Indonesian speech synthesis (`id-ID`) language detection for spoken replies, wake word variants, and localized voice commands.
+  - Added Brazilian Portuguese and Spanish accent variants for « OK Nala » wake spotting, plus single-press hands-free dictation mode.
+- **Agent Hub & Session Workflow**:
+  - Approve **Antigravity** and **OpenCode** execution requests directly from the island.
+  - Start a new coding session directly from the notch/island by picking a project and typing or dictating a prompt.
+  - Drag and drop files directly onto an active agent session card to insert the file into its prompt.
+
+### Changed
+- Aligned subscription toggle switches and action buttons in **Settings → Chat → Your AI subscriptions**.
+- Updated privacy policy (`docs/privacy.html`), voice architecture docs (`docs/VOICE.md`), and version synchronization checks across all platforms.
+
+---
+
+## [0.5.9] - 2026-11-07
 
 ### Added
 
@@ -36,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Flow: Voice Dictation & Call Notetaker
 - **Global Push-to-Talk Dictation**: Hold a configurable shortcut key (Right ⌥, fn, Right Ctrl, etc.), speak naturally, and release to paste transcribed text into any active app.
 - **Hands-Free & Clipboard Safe**: Double-tap for hands-free recording, Esc to cancel, and automatic restoration of original clipboard contents.
-- **Offline Parakeet Engine**: Speech recognition running 100% locally on device hardware via NVIDIA Parakeet across 25 languages with zero cloud audio leakage.
+- **Offline Speech Recognition**: Speech recognition running 100% locally on device hardware via `sherpa-onnx` (Whisper Large-v3 Turbo & NVIDIA Parakeet) with zero cloud audio leakage.
 - **Private Meeting Notetaker**: Record calls without external meeting bots; delivers speaker diarization, transcripts, summaries, and action items locally or via AI.
 - **Vocabulary & Polishing**: Custom dictionary for technical jargon, snippet expansion, and per-app AI text polishing.
 - **Local Analytics**: Track words dictated, time saved, typing speed (WPM), and daily streaks locally.
