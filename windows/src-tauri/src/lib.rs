@@ -169,6 +169,12 @@ fn language_changed(app: &AppHandle) {
     if let Some(window) = app.get_webview_window(HUB_LABEL) {
         let _ = window.set_title("Nala");
     }
+    if flow::get(app).is_some_and(|f| {
+        let p = &f.store.lock().unwrap().prefs;
+        p.enabled || p.voice
+    }) {
+        speech::preload();
+    }
 }
 
 /// Hidden island → shrink the window to the invisible wake strip and park the

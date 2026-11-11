@@ -3,7 +3,7 @@
 // FlowHubSettings.swift.
 
 import { h, clear } from "../../views/dom";
-import { t } from "../../i18n/i18n";
+import { LANGUAGES, t } from "../../i18n/i18n";
 import { onEvent } from "../../core/bridge";
 import { FlowBridge, flowKeyId, type Edge, type FlowKey, type ModelsStatus } from "../../core/flow";
 import { comboFromKeys } from "../keys";
@@ -146,18 +146,19 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
     ["parakeet", "Parakeet TDT (English & Western Languages)"],
   ];
   const languages: [string, string][] = [
+    ["auto", t("Automatic")],
     ["id", "Bahasa Indonesia"],
-    ["en", "English"],
-    ["auto", "Auto-detect"],
+    ...LANGUAGES.filter((l) => l.code !== "id").map((l): [string, string] => [l.code, l.name]),
   ];
   const activeEngine = prefs.engine || status.models.activeEngine || "whisper";
+  const activeLanguage = prefs.language || status.models.language || "auto";
 
   page.append(anchor("flow.recognition", card(
     row(t("Model"), null,
       select(engines, activeEngine, (eng) => void ctx.setPrefs((p) => (p.engine = eng as "whisper" | "parakeet")).then(() => ctx.navigate("flowsettings")))),
     divider(),
     row(t("Dictation language"), null,
-      select(languages, prefs.language || "id", (lang) => void ctx.setPrefs((p) => (p.language = lang)).then(() => ctx.navigate("flowsettings")))),
+      select(languages, activeLanguage, (lang) => void ctx.setPrefs((p) => (p.language = lang)).then(() => ctx.navigate("flowsettings")))),
     divider(),
     row(t("Parakeet, on your computer"), t("The most accurate, offline, 25 languages. Downloaded once (about {0} MB).", { 0: number(status.models.downloadMb) }), modelsControl(ctx)),
     h("div", { class: "hub-note", text: t("Your voice never leaves this computer: Parakeet turns it into text here, and the recording is dropped as soon as it is pasted.") }),

@@ -123,6 +123,7 @@ pub fn setup(app: &AppHandle) {
     app.manage(flow.clone());
     pill::setup(app);
     let prefs = flow.store.lock().unwrap().prefs.clone();
+    speech::set_prefs(&prefs.engine, &prefs.language);
     pill::update(app, |s| {
         s.edge = pill::edge_name(prefs.edge).into();
         s.key = key_id(prefs.key, &prefs.key_combo);
@@ -512,6 +513,7 @@ pub fn flow_set_prefs(app: AppHandle, flow: State<Arc<Flow>>, prefs: Prefs) {
         s.edge = pill::edge_name(prefs.edge).into();
         s.key = key_id(prefs.key, &prefs.key_combo);
     });
+    speech::set_prefs(&prefs.engine, &prefs.language);
     let restart = before.key != prefs.key || before.key_combo != prefs.key_combo;
     if before.enabled && (!prefs.enabled || restart) {
         disable(&app, &flow);
@@ -525,6 +527,12 @@ pub fn flow_set_prefs(app: AppHandle, flow: State<Arc<Flow>>, prefs: Prefs) {
         } else {
             crate::voice::sync(&app);
         }
+    }
+    if before.engine != prefs.engine || before.language != prefs.language {
+        if prefs.enabled || prefs.voice || crate::notes::is_recording(&app) {
+            speech::preload();
+        }
+        speech::emit_status(&app);
     }
     let _ = app.emit("flow-prefs", &prefs);
 }

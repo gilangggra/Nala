@@ -118,7 +118,7 @@ pub struct Prefs {
     pub one_tap_hands_free: bool,
     /// Speech recognition engine: "whisper" or "parakeet".
     pub engine: String,
-    /// Speech recognition language: "id" (Indonesian), "en" (English), "auto" (detect), etc.
+    /// Speech recognition language: "auto" (follows Indonesian UI or auto-detects), "id", "en", etc.
     pub language: String,
 }
 
@@ -141,7 +141,7 @@ impl Default for Prefs {
             voice_gender: "female".into(),
             one_tap_hands_free: false,
             engine: "whisper".into(),
-            language: "id".into(),
+            language: "auto".into(),
         }
     }
 }
@@ -611,5 +611,7 @@ mod tests {
         assert_eq!(p.key, FlowKey::RightAlt);
         assert_eq!(p.keep_days, 30);
         assert!(p.open_at_launch);
+        assert_eq!(p.engine, "whisper");
+        assert_eq!(p.language, "auto");
     }
 }

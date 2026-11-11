@@ -179,9 +179,81 @@ fn downloads() -> &'static Mutex<Downloads> {
     }))
 }
 
+struct SpeechPrefs {
+    engine: String,
+    language: String,
+}
+
+fn speech_prefs() -> &'static Mutex<SpeechPrefs> {
+    static P: OnceLock<Mutex<SpeechPrefs>> = OnceLock::new();
+    P.get_or_init(|| Mutex::new(SpeechPrefs {
+        engine: "whisper".into(),
+        language: "auto".into(),
+    }))
+}
+
+/// Keeps the speech module in step with Flow's preferred engine and language.
+pub fn set_prefs(engine: &str, language: &str) {
+    let mut p = speech_prefs().lock().unwrap_or_else(|e| e.into_inner());
+    p.engine = if engine.trim() == "parakeet" { "parakeet".into() } else { "whisper".into() };
+    let lang = language.trim();
+    p.language = if lang.is_empty() { "auto".into() } else { lang.into() };
+}
+
+/// Picks the engine to run: the requested or preferred one when its models are
+/// on disk, else whichever model set is already installed, else the wanted one.
+pub fn resolve_engine(requested: Option<&str>, whisper_present: bool, parakeet_present: bool) -> &'static str {
+    let wanted = match requested.map(str::trim).filter(|s| !s.is_empty()) {
+        Some("parakeet") => "parakeet",
+        Some("whisper") => "whisper",
+        _ => {
+            let pref = speech_prefs().lock().unwrap_or_else(|e| e.into_inner()).engine.clone();
+            if pref == "parakeet" { "parakeet" } else { "whisper" }
+        }
+    };
+    match (wanted, whisper_present, parakeet_present) {
+        ("parakeet", _, true) => "parakeet",
+        ("whisper", true, _) => "whisper",
+        (_, true, false) => "whisper",
+        (_, false, true) => "parakeet",
+        ("parakeet", false, false) => "parakeet",
+        _ => "whisper",
+    }
+}
+
+/// Normalizes a dictation language preference to Whisper's ISO 639-1 code, or
+/// `None` when Whisper should auto-detect the spoken language from audio.
+///
+/// When `requested` is `"auto"` (or empty/`None` and the stored preference is
+/// `"auto"`): returns `Some("id")` when the interface/system language `ui_lang`
+/// is Indonesian (`"id"`), so short Indonesian phrases and wake words are not
+/// misdetected as Malay or English; otherwise returns `None` so Whisper runs
+/// multilingual auto-detection instead of forcing Indonesian on non-Indonesian users.
+pub fn resolve_whisper_language(requested: Option<&str>, ui_lang: &str) -> Option<String> {
+    let raw = match requested.map(str::trim).filter(|s| !s.is_empty()) {
+        Some(s) => s.to_string(),
+        None => speech_prefs().lock().unwrap_or_else(|e| e.into_inner()).language.clone(),
+    };
+    let tag = raw.trim().replace('_', "-").to_lowercase();
+    if tag.is_empty() || tag == "auto" {
+        let ui_base = ui_lang.trim().replace('_', "-").to_lowercase();
+        let ui_primary = ui_base.split('-').next().unwrap_or("");
+        if ui_primary == "id" {
+            return Some("id".into());
+        }
+        return None;
+    }
+    let primary = tag.split('-').next().unwrap_or("");
+    if primary.is_empty() {
+        return None;
+    }
+    Some(primary.to_string())
+}
+
 /// Computes the state of models for settings and status events.
 pub fn status() -> ModelsStatus {
     let d = downloads().lock().unwrap();
+    let pref = speech_prefs().lock().unwrap_or_else(|e| e.into_inner());
 
     let parakeet = if d.running && d.target == "parakeet" {
         ModelState::Downloading { fraction: d.fraction }
@@ -211,13 +283,7 @@ pub fn status() -> ModelsStatus {
         ModelState::Missing
     };
 
-    let active_engine = if WHISPER.is_present() {
-        "whisper".to_string()
-    } else if PARAKEET.is_present() {
-        "parakeet".to_string()
-    } else {
-        "whisper".to_string()
-    };
+    let active_engine = resolve_engine(Some(&pref.engine), WHISPER.is_present(), PARAKEET.is_present()).to_string();
 
     let download_mb = if active_engine == "whisper" {
         (WHISPER.total_size() + DIARIZER.total_size()) / 1_000_000
@@ -229,7 +295,7 @@ pub fn status() -> ModelsStatus {
         parakeet,
         whisper,
         active_engine,
-        language: "id".into(),
+        language: pref.language.clone(),
         download_mb,
     }
 }
@@ -238,7 +304,7 @@ pub fn is_ready() -> bool {
     WHISPER.is_present() || PARAKEET.is_present()
 }
 
-fn emit_status(app: &AppHandle) {
+pub fn emit_status(app: &AppHandle) {
     let _ = app.emit("speech-models", status());
     crate::voice::sync(app);
 }
@@ -383,25 +449,18 @@ pub fn recognizer() -> Option<Arc<OfflineRecognizer>> {
 
 /// The loaded recognizer for a given engine and language.
 pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<Arc<OfflineRecognizer>> {
-    let eng = match engine {
-        Some("parakeet") => "parakeet",
-        Some("whisper") => "whisper",
-        _ => {
-            if WHISPER.is_present() {
-                "whisper"
-            } else if PARAKEET.is_present() {
-                "parakeet"
-            } else {
-                "whisper"
-            }
-        }
+    let eng = resolve_engine(engine, WHISPER.is_present(), PARAKEET.is_present());
+    let whisper_lang = resolve_whisper_language(language, crate::i18n::current());
+    let effective_lang = if eng == "whisper" {
+        whisper_lang.as_deref().unwrap_or("auto").to_string()
+    } else {
+        "all".to_string()
     };
-    let lang = language.unwrap_or("id");
 
     {
         let slot = recognizer_slot().lock().unwrap();
         if let Some(active) = slot.as_ref() {
-            if active.engine == eng && active.language == lang {
+            if active.engine == eng && active.language == effective_lang {
                 return Some(active.recognizer.clone());
             }
         }
@@ -411,7 +470,7 @@ pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<A
     {
         let slot = recognizer_slot().lock().unwrap();
         if let Some(active) = slot.as_ref() {
-            if active.engine == eng && active.language == lang {
+            if active.engine == eng && active.language == effective_lang {
                 return Some(active.recognizer.clone());
             }
         }
@@ -422,11 +481,6 @@ pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<A
             return None;
         }
         let mut config = OfflineRecognizerConfig::default();
-        let whisper_lang = if lang == "auto" {
-            None
-        } else {
-            Some(lang.to_string())
-        };
         config.model_config.whisper = OfflineWhisperModelConfig {
             encoder: Some(WHISPER.path("turbo-encoder.int8.onnx")),
             decoder: Some(WHISPER.path("turbo-decoder.int8.onnx")),
@@ -442,7 +496,7 @@ pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<A
         let started = Instant::now();
         let rec = OfflineRecognizer::create(&config).map(Arc::new);
         match &rec {
-            Some(_) => crate::log::line(format!("Whisper ({lang}) loaded in {:?}", started.elapsed())),
+            Some(_) => crate::log::line(format!("Whisper ({effective_lang}) loaded in {:?}", started.elapsed())),
             None => crate::log::line("Whisper could not be loaded"),
         }
         rec
@@ -471,7 +525,7 @@ pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<A
     if let Some(loaded) = &r {
         *recognizer_slot().lock().unwrap() = Some(ActiveRecognizer {
             engine: eng.to_string(),
-            language: lang.to_string(),
+            language: effective_lang,
             recognizer: loaded.clone(),
         });
     }
@@ -480,7 +534,22 @@ pub fn recognizer_with(engine: Option<&str>, language: Option<&str>) -> Option<A
 
 /// Loads the model in the background, so the first dictation is not slowed down.
 pub fn preload() {
-    if !is_ready() || recognizer_slot().lock().unwrap().is_some() {
+    if !is_ready() {
+        return;
+    }
+    let eng = resolve_engine(None, WHISPER.is_present(), PARAKEET.is_present());
+    let whisper_lang = resolve_whisper_language(None, crate::i18n::current());
+    let effective_lang = if eng == "whisper" {
+        whisper_lang.as_deref().unwrap_or("auto")
+    } else {
+        "all"
+    };
+    if recognizer_slot()
+        .lock()
+        .unwrap()
+        .as_ref()
+        .is_some_and(|a| a.engine == eng && a.language == effective_lang)
+    {
         return;
     }
     std::thread::spawn(|| {
@@ -665,6 +734,33 @@ mod tests {
                 assert!(f.url.starts_with("https://huggingface.co/"), "{}", f.name);
             }
         }
+    }
+
+    #[test]
+    fn whisper_language_follows_preference_and_ui_fallback() {
+        // Auto mode pins "id" when the UI language is Indonesian, and uses Whisper native
+        // language auto-detection (None) for other UI languages.
+        assert_eq!(resolve_whisper_language(Some("auto"), "id").as_deref(), Some("id"));
+        assert_eq!(resolve_whisper_language(Some("auto"), "id-ID").as_deref(), Some("id"));
+        assert_eq!(resolve_whisper_language(Some(""), "id").as_deref(), Some("id"));
+        assert_eq!(resolve_whisper_language(Some("auto"), "en"), None);
+        assert_eq!(resolve_whisper_language(Some("auto"), "fr"), None);
+
+        // Explicit language selection overrides UI language and normalizes regional tags.
+        assert_eq!(resolve_whisper_language(Some("id"), "en").as_deref(), Some("id"));
+        assert_eq!(resolve_whisper_language(Some("en"), "id").as_deref(), Some("en"));
+        assert_eq!(resolve_whisper_language(Some("zh-Hans"), "en").as_deref(), Some("zh"));
+        assert_eq!(resolve_whisper_language(Some("pt-BR"), "id").as_deref(), Some("pt"));
+    }
+
+    #[test]
+    fn engine_resolution_falls_back_to_installed_model() {
+        assert_eq!(resolve_engine(Some("whisper"), true, false), "whisper");
+        assert_eq!(resolve_engine(Some("whisper"), false, true), "parakeet");
+        assert_eq!(resolve_engine(Some("parakeet"), false, true), "parakeet");
+        assert_eq!(resolve_engine(Some("parakeet"), true, false), "whisper");
+        assert_eq!(resolve_engine(Some("whisper"), false, false), "whisper");
+        assert_eq!(resolve_engine(Some("parakeet"), false, false), "parakeet");
     }
 }
 
