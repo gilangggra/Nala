@@ -4,23 +4,23 @@
 
 # Nala
 
-**A tiny friend that lives in your Mac's notch — or at the top of your screen on Windows and Linux — and keeps an eye on your AI coding agent sessions. And now on your phone too: iPhone and Android.**
+**The intelligent notch companion & dynamic island for AI coding agents.**  
+*Available on macOS, Windows, Linux, iOS, and Android.*
 
-Approve permissions, watch your agents work, drop a file, chat with Claude — all without leaving what you're doing. Walk away from your computer and Mochi follows you to your phone: Lock Screen, Dynamic Island, widgets, Siri.
+Approve permissions, monitor agent sessions in real-time, inspect diffs, drop files, and chat with AI models — all without breaking your flow. Step away from your desk, and your companion seamlessly follows you to your phone with live updates, widgets, and biometric approvals.
 
-**New in 0.5: Nala is a real desktop app.** Hold a key anywhere, speak, let go: your words are pasted where you type, like Wispr Flow — free, open source, and offline with Parakeet. Record your calls without a bot in the meeting and get the transcript, the summary and the to-dos.
+Hold a key anywhere to dictate with offline AI speech recognition, or record meeting calls locally to get automated transcripts, summaries, and action items — free, open-source, and private.
 
-[![Version](https://img.shields.io/github/v/release/gilangggra/Nala?filter=v*&label=version&color=0A84FF)](https://github.com/gilangggra/Nala/releases)
-![macOS 15+](https://img.shields.io/badge/macOS-15%2B-black?logo=apple)
-![iOS 18+](https://img.shields.io/badge/iOS-18%2B-black?logo=apple)
-![Android 11+](https://img.shields.io/badge/Android-11%2B-3DDC84?logo=android&logoColor=white)
-![Windows 10/11](https://img.shields.io/badge/Windows-10%2F11-0078D4?logo=windows&logoColor=white)
+[![Releases](https://img.shields.io/github/v/release/gilangggra/Nala?label=release&color=0A84FF)](https://github.com/gilangggra/Nala/releases)
+![macOS](https://img.shields.io/badge/macOS-15%2B-black?logo=apple)
+![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4?logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-AppImage%20%7C%20deb%20%7C%20rpm-FCC624?logo=linux&logoColor=black)
-![Swift 6](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)
-![SwiftUI](https://img.shields.io/badge/SwiftUI-native-0A84FF)
-![Tauri 2](https://img.shields.io/badge/Tauri-2-FFC131?logo=tauri&logoColor=black)
+![iOS](https://img.shields.io/badge/iOS-18%2B-black?logo=apple)
+![Android](https://img.shields.io/badge/Android-11%2B-3DDC84?logo=android&logoColor=white)
 ![Code: MIT](https://img.shields.io/badge/code-MIT-green)
 ![GitHub stars](https://img.shields.io/github/stars/gilangggra/Nala?style=social)
+
+<br>
 
 <img src="docs/media/demo.gif" width="760" alt="Nala in action">
 
@@ -28,111 +28,137 @@ Approve permissions, watch your agents work, drop a file, chat with Claude — a
 
 ---
 
-## Why
+## 📑 Table of Contents
+
+- [Why Nala?](#why-nala)
+- [Meet Mochi](#meet-mochi)
+- [Flow: Voice Dictation & Call Notetaker](#flow-voice-dictation--call-notetaker)
+- [Core Features](#core-features)
+- [Mobile Companions](#mobile-companions)
+  - [Nala on iPhone](#nala-on-iphone)
+  - [Nala for Android](#nala-for-android)
+- [Interactive Gestures](#interactive-gestures)
+- [Demo Mode](#demo-mode)
+- [Installation](#installation)
+  - [macOS](#macos)
+  - [Windows](#windows)
+  - [Linux](#linux)
+  - [NixOS](#nixos)
+  - [iPhone](#iphone)
+  - [Android](#android)
+  - [Build from Source](#build-from-source)
+- [Setup & Hooks](#setup--hooks)
+  - [Supported Agents](#supported-agents)
+  - [WhatsApp Integration](#whatsapp-experimental)
+- [How It Works](#how-it-works)
+- [Release Notes](#release-notes)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Why Nala?
 
 Some studios showed off gorgeous notch companions… and never let anyone use them.
-**Nala is the open version.** Every line of code is open source under the MIT License: read it, fork it, learn from it. The Nala name, character and the sounds stay © Gilang Ramadan (see [License](#license)).
 
-Meet **Mochi**: a soft little squircle with big eyes that pops out of your notch, waves hello, follows your cursor with its eyes, gets annoyed when you poke it (and dizzy if you insist), and tells you the moment Claude Code needs you.
+**Nala is the open-source alternative.** Every line of code is open source under the MIT License: read it, fork it, customize it, and learn from it.
 
-## Nala on the Mac: dictation, notes, one window
+Developers spend their days interacting with autonomous AI coding agents like Claude Code, Codex, Cursor, Gemini CLI, and Antigravity. Constantly switching context to your terminal just to click "Allow" breaks your creative focus. Nala brings your agents into your peripheral vision through a native notch companion or smooth desktop island that lets you approve commands, watch progress, and take action with zero friction.
+
+---
+
+## Meet Mochi
+
+**Mochi** is your desktop companion: a soft little squircle with big, curious eyes that lives in your notch (or slides out from the top of your screen on Windows and Linux).
+
+- 👋 **Alive and responsive** — waves hello on launch, blinks, breathes, and follows your cursor across the display.
+- 🎯 **Agent-aware** — celebrates when your agent finishes a task, gets dizzy when clicked repeatedly, and raises alerts when input is needed.
+- 🖥️ **Desktop freedom** — drag Mochi out of the notch to float anywhere on your desktop as an interactive desktop pet.
+- 👗 **Wardrobe & themes** — customize Mochi's appearance with outfits, accessories, and seasonal costumes.
+
+---
+
+## Flow: Voice Dictation & Call Notetaker
 
 <div align="center">
-<img src="docs/media/hub-dictation.png" width="760" alt="The Nala window: the Dictation page with today's dictations, words dictated, speed and days in a row">
+<img src="docs/media/hub-dictation.png" width="760" alt="The Nala window: Dictation page">
 </div>
 
-Since 0.4, Nala has its own window and sits in the Dock. On the left, **Flow** — everything about your voice — and **Notch**, all the settings of the island. *(macOS, GitHub build)*
+Nala includes a complete desktop voice suite built right in:
 
-- 🎙️ **Flow dictation** — hold a key anywhere on the Mac (right ⌥ by default, or fn, right ⌘ or right ⌃), speak, let go: your words are pasted where you type, in any app. Two quick taps for hands-free (or one, with a setting), Esc to cancel, ⌃⌘V to paste the last one again. Your clipboard gets back what it held.
-- 💊 **The pill** — a small see-through pill at the bottom of the screen (or on its left or right edge). Hover it for a toolbar: dictate, record a call, open Nala. While you speak, Mochi listens and nine dots follow your voice.
-- 🦜 **Parakeet, offline** — run NVIDIA's Parakeet on your Mac's Neural Engine through [FluidAudio](https://github.com/FluidInference/FluidAudio): more accurate, 25 languages, nothing leaves your Mac. One click to download (about 650 MB), Apple silicon only. Until then the Mac's own recognition is used.
-- ✍️ **Your words, your way** — a dictionary of names Nala always spells right, replacements, snippets (say a short phrase, paste a whole text), and an optional clean-up by Claude, on your Claude plan through Claude Code or with your own key: as said, natural or polished, per app.
-- 📝 **Notetaker** — click Record a call: Nala records your microphone and what your Mac plays, no bot joins the call. Then you get the transcript person by person, a summary, the key points and the to-dos, written by Claude with your key or by Apple Intelligence on your Mac. The audio is deleted once the transcript is written. Tell the people in the call that you record.
-- 📊 **Statistics** — words dictated, time saved, words per minute, days in a row and the apps you dictate in. Counted on your Mac, never sent anywhere.
-
-<table>
-<tr>
-<td width="33%"><img src="docs/media/hub-statistics.png" alt="Statistics: words dictated, time saved, speed, words per day and where you dictate"></td>
-<td width="33%"><img src="docs/media/hub-styles.png" alt="Styles: an optional clean-up by Claude, as said, natural or polished, per app"></td>
-<td width="33%"><img src="docs/media/hub-settings.png" alt="Settings: the key to hold, where the pill is, hands-free, paste again and cancel"></td>
-</tr>
-</table>
-
-Flow dictation and the Notetaker are on the Mac for now; Windows and Linux are next.
-
-## Features
-
-- 🤖 **Claude Code, Cursor, Codex, Gemini CLI, Antigravity, Copilot CLI, Muse Code, OpenCode, Amp, Hermes, Claude Desktop and other agents, live** — see every session in your notch: what it reads, edits and runs, step by step. Tag a hook payload with `coucou_agent` to give any agent its own pill (see [`docs/AGENTS.md`](docs/AGENTS.md)). Finished? Mochi does a happy little jump.
-- See what Claude is editing, live in the notch: each file modification shows the file name and +N −M counts in the ticker, tap to read the full diff
-- ✅ **Approve and answer from the notch** — Claude Code permission requests show up with **Allow / Deny / Always**; `AskUserQuestion` prompts show the choices right in the notch (single or multi-select, up to 4 questions). One click, or "Reply in terminal" to fall back to the CLI. Codex also gets Allow / Deny.
-- 🧑‍💻 **Jump to the right terminal** — open the exact terminal window of a session *(macOS)*.
-- 💬 **Chat with Claude, Gemini, OpenAI, DeepSeek, Qwen, Moonshot, or a local model (Ollama / LM Studio)** — click the model name above the chat box to switch provider and pick a model. Cloud providers use your own API key; local providers connect to a server running on your Mac. **No API key? Use your subscription**: switch it on in Settings → Chat and the chat goes through the official terminal tool you already pay for, signed in with your own account — Claude Code, Antigravity CLI or Gemini CLI, Codex CLI (ChatGPT), Cursor CLI or GitHub Copilot CLI *(GitHub build, Windows, Linux)*. *(Gemini, OpenAI, DeepSeek, Qwen, Moonshot and local models: macOS)*
-- 📈 **Portfolio pill** *(macOS)* — track your crypto across 16 networks (Bitcoin, Ethereum, Solana, Polygon, BNB, Avalanche, Arbitrum, Optimism, Base, Dogecoin, Litecoin, TRON, XRP, Cardano, Cosmos, NEAR) and 5 exchanges (Binance, OKX, Bybit, Kraken, Coinbase) in the notch. Live balances, 7-day sparklines and 24-hour price change per holding. Read-only API keys for exchanges, public addresses for wallets — nothing leaves your Mac.
-- 📊 **Claude plan usage** *(macOS, GitHub build)* — a small pill in the notch header shows your 5-hour and weekly Claude plan limits. Enable it from Settings → Agents → Plan usage. Pro and Max plans only.
-- 📊 **Codex plan usage** *(macOS, GitHub build)* — a Codex pill next to it shows your Codex limits and how many free resets you have left, read from the Codex CLI. Turn it on in Settings → Agents → Plan usage.
-- 📋 **Declare the tools you use** — open Settings → Active pills and pick your main workspace tool (VS Code, Cursor, Codex or Antigravity), then toggle up to 4 more: Gemini CLI, Anthropic, Google AI, OpenAI, Ollama, LM Studio and service integrations *(macOS)*.
-- ✉️ **Mail in the notch** *(macOS GitHub build: Apple Mail; Windows: classic Outlook)* — search every inbox and filter (Unread, Important, Today), read a message and act on it: reply, mark as read, important, junk. Nala → Mail sorts new messages for you with your rules, banned words and VIPs, every action listed with Undo; nothing is ever deleted. Turn on **Mail** in the chat and the AI can prepare a plan — sorting, reply drafts, a mail merge with each recipient's page of a PDF — that runs only when you click Run.
-- 📎 **Drop a file on the notch** — Mochi turns into a box and swallows it, then ask a question about it or send it by email *(email: macOS, Mail.app)*.
-- 🖥️ **Mochi on the desktop** — drag Mochi out of the island to set him loose on your desktop: he floats as a 120 pt companion, follows your cursor, wears his outfit, reacts to alerts by flying home and flying back, and comes back where you left him on next launch.
-- 🪟 **Drag Mochi onto any window** — attach that window as context for Claude *(macOS)*.
-- 🔌 **Integrations** — Stripe payments, n8n workflows, GitHub (open PRs, reviews requested, CI status), Vercel deployments, Resend emails, Notion, Cal.com. Each one gets its own little colored Mochi.
-- 🎵 **Apple Music pill** *(macOS, GitHub build)* — add the Apple Music pill in Settings → Active pills to see what's playing and control playback from the notch; Mochi dances while it plays.
-- 🎧 **Spotify pill** *(macOS, GitHub build)* — add the Spotify pill in Settings → Active pills: album cover, title and artist, a progress bar you drag to seek, play/pause, previous/next, shuffle, repeat and volume, right from the notch; Mochi dances while it plays.
-- 👗 **Dress Mochi up** — right-click him for the wardrobe. He also dresses up for the seasons on his own.
-- ⌨️ **Keyboard shortcuts** — open the chat, jump to an alert or a terminal, switch pills, mute, send Mochi to the desktop or open the wardrobe from anywhere; all customizable in Settings → Shortcuts.
-- 🎭 **A real character** — idle breathing, blinks, eyes on a sphere that follow your mouse, emotes, 28 handcrafted sounds, a greeting on launch.
-- 🔊 **Your own sounds** *(macOS)* — drop a file named like one of Mochi's sounds (`finish.wav`, `approval.mp3`…) in Settings → General → Sound → **Open sounds folder** to replace it.
-- 🗣️ **« OK Nala »** *(macOS, GitHub build)* — talk to Mochi like Jarvis. Say « OK Nala », then ask: « how much did I make on Stripe today? », « swap GitHub for Stripe », « play some Daft Punk », « who won the game last night? », « send an email to Enzo to tell him the image is ready ». Claude is the brain (your own Anthropic API key, set in Settings → Chat); speech recognition runs on your Mac, and only your words and the data Nala reads to answer go to Anthropic, never audio. Mochi listens, thinks and answers out loud; emails open in the notch and leave only when you click Send. Settings → Voice.
-- 🎙️ **Dictate in the chat** *(macOS, GitHub build)* — click the mic next to the chat field and talk in any of your languages (Nala picks the one you spoke, or right-click the mic to choose); speech recognition runs on your Mac when it supports it.
-- ↘️ **The notch or a corner** *(macOS, GitHub build)* — put Nala in any corner of the screen: drag Mochi there, or Settings → General → Display → Position. A small tile with Mochi at rest; open, the other pills sit on a quarter circle around him.
-- 🔎 **Search the settings** — type in the Nala window's sidebar to find any setting *(macOS GitHub build, Windows, Linux)*.
-- 🫥 **Invisible when idle** — hides away when nothing is running, peeks out when you hover the notch (the top edge of the screen on Windows and Linux).
-- 🖥️ **Any Mac, notch or not** — on an iMac, a Mac mini, or a MacBook with its lid closed on an external display, Mochi sits in a small bar at the top of the screen. With several displays, pick his screen in Settings → General, or let him follow your mouse *(macOS)*.
-- 📱 **Nala on iPhone** — your sessions, approvals and services in your pocket, with Live Activities, widgets and Siri. See [Nala on iPhone](#nala-on-iphone).
-- 🤖 **Nala for Android** — your agents, approvals with your fingerprint, questions, chat and home-screen widgets on an Android phone, linked to Nala on Windows or Linux over your Wi-Fi. See [Nala for Android](#nala-for-android).
-- 📅 **Weekly recap** *(macOS)* — every Monday morning Nala shows a summary of the past week: time coding, sessions, files, lines changed, commands, permissions, top agent and project, busiest day and longest session. Share it as a 1080 × 1920 image with Mochi — project names optional. All local, no sync.
-- 🌍 **16 languages** — English, 简体中文, 繁體中文, हिन्दी, Español, العربية, Français, বাংলা, Português, Русский, Bahasa Indonesia, Deutsch, Türkçe, ไทย, 한국어, 日本語. Pick one in Settings → General → Language; Traditional Chinese and Thai are on the Mac only for now. Community translations welcome.
-- 🔒 **Private by design** — no telemetry, no account. Keys live in your macOS Keychain, Windows Credential Manager or Linux Secret Service (GNOME Keyring, KWallet). The app only talks to the services you plug in (and, once you agree, to GitHub's releases API to tell you about new versions).
-
-## Nala on iPhone
-
-The Mac app does the work; the iPhone app keeps you in the loop when you step away. It goes as far into the Apple ecosystem as a dev tool can:
+- 🎙️ **Flow Dictation** — Hold a hotkey anywhere on your system (Right ⌥, fn, Right Ctrl, etc.), speak naturally, and release: your words are instantly pasted into whichever app is active. Includes double-tap hands-free mode, Esc to cancel, and clipboard preservation.
+- 💊 **Floating Pill** — A subtle, translucent pill resting on your screen edge. Hover to access quick actions: dictate, record, or open settings. Nine reactive dots dance to your voice as you speak.
+- 🦜 **Offline Parakeet Engine** — Run NVIDIA's Parakeet model directly on your device via neural hardware acceleration. Highly accurate across 25 languages with zero audio ever leaving your machine.
+- ✍️ **Intelligent Text Polishing** — Configure a custom dictionary of names and technical terms, define snippet expansions, and optionally polish text with AI (as said, natural, or professional).
+- 📝 **Private Call Notetaker** — Record your microphone and computer audio with zero awkward third-party meeting bots. Generates speaker-separated transcripts, summaries, and actionable to-do lists locally or via your preferred AI provider. Audio is deleted once the transcript is complete.
+- 📊 **Local Analytics** — Track dictated word counts, time saved, typing speed (WPM), and app usage — all calculated locally and never synced externally.
 
 <table>
 <tr>
-<td colspan="3" align="center"><img src="docs/media/iphone-live-activity.jpg" width="520" alt="Mochi on the Lock Screen, waiting for your OK with Deny and Allow"></td>
-</tr>
-<tr>
-<td width="33%"><img src="docs/media/iphone-approval.jpg" alt="A permission request on the iPhone, Allow with Face ID"></td>
-<td width="33%"><img src="docs/media/iphone-session.jpg" alt="A Claude Code session on the iPhone: the prompt, what it did, Claude's answer and the next instruction"></td>
-<td width="33%"><img src="docs/media/iphone-widgets.jpg" alt="Home Screen widgets with each agent's and service's Mochi"></td>
+<td width="33%"><img src="docs/media/hub-statistics.png" alt="Statistics: words dictated, time saved, speed, words per day"></td>
+<td width="33%"><img src="docs/media/hub-styles.png" alt="Styles: AI text clean-up per app"></td>
+<td width="33%"><img src="docs/media/hub-settings.png" alt="Settings: hotkey, positioning, hands-free"></td>
 </tr>
 </table>
 
-- 🏝️ **Live Activity and Dynamic Island** — lock your Mac while an agent works and Mochi moves to your iPhone's Lock Screen and Dynamic Island with the agent's state, then comes back to the notch when you unlock. **Allow** or **Deny** a permission right from the Lock Screen, without opening the app.
-- 🔔 **Notifications you can act on** — Allow, Review or Deny a permission, pick an answer to Claude's question, or reply to a finished agent, straight from the notification.
-- 🔐 **Face ID on every Allow** — nothing runs on your Mac without your explicit tap; your Mac only applies a decision meant for the exact request it is waiting on.
-- 💬 **Talk to your agents** — follow each session live (steps, diffs, the last turn), answer questions, and send the next instruction to your Mac by text or voice.
-- 🧩 **Widgets, Control Center, Siri and Shortcuts** — home and Lock Screen widgets, a Control Center control, ask Siri how your agents are doing or send Claude an instruction, in Siri and Shortcuts.
-- 🔎 **Spotlight and Focus** — find past turns in Spotlight; a Focus filter shows only the agents waiting for you.
-- 📊 **Your services up close** — GitHub, Vercel, Stripe, Cal.com, n8n, Notion, Resend: your Mac reads their APIs with the keys in its Keychain and the iPhone shows the figures and lists. Safe actions (re-run CI, redeploy, merge a PR, pause a workflow) behind Face ID; nothing that moves money or sends an email.
-- 🫧 **Liquid Glass, native to the bone** — SwiftUI, tabs, zoom transitions, context menus, swipe actions, alternate icons, Mochi at 120 Hz.
-- 🔒 **Through your own iCloud** — sessions sync through your private CloudKit database; project names, commands and questions are encrypted with your iCloud keys. No Nala server sees your projects, commands or keys. Turn it on in the Mac app: Settings → General → iPhone.
+---
 
-**Get it on your iPhone in 3 steps:** install Nala on your iPhone ([Join the TestFlight beta](https://testflight.apple.com/join/3GpeHv2b) — free, App Store coming soon), turn on **Settings → General → iPhone** in the Mac app (0.1.9 or later), and use the same Apple Account in iCloud on both. Full guide, troubleshooting and build-it-yourself: [docs/IPHONE.md](docs/IPHONE.md).
+## Core Features
 
-## Nala for Android
+- 🤖 **Universal Coding Agent Hub** — Live monitoring for **Claude Code, Cursor, Codex, Gemini CLI, Antigravity, Copilot CLI, Muse Code, OpenCode, Amp, Hermes, Claude Desktop**, and custom agents. Watch file edits step-by-step with real-time `+N / -M` line counts and diffs.
+- ✅ **One-Click Approvals** — Claude Code permission prompts display directly in the island with **Allow / Deny / Always**. Interactive `AskUserQuestion` prompts support single and multi-select choices right from the notch.
+- 🧑‍💻 **Jump to Terminal** — Instantly bring the exact terminal window running your active session to the front.
+- 💬 **Multi-Model AI Chat** — Chat with Claude, Gemini, OpenAI, DeepSeek, Qwen, Moonshot, or local models via Ollama and LM Studio.
+- 💳 **Subscription Tunneling (No API Key Required)** — Route chat requests through the official CLI tools you already pay for (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot) without needing individual paid API keys.
+- 📈 **Crypto Portfolio Pill** — Track assets across 16 blockchains and 5 major exchanges with live balances, 7-day sparklines, and 24-hour price deltas. Uses read-only public keys — completely private.
+- 📊 **Plan Usage Gauges** — Monitor your Claude and Codex rate limits and reset countdowns at a glance.
+- ✉️ **Integrated Mail** — Search inboxes, apply smart filters (Unread, Important, Today), and trigger AI-assisted email sorting and drafting (Apple Mail on macOS, classic Outlook on Windows).
+- 📎 **Drag-and-Drop Ingestion** — Drop any file onto Mochi to summarize it, ask questions, or attach it to an email. Drag Mochi onto an app window to include it as context.
+- 🔌 **Productivity Integrations** — Dedicated pills for GitHub (PRs, reviews, CI status), Stripe revenue, Vercel deployments, Resend, Notion, and Cal.com.
+- 🎵 **Media Controller** — Apple Music and Spotify pills with album artwork, interactive seek bars, and playback controls while Mochi dances along.
+- 🗣️ **« OK Nala » Voice Control** — Voice interaction for system control, querying service balances, controlling music, and drafting emails.
+- 🌍 **Internationalization** — Native localization in 16 languages, including English, 简体中文, 繁體中文, हिन्दी, Español, العربية, Français, বাংলা, Português, Русский, Bahasa Indonesia, Deutsch, Türkçe, ไทย, 한국어, and 日本語.
+- 🔒 **Zero Telemetry, Private by Design** — No user accounts, no tracking. Credentials stay in your OS Keychain, Windows Credential Manager, or Linux Secret Service.
 
-**Nala for Android** brings Mochi to Android phones. It lives in [`android/`](android/).
+---
 
-- 🔐 **Approve from your phone** — a permission request rises over any screen, even on a locked phone; **Allow** needs your fingerprint or screen lock, **Deny** doesn't. A command too long to show in full can only be allowed on the computer.
-- 🧑‍💻 **Your agents at a glance** — the agent that needs you, the others below, plan usage and your services when the computer shares them.
-- 💬 **Answers and chat** — answer Claude Code's questions and chat through the computer's own AI keys (the keys never leave the computer).
-- 🏝️ **An island over other apps** *(optional)* — a black island drops from the camera cut-out while an agent works, plus a quick-settings tile and an ongoing notification.
-- 🧩 **Home-screen widgets** — nine of them, from a tiny Mochi to a big card with plan usage and quick buttons. Orange when something waits for you, blue while it works, green when it's done. Read-only: a request is always decided in the app.
-- 🔒 **Local and private** — the phone talks straight to your computer on your Wi-Fi, paired with a QR code and a pinned certificate. The phone link is **off by default**, and nothing listens until you turn it on.
+## Mobile Companions
 
-**Status:** tested on a real phone (Android 13) with the Windows app. The phone link is in **Nala 0.4.0 for Windows and Linux**. Download the signed APK from the [latest Android release](https://github.com/gilangggra/Nala/releases/tag/android-v0.3.0). Android needs Nala on **Windows or Linux** (not the Mac), Android 11 or later, and both on the same Wi-Fi. Full guide: [`android/README.md`](android/README.md).
+### Nala on iPhone
+
+When you step away from your desk, Nala transfers your active sessions to your iPhone:
+
+<table>
+<tr>
+<td colspan="3" align="center"><img src="docs/media/iphone-live-activity.jpg" width="520" alt="Mochi on the Lock Screen, waiting for approval"></td>
+</tr>
+<tr>
+<td width="33%"><img src="docs/media/iphone-approval.jpg" alt="A permission request on iPhone, Allow with Face ID"></td>
+<td width="33%"><img src="docs/media/iphone-session.jpg" alt="A Claude Code session on iPhone"></td>
+<td width="33%"><img src="docs/media/iphone-widgets.jpg" alt="Home Screen widgets"></td>
+</tr>
+</table>
+
+- 🏝️ **Live Activities & Dynamic Island** — Locking your Mac transitions Mochi to your iPhone's Dynamic Island and Lock Screen.
+- 🔐 **Face ID Biometric Approvals** — Approve or deny agent execution with Face ID confirmation. Your Mac only executes decisions matching active requests.
+- 💬 **Live Session Control** — Inspect terminal diffs, answer questions, and submit follow-up prompts using text or voice.
+- 🧩 **Widgets & Siri Shortcuts** — Home Screen widgets, Control Center tiles, and full Siri integration.
+- 🔒 **End-to-End iCloud Sync** — Sessions sync privately through your personal CloudKit database with client-side encryption. No third-party servers involved.
+
+*Full iPhone guide and configuration: [docs/IPHONE.md](docs/IPHONE.md).*
+
+---
+
+### Nala for Android
+
+The native Android app brings Mochi and your agents to Android devices:
+
+- 🔐 **Remote Biometric Approvals** — Permission requests appear over any screen or lock screen; approve with your fingerprint or device PIN.
+- 🏝️ **Floating Camera Island** — Dynamic overlay dropped from the camera punch-hole during active tasks, with a persistent quick-settings tile.
+- 🧩 **Custom Home Screen Widgets** — 9 distinct widgets providing agent status indicators, plan usage meters, and quick actions.
+- 🔒 **Direct Local Wi-Fi Pairing** — Connects directly to your computer over local Wi-Fi with QR pairing and pinned TLS certificates. Completely offline.
+
+*Full Android guide and setup: [android/README.md](android/README.md).*
 
 <table>
 <tr>
@@ -145,160 +171,108 @@ The Mac app does the work; the iPhone app keeps you in the loop when you step aw
 </tr>
 </table>
 
-## Versions
+---
 
-macOS releases are published as `v*` tags. See [CHANGELOG.md](CHANGELOG.md) for the full notes of each version.
+## Interactive Gestures
 
-| Version | Date | Highlights |
-|---------|------|------------|
-| [0.5.8](https://github.com/gilangggra/Nala/releases/tag/v0.5.8) | Oct 31, 2026 | Fixes by @Ohualtex: approvals and questions stay put, desktop Mochi stays visible, dropped files no longer overwrite each other |
-| [0.5.7](https://github.com/gilangggra/Nala/releases/tag/v0.5.7) | Oct 31, 2026 | Mail in the notch: search, filters, reading, automatic sorting with rules and Undo, mail plans from the chat; search the settings; Nala in a corner of the screen |
-| [0.5.6](https://github.com/gilangggra/Nala/releases/tag/v0.5.6) | Oct 30, 2026 | Chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot), switched on in Settings → Chat; Korean and Japanese |
-| [0.5.5](https://github.com/gilangggra/Nala/releases/tag/v0.5.5) | Oct 29, 2026 | Chat on your Claude plan with no API key; each session apart behind its pill, questions side by side; Claude Code on a remote machine |
-| [0.5.4](https://github.com/gilangggra/Nala/releases/tag/v0.5.4) | Oct 29, 2026 | Reliability: 25 community fixes — the hook server never gives up, your own hooks stay untouched, no crash without a mic, truer n8n, Stripe and GitHub pills |
-| [0.5.3](https://github.com/gilangggra/Nala/releases/tag/v0.5.3) | Oct 22, 2026 | Mochi turns blue when a new version waits; What's new and your Nala so far after each update; Buy Mochi a coffee |
-| [0.5.2](https://github.com/gilangggra/Nala/releases/tag/v0.5.2) | Oct 20, 2026 | New version in the notch, one click to install it; German, Turkish, Thai, Traditional Chinese; Homebrew; plan approval from the notch |
-| [0.5.1](https://github.com/gilangggra/Nala/releases/tag/v0.5.1) | Oct 18, 2026 | WhatsApp in one click: Nala installs and starts the gateway, no Terminal |
-| [0.5.0](https://github.com/gilangggra/Nala/releases/tag/v0.5.0) | Oct 18, 2026 | WhatsApp in the notch (experimental), Mochi feels your Mac, a screen capture for Claude, dictation that writes prompts or translates |
-| [0.4.0](https://github.com/gilangggra/Nala/releases/tag/v0.4.0) | Oct 14, 2026 | Nala becomes an app: Flow dictation anywhere, Parakeet offline, the Notetaker, a window in the Dock |
-| [0.3.0](https://github.com/gilangggra/Nala/releases/tag/v0.3.0) | Oct 11, 2026 | « OK Nala »: talk to Mochi, powered by Claude — pills, music, your services, web search, emails |
-| [0.2.3](https://github.com/gilangggra/Nala/releases/tag/v0.2.3) | Oct 8, 2026 | Terminal sessions, Spotify, a colour per Mochi, dictation in any language, open on hover, your own sounds |
-| [0.2.2](https://github.com/gilangggra/Nala/releases/tag/v0.2.2) | Oct 8, 2026 | Choose Mochi's screen, Claude Desktop pill, Codex plan usage, full questions, safer settings.json |
-| [0.2.1](https://github.com/gilangggra/Nala/releases/tag/v0.2.1) | Oct 7, 2026 | Hermes Agent support |
-| [0.2.0](https://github.com/gilangggra/Nala/releases/tag/v0.2.0) | Oct 6, 2026 | Copilot CLI, Muse Code, OpenCode and Amp, weekly recap, 10 languages |
-| [0.1.9](https://github.com/gilangggra/Nala/releases/tag/v0.1.9) | Oct 6, 2026 | iPhone services with live details and actions, smarter Live Activity |
-| [0.1.8](https://github.com/gilangggra/Nala/releases/tag/v0.1.8) | Oct 5, 2026 | Nala on iPhone: sessions, widgets, approvals with Face ID, Mochi in the Dynamic Island |
-| [0.1.7](https://github.com/gilangggra/Nala/releases/tag/v0.1.7) | Oct 4, 2026 | Keyboard shortcuts |
-| [0.1.6](https://github.com/gilangggra/Nala/releases/tag/v0.1.6) | Oct 4, 2026 | Mochi on the desktop |
-| [0.1.5](https://github.com/gilangggra/Nala/releases/tag/v0.1.5) | Oct 4, 2026 | Wardrobe and seasonal outfits, new launch greeting |
-| [0.1.4](https://github.com/gilangggra/Nala/releases/tag/v0.1.4) | Oct 3, 2026 | Live diffs, GitHub pull requests, CI, reviews and contribution grid |
-| [0.1.3](https://github.com/gilangggra/Nala/releases/tag/v0.1.3) | Oct 3, 2026 | Answer Claude's questions from the notch, plan usage, local models, Apple Music |
-| [0.1.2](https://github.com/gilangggra/Nala/releases/tag/v0.1.2) | Oct 2, 2026 | Codex and Cursor support, the permission card stays until you answer |
-| [0.1.1](https://github.com/gilangggra/Nala/releases/tag/v0.1.1) | Oct 2, 2026 | Gemini and OpenAI chat, Linux build, more agents and pills, security hardening |
-| [0.1.0](https://github.com/gilangggra/Nala/releases/tag/v0.1.0) | Sep 27, 2026 | First release: Mochi, Claude Code sessions, chat, file drop, integrations |
+| Action | Mochi's Reaction |
+|---|---|
+| Hover the notch / top screen edge | Peeks out and waves 👋 |
+| Click the island | Expands overview panel |
+| Hover over Mochi | Blinks and eyes enlarge |
+| Click Mochi | Squishes with an annoyed emote |
+| Rapid triple-click | 😵‍💫 Becomes dizzy temporarily |
+| Drop a file onto the island | Transforms into a box and swallows the file |
+| Drag Mochi onto an app window *(macOS)* | Attaches window context to chat |
+| Click AI model name in chat | Switches AI provider or model |
+| Say « OK Nala » | Activates listening mode |
+| Hold dictation hotkey and speak | Transcribes voice and pastes into active app |
 
-Windows and Linux are released together, under the `windows-v*` and `linux-v*` tags. The newest Windows installer is always at [`windows-latest`](https://github.com/gilangggra/Nala/releases/tag/windows-latest), the newest Linux AppImage at [`linux-latest`](https://github.com/gilangggra/Nala/releases/tag/linux-latest).
+---
 
-| Windows & Linux | Date | Highlights |
-|---------|------|------------|
-| 0.5.9 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.9) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.9) | Nov 3, 2026 | The island never disappears (Mochi or the time when closed), ✕ to fold it, dictation keeps your language, your own dictation key, silence while you speak |
-| 0.5.8 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.8) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.8) | Oct 31, 2026 | 14 fixes and features by @Ohualtex: permission requests queue, Claude Desktop cards and pill, plan usage in the compact island, Flow pill in a corner |
-| 0.5.7 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.7) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.7) | Oct 31, 2026 | Mail with classic Outlook on Windows: search, filters, automatic sorting, mail plans from the chat; search the settings |
-| 0.5.6 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.6) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.6) | Oct 30, 2026 | Chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot); Korean and Japanese |
-| 0.5.5 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.5) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.5) | Oct 29, 2026 | No API key? Your own Claude Code answers the chat, Flow's clean-up and the notes of a call, on your Claude plan |
-| 0.5.4 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.4) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.4) | Oct 29, 2026 | Reliability: 25 community fixes — the hook server never gives up, approval cards go when the terminal takes over, a sturdier Flow pill, WhatsApp group names |
-| 0.5.3 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.3) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.3) | Oct 22, 2026 | WhatsApp in the island (experimental): one-click gateway install, your chats and replies |
-| 0.5.2 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.2) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.2) | Oct 22, 2026 | Mochi turns blue when a new version waits, What's new after each update; GitLab and Gitea pills; the weekly recap on Android |
-| 0.5.1 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.1) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.1) | Oct 20, 2026 | New version in the island, one click to install it on Windows; German and Turkish; an optional clock; Linux idle CPU fixed |
-| 0.5.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.0) | Oct 15, 2026 | Catches up with the Mac: the Nala window, Flow dictation with Parakeet offline (X11 and Wayland), the Notetaker, « OK Nala » |
-| 0.4.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.4.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.4.0) | Oct 11, 2026 | Your Android phone: the link for Nala for Android — approvals with your fingerprint, answers, chat, off by default |
-| 0.3.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.3.0) · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.3.0) | Oct 9, 2026 | Linux catches up: Spotify with Mochi dancing, global shortcuts on Wayland, Open terminal brings the terminal back; open on hover, your own sounds, a colour per Mochi |
-| 0.2.0 · [Windows](https://github.com/gilangggra/Nala/releases/tag/windows-v0.2.0) | Oct 8, 2026 | Catches up with the Mac: nine agents with approvals, chat with any AI, plan usage, GitHub, wardrobe, 10 languages |
-| 0.1.1 · [Linux](https://github.com/gilangggra/Nala/releases/tag/linux-v0.1.1) | Oct 1, 2026 | First Linux build (beta) |
+## Demo Mode
 
-Nala for Android is released under the `android-v*` tags.
+Want to test Nala without setting up API keys or coding agents?
 
-| Android | Date | Highlights |
-|---------|------|------------|
-| [0.3.0](https://github.com/gilangggra/Nala/releases/tag/android-v0.3.0) | Oct 22, 2026 | A light theme and your phone's colours, nine more languages (Arabic right to left), quick actions, a Team widget, Share to Nala, the weekly recap, a per-agent mute |
-| [0.2.0](https://github.com/gilangggra/Nala/releases/tag/android-v0.2.0) | Oct 13, 2026 | Nine home-screen widgets: Mochi, your agents, plan usage and quick buttons, coloured by state |
-| [0.1.0](https://github.com/gilangggra/Nala/releases/tag/android-v0.1.0) | Oct 11, 2026 | First release: your agents, approvals with your fingerprint, answers and chat, linked to Windows or Linux |
+Open **Settings → General → Demo** and click **Try demo mode**. Nala will run a fully interactive scripted preview showcasing:
+- Live Claude Code session with real-time diffs and terminal steps.
+- Interactive permission requests and user question dialogs.
+- Pre-populated GitHub, Stripe, and Vercel integration pills.
+- Streamed AI chat responses and weekly recap visualizations.
 
-## Demo mode
+No files, keys, or hooks are modified during demo mode.
 
-No API key, no Claude Code, no setup — open **Settings → General → Demo**, click **Try demo mode**, and Nala walks through a scripted session: a Claude Code session with live steps and a diff you can read, a permission request, an AskUserQuestion, a parallel Codex session, the GitHub, Stripe, Vercel and other integration pills loaded with sample data, the chat with a streamed response, the weekly recap with a share image you can actually save.
+---
 
-Nothing is written to disk during the demo — no Keychain entries, no hook files, no recap history. Your real sessions and keys are saved and restored exactly as they were when you stop.
+## Installation
 
-## Install
+### macOS
 
-### App Store
-
-Nala is coming to the **Mac App Store** and the **iPhone App Store**: one click to install, automatic updates, and the iPhone app pairs with your Mac through your iCloud account, with nothing to configure. The links will be here as soon as Apple publishes them.
-
-The App Store build of the Mac app runs in Apple's sandbox, so some features stay in the GitHub build: agents other than Claude Code, Cursor and Claude Desktop (Codex, Gemini CLI, Antigravity, Copilot CLI…), Claude and Codex plan usage, the chat through your AI subscription, the Nala window (Flow dictation, the Notetaker, settings search), « OK Nala », Mail, WhatsApp, Apple Music, Spotify, the Portfolio pill, screen capture, attaching the front window to the chat, and updates from inside the app (the App Store updates it).
-
-### iPhone
-
-1. **Install Nala on your iPhone** (iOS 18 or later): install [TestFlight](https://apps.apple.com/app/testflight/id899247664) from the App Store, then [Join the TestFlight beta](https://testflight.apple.com/join/3GpeHv2b). The beta is free; Apple limits it to 10,000 testers. The App Store version is coming soon.
-   *Apple is reviewing the beta: it opens within a day or two — if the link isn't accepting testers yet, check back soon.*
-2. **On your Mac**, with Nala 0.1.9 or later: **Settings… → General → iPhone**, turn on **Show my agent sessions on my iPhone**, and **Move Mochi to my iPhone's Dynamic Island when my Mac is locked** for the Lock Screen.
-3. **Same Apple Account** in iCloud on the Mac and the iPhone. That's the whole link: no account, no pairing code.
-4. Open Nala on the iPhone, allow notifications, and start a Claude Code session on the Mac.
-
-Everything else, troubleshooting included, is in [docs/IPHONE.md](docs/IPHONE.md).
-
-### Android
-
-1. **Download** `Nala-Android-0.3.0.apk` from the [release page](https://github.com/gilangggra/Nala/releases/tag/android-v0.3.0) on your phone (Android 11 or later) and open it. Android asks once to allow installs from your browser or file manager. You can also [build it from source](#build-from-source).
-2. **On your computer**, install Nala **0.4.0 or later** for [Windows](#windows) or [Linux](#linux): **Settings → Android phone**, turn on **Phone link**. If Windows asks about the firewall, allow Nala on private networks.
-3. **Show pairing code** and scan it with the app. The phone and the computer must be on the same Wi-Fi.
-
-Everything else, troubleshooting included, is in [`android/README.md`](android/README.md).
-
-### Homebrew (macOS)
+#### Homebrew (Recommended)
 
 ```bash
 brew tap gilangggra/nala https://github.com/gilangggra/Nala
 brew install --cask nala
 ```
 
-It installs the same signed and notarized GitHub build as the download below. Nala then updates itself from the notch; `brew upgrade --cask --greedy nala` works too.
+To update in the future:
+```bash
+brew upgrade --cask --greedy nala
+```
 
-### Download for macOS
+#### Direct Download
 
-1. Grab the latest `Nala.zip` from [Releases](https://github.com/gilangggra/Nala/releases).
-2. Unzip and move **Nala.app** to `/Applications`.
-3. Launch it, and click **Open** when macOS asks you to confirm. Updating from 0.1.0? macOS may ask you, once for each key you saved, to let Nala use it: enter your Mac password and click **Always Allow**.
+1. Download the latest `Nala.zip` from [GitHub Releases](https://github.com/gilangggra/Nala/releases).
+2. Unzip and drag `Nala.app` to your `/Applications` directory.
+3. Launch the app and grant Accessibility/Microphone permissions when prompted for Flow dictation.
+
+---
 
 ### Windows
 
-Download **[Nala-Windows.msi](https://github.com/gilangggra/Nala/releases/download/windows-latest/Nala-Windows.msi)** or **[Nala-Windows-setup.exe](https://github.com/gilangggra/Nala/releases/download/windows-latest/Nala-Windows-setup.exe)** (Windows 10/11, always the newest version) and run it. You can also [build it from source](#build-from-source).
+Download the latest installer from [GitHub Releases](https://github.com/gilangggra/Nala/releases):
 
-**Windows will show a warning the first time — that's expected.** The installer isn't code-signed yet, so SmartScreen doesn't know the publisher:
+- **[Nala-Windows.msi](https://github.com/gilangggra/Nala/releases/download/windows-latest/Nala-Windows.msi)** — System-wide Windows Installer.
+- **[Nala-Windows-setup.exe](https://github.com/gilangggra/Nala/releases/download/windows-latest/Nala-Windows-setup.exe)** — Per-user installer (no administrative elevation needed).
 
-1. A **"Windows protected your PC"** screen appears, with *Publisher: Unknown publisher*.
-2. Click **More info** (*Informations complémentaires* in French). This reveals a **Run anyway** button.
-3. Click **Run anyway** (*Exécuter quand même*). The installer starts normally.
+> [!NOTE]
+> **SmartScreen Prompt**: If Windows displays an "Unknown publisher" warning, click **More info** → **Run anyway**. Nala is open source and cleanly verified by Microsoft Defender.
 
-This is only because the app isn't signed with a paid certificate yet. Nala is open source, and Microsoft Defender scans the installer as clean.
-
-**Windows and Linux 0.5.9** keep a small island at the top of the screen once it is closed (Mochi, the time or your Claude usage in it), fold it with ✕, keep your language when you dictate, take any dictation key you like and, on Windows, quiet the other apps while you speak. **0.5.8** bring 14 fixes and features by @Ohualtex: permission requests wait their turn, Claude Desktop cards on Windows and its pill on Linux, plan usage in the compact island. **0.5.7** bring **Mail** to Windows with classic Outlook (search, automatic sorting, mail plans from the chat) and a search field for the settings. **0.5.6** chat on your own AI subscription (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot) and speak Korean and Japanese. **0.5.5** answer on your Claude plan through Claude Code when no API key is saved. **0.5.4** bring 25 reliability fixes from the community. **0.5.3** bring **WhatsApp** to the island (experimental), with the gateway installed in one click. **0.5.2** turn Mochi blue when a new version waits and show what it brings after the update; they add **GitLab and Gitea** pills. **0.5.1** tell you when a new version is out (once you agree) and, on Windows, install it in one click; they also speak German and Turkish. **0.5.0** caught up with the Mac: Nala is now an app with its own window in the taskbar, **Flow dictation** anywhere (hold right Ctrl, speak, let go) with Parakeet running offline on your computer, the **Notetaker** for your calls, and **« OK Nala »** to talk to Mochi, powered by Claude with your key. On Linux, dictation works on X11 and Wayland. 0.4.0 paired with [Nala for Android](#nala-for-android): approve, answer and chat from your Android phone (Settings → Android phone, off by default). 0.3.0 added open on hover, your own sounds, a colour of your own for each Mochi and the Mochi-to-desktop shortcut; on Linux, the Spotify pill with Mochi dancing to it, global shortcuts on Wayland and "Open terminal" that brings the terminal forward. 0.2.0 caught up with the Mac: Codex, Copilot CLI, Muse Code and six more agents with approvals from the island, answers to Claude's questions, live diffs, GitHub pull requests and CI, plan usage, local models, the wardrobe, Mochi on the desktop, keyboard shortcuts, the weekly recap and 10 languages. See the [changelog](CHANGELOG.md).
-
-There is no notch on a PC, so the island slides out of the top edge of the screen
-instead of hiding inside one. See [`windows/README.md`](windows/README.md) for the
-rest of the differences.
-
-**New versions.** Once you agree (the island asks once, or Settings → General → Updates), Nala for Windows and Linux tells you when a new version is out; on Windows, **Update now** downloads the installer you used, checks its SHA-256 against the one GitHub publishes and installs it in one click. See [`windows/README.md`](windows/README.md#new-versions).
+---
 
 ### Linux
 
-**Nala for Linux 0.5.9** is out (x86_64): [AppImage](https://github.com/gilangggra/Nala/releases/download/linux-v0.5.9/Nala-Linux-0.5.9-x86_64.AppImage) · [.deb](https://github.com/gilangggra/Nala/releases/download/linux-v0.5.9/Nala-Linux-0.5.9-amd64.deb) · [.rpm](https://github.com/gilangggra/Nala/releases/download/linux-v0.5.9/Nala-Linux-0.5.9-x86_64.rpm) · [all files and checksums](https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.9). The newest AppImage is always at [`linux-latest`](https://github.com/gilangggra/Nala/releases/download/linux-latest/Nala-Linux-x86_64.AppImage).
+Download the latest Linux packages from [GitHub Releases](https://github.com/gilangggra/Nala/releases):
 
-- **AppImage** (any distribution): `chmod +x Nala-Linux-*.AppImage`, then run it.
-- **Debian / Ubuntu**: `sudo apt install ./Nala-Linux-*.deb`
-- **Fedora / openSUSE**: `sudo dnf install ./Nala-Linux-*.rpm`
+- **AppImage (Universal)**:
+  ```bash
+  chmod +x Nala-Linux-*.AppImage
+  ./Nala-Linux-*.AppImage
+  ```
+- **Debian / Ubuntu (.deb)**:
+  ```bash
+  sudo apt install ./Nala-Linux-*.deb
+  ```
+- **Fedora / openSUSE (.rpm)**:
+  ```bash
+  sudo dnf install ./Nala-Linux-*.rpm
+  ```
+- **Arch Linux**: Build using the included [PKGBUILD](linux/arch/PKGBUILD).
 
-Check a download with `sha256sum -c SHA256SUMS --ignore-missing`. On Arch Linux, build it with the [PKGBUILD](linux/arch/PKGBUILD); on NixOS, use the [flake](#nixos).
+On Wayland compositors supporting `gtk-layer-shell` (KDE Plasma, Hyprland, Sway, COSMIC), Nala docks seamlessly to the screen edge. On GNOME, it runs via XWayland as a top dock.
 
-The island sits on the top edge on compositors with layer-shell — COSMIC, KDE
-Plasma, Hyprland, Sway and other wlroots compositors. GNOME has no layer-shell,
-so there it runs through XWayland as a dock window at the top of the screen. See [`windows/README.md`](windows/README.md#linux).
+---
 
 ### NixOS
 
-Nala has a Nix flake for `x86_64-linux` and `aarch64-linux`. It builds Nala from source on your machine, so the first build takes a while (about 20 minutes on a laptop, mostly Rust).
+Nala provides a native Nix flake for `x86_64-linux` and `aarch64-linux`.
 
-**Try it** without installing anything:
-
+**Run directly:**
 ```bash
 nix run github:gilangggra/Nala
 ```
 
-Flakes not turned on yet? Add `--extra-experimental-features 'nix-command flakes'` after `nix`.
-
-**Install it** from your system flake:
-
+**Add to configuration.nix:**
 ```nix
 {
   inputs = {
@@ -321,51 +295,48 @@ Flakes not turned on yet? Add `--extra-experimental-features 'nix-command flakes
 }
 ```
 
-Then `sudo nixos-rebuild switch`. With Home Manager, the same package goes in `home.packages`. To build it against your own nixpkgs rather than the one pinned in Nala's `flake.lock`, add `nala.inputs.nixpkgs.follows = "nixpkgs";` (the flake is tested with nixos-unstable).
+---
 
-**Or through the overlay**, as `pkgs.nala`. Your nixpkgs then has to allow it (see *License* below):
+### iPhone
 
-```nix
-nixpkgs.overlays = [ nala.overlays.default ];
-nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "nala" ];
-environment.systemPackages = [ pkgs.nala ];
-```
+1. Install [TestFlight](https://apps.apple.com/app/testflight/id899247664) from the App Store.
+2. [Join the Nala TestFlight Beta](https://testflight.apple.com/join/3GpeHv2b).
+3. On your Mac: Open **Settings → General → iPhone** and enable **Show my agent sessions on my iPhone**.
+4. Ensure both devices share the same iCloud Apple Account.
 
-**Update** with `nix flake update nala`, then rebuild. The input follows `main`; to stay on releases, point it at a tag instead, like `github:gilangggra/Nala/linux-v0.6.0` (from the first release that has the flake). Nala's own update card only links to the release page on Linux, so it never touches your system.
+---
 
-**Good to know**
+### Android
 
-- **License.** The package is marked unfree: the code is MIT, but the name, Mochi, the icon and the sounds are not (see [LICENSE-ASSETS.md](LICENSE-ASSETS.md)). Building it for yourself is allowed, which is what the flake does; it also keeps Nala off public binary caches. The flake's `packages` allow it on their own; with the overlay, your config decides.
-- **Claude Code hooks** work as on any Linux. Nala copies its relay to `~/.local/share/nala/bin/` at each launch, so the hooks in `~/.claude/settings.json` keep working across updates and garbage collections. **Start at login** and the shortcut commands in Settings use `nala` from your `PATH`, for the same reason.
-- **API keys** go to the Secret Service. GNOME and Plasma have one; on Hyprland, Sway and other window managers, add `services.gnome.gnome-keyring.enable = true;`.
-- **On Wayland**, Flow dictation and global shortcuts go through `xdg-desktop-portal`, which the NixOS GNOME, Plasma and Hyprland modules turn on for you.
-- **The tray icon on GNOME** needs the AppIndicator extension: add `pkgs.gnomeExtensions.appindicator` and turn it on in Extensions. Without it, launch Nala again to open its window.
-- **WhatsApp.** *Install WhatsApp* downloads GOWA's build for generic Linux. If it doesn't start (the dot stays grey and `~/.local/share/nala/nala.log` says `GOWA could not start`), add `programs.nix-ld.enable = true;` so programs built for other distributions can run.
+1. Download the latest signed `Nala-Android.apk` from [GitHub Releases](https://github.com/gilangggra/Nala/releases).
+2. On your computer: Open Nala **Settings → Android phone** and toggle **Phone link**.
+3. Scan the generated pairing QR code with the Android app on the same local Wi-Fi network.
 
-### Build from source
+---
 
-**macOS** — requirements: macOS 15+, Xcode 16+, [XcodeGen](https://github.com/yonaskolb/XcodeGen).
+### Build from Source
 
+#### macOS (XcodeGen)
+Requires macOS 15+, Xcode 16+, and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 ```bash
 brew install xcodegen
 git clone https://github.com/gilangggra/Nala.git
 cd Nala/NotchBuddy
 xcodegen
-open NotchBuddy.xcodeproj   # then ⌘R
+open NotchBuddy.xcodeproj
 ```
 
-**Windows** — requirements: [Rust](https://rustup.rs), Node 20+, MSVC build tools.
-
+#### Windows (Tauri 2 + Rust)
+Requires [Rust](https://rustup.rs), Node.js 20+, and C++ Build Tools.
 ```powershell
 git clone https://github.com/gilangggra/Nala.git
 cd Nala/windows
 npm install
-npm run pack                # installer lands in windows/release/
+npm run pack
 ```
 
-**Linux** — requirements: [Rust](https://rustup.rs), Node 20+, and the WebKitGTK,
-gtk-layer-shell and appindicator development packages (Debian/Ubuntu names below).
-
+#### Linux
+Requires [Rust](https://rustup.rs), Node.js 20+, WebKitGTK, and layer-shell development headers.
 ```bash
 sudo apt install build-essential pkg-config \
   libwebkit2gtk-4.1-dev libgtk-layer-shell-dev libayatana-appindicator3-dev \
@@ -374,190 +345,138 @@ sudo apt install build-essential pkg-config \
 git clone https://github.com/gilangggra/Nala.git
 cd Nala/windows
 npm install
-npm run pack                # AppImage, .deb and .rpm land in windows/release/
+npm run pack
 ```
 
-On NixOS, `nix develop` gives you all of this: then `cd windows && npm ci && npm run tauri dev`.
-
-**Android** — requirements: JDK 17 and the Android SDK (platform 35).
-
+#### Android
+Requires JDK 17 and Android SDK (API 35).
 ```bash
 git clone https://github.com/gilangggra/Nala.git
 cd Nala/android
-./gradlew assembleDebug      # the APK lands in app/build/outputs/apk/debug/
+./gradlew assembleDebug
 ```
 
-## Setup
+---
 
-On the Mac, open Nala from the Dock or the menu bar: its window has every setting under **Notch** (⌘,). On Windows and Linux, click the Nala icon in the system tray → **Settings…**
+## Setup & Hooks
 
-| What | Why | Where the key goes |
+Access the settings window via the Dock/menu bar on macOS (⌘,), or via the system tray on Windows and Linux.
+
+| Integration | Purpose | Configuration Path |
 |---|---|---|
-| **Claude Code hooks** | live sessions and approvals | **Install hooks** — Nala backs up `~/.claude/settings.json`, merges its hooks and shows you the diff before writing anything |
-| **Claude plan** *(macOS, GitHub build)* | Plan usage gauge in the notch header | **Install relay** in Settings → Agents → Plan usage, then enable "Show in the notch" |
-| **Gemini CLI hooks** | Gemini CLI sessions in the island | **Install hooks** in Settings → Gemini CLI — backs up `~/.gemini/settings.json` |
-| **Antigravity (agy) hooks** | agy sessions in the island, and *(macOS, optional)* its commands approved from the notch | **Install hooks** in Settings → Antigravity — backs up `~/.gemini/config/hooks.json`; then turn on **Approve commands from the notch** |
-| **Anthropic API key** | chat and questions about files | Settings → Anthropic API · Keychain / Windows Credential Manager / Secret Service |
-| **Google AI API key** *(macOS)* | chat with Google AI (Gemini) | Settings → Chat — other providers · Keychain |
-| **OpenAI API key** *(macOS)* | chat with OpenAI | Settings → Chat — other providers · Keychain |
-| **Ollama server** *(macOS)* | chat with local models via Ollama | Settings → Chat → Local models → **Connect** |
-| **LM Studio server** *(macOS)* | chat with local models via LM Studio | Settings → Chat → Local models → **Connect** |
-| **iPhone** *(macOS)* | sessions, approvals, questions and Mochi on your iPhone | Settings → General → iPhone · your private iCloud, see [docs/IPHONE.md](docs/IPHONE.md) |
-| **Android phone** *(Windows, Linux)* | sessions, approvals, questions and chat on your Android phone | Settings → Android phone · off by default, your local network only, see [android/README.md](android/README.md) |
-| **Active pills** *(macOS)* | choose which tools and agents appear in the island | Settings → Active pills |
-| **Flow dictation** *(macOS, GitHub build)* | hold a key, speak, the words are pasted | Nala → Flow → Settings · the Accessibility and Microphone permissions |
-| **Parakeet** *(macOS, Apple silicon)* | offline dictation, more accurate | Nala → Flow → Settings → Recognition → **Download** (about 650 MB) |
-| Stripe, n8n, GitHub, Vercel, Resend, Notion, Cal.com | the service pills | Keychain / Windows Credential Manager / Secret Service, all optional |
-| **WhatsApp** *(macOS GitHub build, Windows, Linux; experimental)* | your WhatsApp messages in the notch or the island, and replies | Settings → Integrations → WhatsApp · a gateway on your Mac, see [WhatsApp (experimental)](#whatsapp-experimental) |
+| **Claude Code** | Live sessions & approvals | **Install hooks** — safely backs up `~/.claude/settings.json` and inserts relay hooks |
+| **Antigravity (agy)** | Live sessions & notch approvals | Settings → Antigravity → **Install hooks** |
+| **Gemini CLI** | Live sessions | Settings → Gemini CLI → **Install hooks** |
+| **Codex CLI** | Live sessions & approvals | Settings → Codex → **Install hooks** |
+| **API Keys** | AI Chat (Claude, OpenAI, Gemini, etc.) | Settings → Chat (stored in OS Credential Vault) |
+| **Local LLMs** | Ollama / LM Studio connection | Settings → Chat → Local models → **Connect** |
+| **Flow Dictation** | Speech-to-text hotkey | Settings → Flow → Settings |
+| **Offline Parakeet** | Local voice recognition | Settings → Flow → Recognition → **Download** (~650 MB) |
+| **iPhone Link** | iOS Live Activity & approvals | Settings → General → iPhone (iCloud CloudKit) |
+| **Android Link** | Android approvals & widgets | Settings → Android phone (Local Wi-Fi pairing) |
+| **Services** | GitHub, Stripe, Vercel, Resend, Notion | Settings → Active pills |
 
-If Nala isn't running, the hook exits immediately: **Claude Code is never blocked.**
+> [!TIP]
+> If Nala is closed, hook scripts exit immediately with zero latency. **Your CLI coding sessions are never blocked.**
 
-### WhatsApp (experimental)
+---
 
-*macOS (GitHub build), and Windows and Linux since 0.5.3.* The WhatsApp pill shows your incoming messages in the notch, one row per conversation, and lets you reply without opening WhatsApp. WhatsApp has no API for personal accounts, so Nala goes through an **unofficial gateway that runs on your Mac** and speaks the WhatsApp Web protocol: [GOWA](https://github.com/aldinokemal/go-whatsapp-web-multidevice) (recommended) or [OpenWA](https://github.com/rmyndharis/OpenWA). Nala only reads and sends through that gateway.
+### Supported Agents
 
-> **Unofficial.** Use it on your own account only. WhatsApp may restrict an account that abuses it (bulk messages, automation). Nala only replies in a conversation that wrote to you, a few messages a minute at most.
-
-**Set it up in three steps, no Terminal:**
-
-1. **Turn it on.** In Nala: Settings → Integrations → WhatsApp (experimental) → **Show my WhatsApp messages**.
-2. **Click Install WhatsApp.** Nala downloads [GOWA](https://github.com/aldinokemal/go-whatsapp-web-multidevice), the open-source gateway, from its GitHub releases (the build for your Mac, about 15 MB, once), checks it against the SHA-256 GOWA publishes, and starts it. It starts and stops with Nala from then on.
-3. **Scan the QR code** that shows right there: on your phone, WhatsApp → Settings → Linked devices → Link a device. The dot turns green and the pill fills in as messages arrive.
-
-The gateway lives in `~/Library/Application Support/Nala/GOWA`, next to the WhatsApp session it keeps, so you scan once. **Update** in the same place gets GOWA's latest version. That download is the only time Nala goes online for WhatsApp, and only when you click. On Windows it lives in `%LOCALAPPDATA%\Nala\GOWA`, on Linux in `~/.local/share/nala/GOWA`.
-
-Nala tells the gateway where to post new messages (a small server on `127.0.0.1`, port 47823 by default, never reachable from another machine), with a random secret kept in the Keychain; every delivery is checked against its HMAC-SHA256 signature. If no message comes that way, Nala checks every 20 seconds instead.
-
-<details>
-<summary><b>Advanced: run the gateway yourself (GOWA by hand, or OpenWA)</b></summary>
-
-Everything below is under **Advanced: your own gateway** in the same Settings section.
-
-**GOWA by hand.** Download `whatsapp_<version>_darwin_arm64.zip` (Apple silicon) or `…_darwin_amd64.zip` (Intel) from the [latest release](https://github.com/aldinokemal/go-whatsapp-web-multidevice/releases/latest). The zip holds one binary, `darwin-arm64` or `darwin-amd64`. In the folder it unzipped to:
-
-```bash
-xattr -d com.apple.quarantine ./darwin-arm64
-```
-
-```bash
-chmod +x ./darwin-arm64
-```
-
-```bash
-./darwin-arm64 rest --host=127.0.0.1 --port=3000 --auto-download-media=false
-```
-
-Add `--basic-auth=user:password` to protect it with a password, and put the same `user:password` in Nala. Keep `http://127.0.0.1:3000`, **Save**, then **Test connection**. The address and the password go to the Keychain.
-
-**OpenWA instead.** Start it with the Baileys engine and allow its webhook to reach your Mac, then pick **OpenWA** with `http://127.0.0.1:2785` and its API key (`data/.api-key` on first start):
-
-```bash
-ENGINE_TYPE=baileys SSRF_ALLOWED_HOSTS=127.0.0.1 npm run start:prod
-```
-
-</details>
-
-**What it does**
-- One row per conversation: initials, name, the last message cut short, the unread count. Photos, voice messages and documents show as a label (« Photo », « Voice message », « Document »); nothing is downloaded.
-- A new message: Mochi's little happy face, a sound if sounds are on, and the island opens under its usual rules.
-- Click a conversation: its last ten messages and a reply field. Return sends, Shift-Return starts a new line, Esc goes back.
-- Read receipts only when you open a conversation (or, if you turn that off, only when you reply). Never when a message just arrives.
-- Groups stay quiet unless you're mentioned; chats you ignore never show (right-click a row, or Settings); quiet during a macOS Focus when the system lets Nala read it.
-
-**Privacy.** Nala talks only to the gateway on your Mac (and to GitHub when you click Install or Update, to fetch GOWA itself). Messages stay in memory, are never written to disk or to a log, and are forgotten when Nala quits or WhatsApp is turned off. No profile photo is fetched: they live on WhatsApp's servers, so the pill shows initials.
-
-**Limits.** No profile photos, no voice-message duration (neither gateway gives it), no new conversations from Nala, no media sending. The gateway must run for messages to arrive. Following a Focus needs Nala to be signed with Apple's Communication Notifications capability; until then that setting says it's unavailable.
-
-### Supported agents
-
-| Agent | How it connects (Mac) | Mac-only? |
+| Agent | Connection Method | Platforms |
 |---|---|---|
-| Claude Code | Settings → Claude Code → **Install hooks** | No |
-| Gemini CLI | Settings → Gemini CLI → **Install hooks** | No |
-| Antigravity | Settings → Antigravity → **Install hooks** | No |
-| Cursor | Hooks installed automatically alongside Claude Code | No |
-| Codex | `--agent codex` flag; Settings → Codex → **Install hooks** | No |
-| Copilot CLI | `--agent copilot` flag + camelCase events | No |
-| Muse Code | `--agent muse` flag | No |
-| OpenCode | Plugin — **Settings → OpenCode Plugin → Install** | No |
-| Amp | Plugin — **Settings → Amp Plugin → Install** | No |
-| Hermes | Plugin — **Settings → Agents → Hermes → Install** | No |
-| Any other | `--agent <name>` flag; see [`docs/AGENTS.md`](docs/AGENTS.md) | No |
+| **Claude Code** | Native settings hook | macOS, Windows, Linux |
+| **Antigravity** | Native config hook | macOS, Windows, Linux |
+| **Gemini CLI** | Native settings hook | macOS, Windows, Linux |
+| **Cursor** | Automatic hook detection | macOS, Windows, Linux |
+| **Codex** | `--agent codex` flag / hook | macOS, Windows, Linux |
+| **Copilot CLI** | `--agent copilot` flag | macOS, Windows, Linux |
+| **Muse Code** | `--agent muse` flag | macOS, Windows, Linux |
+| **OpenCode** | Plugin: Settings → OpenCode Plugin | macOS, Windows, Linux |
+| **Amp** | Plugin: Settings → Amp Plugin | macOS, Windows, Linux |
+| **Hermes** | Plugin: Settings → Hermes | macOS, Windows, Linux |
+| **Custom Agents** | Generic `--agent <name>` flag (see [docs/AGENTS.md](docs/AGENTS.md)) | macOS, Windows, Linux |
 
-OpenCode, Amp and Hermes use a plugin model rather than a hook command. Nala installs the plugin file into `~/.config/opencode/plugins/`, `~/.config/amp/plugins/` and `~/.hermes/plugins/nala/` respectively. On Windows and Linux the plugins start the `nala-hook` relay directly — see [`windows/README.md`](windows/README.md#supported-agents).
+*For agents running on remote servers or SSH containers, see [docs/REMOTE.md](docs/REMOTE.md).*
 
-Agents running on a server (VS Code Remote - SSH, an SSH environment in the Claude app, Codex on a dev box) can reach Nala on your Mac through an SSH tunnel: see [`docs/REMOTE.md`](docs/REMOTE.md).
+---
 
-## Things to try
+### WhatsApp (Experimental)
 
-| Do this | Mochi does that |
-|---|---|
-| Hover the notch (top edge on Windows and Linux) | peeks out and says hi 👋 |
-| Click it | opens |
-| Hover Mochi | blinks, eyes grow |
-| Click Mochi | squish + annoyed |
-| Click 3 times fast | 😵‍💫 dizzy for a few seconds |
-| Drag a file onto the island | turns into a box and swallows it |
-| Drag Mochi onto a window *(macOS)* | attaches it as context |
-| Click the model name above the chat box *(macOS)* | switch AI provider or model |
-| Say « OK Nala, play some music » *(macOS)* | listens, thinks, and does it |
-| Hold right ⌥ and speak, in any app *(macOS)* | Mochi listens in the pill, your words are pasted |
-| Hover the pill at the bottom of the screen *(macOS)* | opens a toolbar: dictate, record a call, open Nala |
+*Available on macOS (GitHub build), Windows, and Linux.*
 
-## How it works
+Monitor conversations and send replies directly from your notch or dynamic island via an open-source local gateway ([GOWA](https://github.com/aldinokemal/go-whatsapp-web-multidevice)).
 
-**macOS**
+1. Open **Settings → Integrations → WhatsApp**.
+2. Click **Install WhatsApp** to automatically configure the local gateway binary.
+3. Scan the QR code using WhatsApp on your phone (**Linked devices → Link a device**).
 
-- **Island**: a borderless `NSPanel` hugging the notch, driven by a small state machine (`hidden → petit → home`).
-- **Character**: drawn in SwiftUI `Canvas` + `TimelineView` at 60 fps — squircle body, eyes projected on a sphere, spring animations. No Rive, no Lottie, no images.
-- **Claude Code**: a tiny `nb-hook` script receives hook events and forwards them over a Unix socket to the app. For approvals it waits for your click, then answers the hook.
-- **Integrations**: lightweight pollers, paused when nothing is watching.
-- **Declared pills**: `PillCatalog.swift` is the single source of truth — every pill (coding tools, agents, AI providers, services) is declared there with its ID, color and category.
-- **Sounds**: 28 short WAVs played through preloaded `AVAudioPlayer`s.
+Messages are processed entirely in memory, verified with HMAC-SHA256, and never written to disk or sent to external servers.
 
-The macOS app is native Swift 6 / SwiftUI / AppKit with **zero third-party dependencies**.
+---
 
-**iPhone**
+## How It Works
 
-- A native SwiftUI app sharing Mochi's engine, the pills and the diff engine with the Mac through `NalaKit`.
-- The Mac publishes sessions, turns and services to a private CloudKit zone in your iCloud (sensitive fields encrypted with your iCloud keys); the iPhone reads them and writes back decisions, answers and instructions, which the Mac only applies when they match what it is waiting on.
-- Live Activities are started and updated by APNs pushes through [`relay/`](relay/), a stateless Cloudflare Worker that holds the APNs key and only sees the agent's name and state.
+```
+┌────────────────────────────────────────────────────────┐
+│                      User Action                       │
+│    (Notch Hover, Flow Hotkey, File Drop, Approvals)    │
+└───────────────────────────┬────────────────────────────┘
+                            │
+            ┌───────────────┴───────────────┐
+            ▼                               ▼
+┌───────────────────────┐       ┌───────────────────────┐
+│     macOS Engine      │       │ Windows/Linux Engine  │
+│  (Swift 6 / AppKit /  │       │  (Tauri 2 / Rust /    │
+│       SwiftUI)        │       │      TypeScript)      │
+└───────────┬───────────┘       └───────────┬───────────┘
+            │                               │
+            ├───────────────┬───────────────┤
+            ▼               ▼               ▼
+┌───────────────────┐ ┌───────────┐ ┌───────────────────┐
+│ Agent IPC Relays  │ │ Flow Voice│ │  Mobile Link      │
+│ (Unix Sockets /   │ │ (Parakeet │ │ (iCloud CloudKit /│
+│   Named Pipes)    │ │  Offline) │ │  Local TLS Wi-Fi) │
+└───────────────────┘ └───────────┘ └───────────────────┘
+```
 
-**Windows**
+- **macOS**: Built with native Swift 6 and SwiftUI. The notch interface is rendered with borderless AppKit `NSPanel` elements and custom `Canvas` physics running at a smooth 60–120 fps.
+- **Windows & Linux**: Built with Tauri 2 and Rust. Uses transparent, click-through, always-on-top overlays that never steal window focus.
+- **iPhone**: Native SwiftUI application communicating through private, end-to-end encrypted iCloud CloudKit databases with APNs-driven Live Activities.
+- **Android**: Native Kotlin and Jetpack Compose application with hardware-backed biometric verification, pairing over local TLS with pinned certificates.
 
-- A [Tauri 2](https://tauri.app) app (Rust + TypeScript): the island is a transparent, always-on-top window that never steals focus, Mochi is drawn in Canvas 2D with the same shapes, timings and sounds as on the Mac.
-- Claude Code hooks go through a tiny `nala-hook.exe` and a named pipe; keys live in Windows Credential Manager.
-- Details and differences in [`windows/README.md`](windows/README.md).
+---
 
-**Linux**
+## Release Notes
 
-- The same Tauri app as Windows. On Wayland the island is a gtk-layer-shell
-  overlay anchored to the top edge, and click-through is its input region.
-- Claude Code hooks go through the same `nala-hook`, over a Unix socket in
-  `$XDG_RUNTIME_DIR`; keys live in the Secret Service.
+Detailed release logs and change history are maintained in:
+- [CHANGELOG.md](CHANGELOG.md) — Complete human-readable changelog.
+- [GitHub Releases](https://github.com/gilangggra/Nala/releases) — Downloadable binary packages, hashes, and release notes.
 
-**Android**
-
-- A native Kotlin and Jetpack Compose app; Mochi is drawn in code, ported from the Windows app, with his outfits and sounds.
-- The phone link (`windows/src-tauri/src/phone_link`) is an opt-in server in the Windows and Linux app, on your local network only: TLS with a certificate pinned at pairing, a pairing code that "Pair again" replaces (and disconnects every phone), and approvals bound to the exact request the computer is waiting on. The protocol is in [`docs/ANDROID_LINK.md`](docs/ANDROID_LINK.md).
+---
 
 ## Contributing
 
-Issues and PRs are very welcome — new integrations, new emotes, new sounds, bug fixes. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions from the community are warmly welcome! Whether you are interested in creating new service integrations, adding expressive character emotes, writing translations, or fixing bugs:
 
-Want to add or improve a translation? Open a PR with changes to `NotchBuddy/Resources/Localizable.xcstrings`.
+- Check out our [CONTRIBUTING.md](CONTRIBUTING.md) guide.
+- Translations can be added or updated directly in `NotchBuddy/Resources/Localizable.xcstrings`.
+
+---
 
 ## Author
 
-Built and maintained by [Gilang Ramadan](https://github.com/gilangggra).
+Created and maintained by **[Gilang Ramadan](https://github.com/gilangggra)**.
+
+---
 
 ## License
 
-- **Code:** [MIT](LICENSE) — Copyright (c) 2026 Gilang Ramadan.
-- **Name, character, icon, sounds and media:** © Gilang Ramadan, all rights reserved — see [LICENSE-ASSETS.md](LICENSE-ASSETS.md).
+- **Source Code**: [MIT License](LICENSE) © 2026 Gilang Ramadan.
+- **Character, Name, Icons & Audio Assets**: © Gilang Ramadan, all rights reserved (see [LICENSE-ASSETS.md](LICENSE-ASSETS.md)).
 
 <div align="center">
 
-**If Nala made you smile, a ⭐ helps a lot.**
+**If Nala brightens your day, please consider giving the repository a ⭐!**
 
 </div>
