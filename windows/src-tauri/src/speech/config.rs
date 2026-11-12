@@ -199,4 +199,34 @@ pub const VOICE_MAX_APP_WORDS: usize = 5;
 /// Maximum word count for a single pill name in a local pill command.
 pub const VOICE_MAX_PILL_WORDS: usize = 4;
 
+// ── Multi-Provider Voice Brain (« OK Nala » Conversational Adapter) ───────────
+
+/// Default low-latency Anthropic model for « OK Nala ».
+pub const VOICE_ANTHROPIC_FAST_MODEL: &str = "claude-haiku-4-5";
+
+/// Default low-latency OpenAI model for « OK Nala ».
+pub const VOICE_OPENAI_FAST_MODEL: &str = "gpt-4o-mini";
+
+/// Default low-latency Google Gemini model for « OK Nala ».
+pub const VOICE_GOOGLE_FAST_MODEL: &str = "gemini-2.0-flash";
+
+/// Default OpenRouter model for « OK Nala ».
+pub const VOICE_OPENROUTER_FAST_MODEL: &str = "openrouter/auto";
+
+/// Seconds of inactivity before « OK Nala » forgets the in-memory voice conversation.
+pub const VOICE_BRAIN_FORGET_SECS: u64 = 90;
+
+/// Maximum tool-execution turns per single voice question.
+pub const VOICE_BRAIN_MAX_STEPS: usize = 5;
+
+/// Maximum messages retained in the voice brain's rolling history.
+pub const VOICE_BRAIN_MAX_HISTORY: usize = 24;
+
+/// Maximum tokens requested per voice brain turn.
+pub const VOICE_BRAIN_MAX_TOKENS: u32 = 1024;
+
+/// HTTP timeout (seconds) for a single voice brain completion request.
+pub const VOICE_BRAIN_TIMEOUT_SECS: u64 = 45;
+
+
 

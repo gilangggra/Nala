@@ -149,6 +149,7 @@ fn save_settings(app: AppHandle, shared: State<Shared>, settings: Settings) {
     if i18n::set_picked(&settings.language) {
         language_changed(&app);
     }
+    voice::sync(&app);
     // Keep the other window in step (island ⇄ settings window).
     let _ = app.emit("settings-changed", settings);
 }
@@ -648,6 +649,7 @@ fn subscription_set(app: AppHandle, shared: State<Shared>, provider: String, on:
         log::line(format!("could not save settings: {err}"));
     }
     let status = cli_relay::status(&settings);
+    voice::sync(&app);
     let _ = app.emit("settings-changed", settings);
     status
 }
@@ -660,7 +662,10 @@ fn secret_set(app: AppHandle, key: String, value: String) -> Result<(), String> 
     }
     let before = (key == "github-token").then(|| secrets::get(&key));
     secrets::set(&key, &value)?;
-    if key == claude::KEY {
+    if matches!(
+        key.as_str(),
+        claude::KEY | "openai-api-key" | "google-api-key" | "openrouter-api-key"
+    ) {
         voice::sync(&app);
     }
     if let Some(before) = before {
@@ -678,7 +683,10 @@ fn secret_set(app: AppHandle, key: String, value: String) -> Result<(), String> 
 fn secret_clear(app: AppHandle, key: String) -> Result<(), String> {
     let had = key == "github-token" && secrets::present(&key);
     secrets::clear(&key)?;
-    if key == claude::KEY {
+    if matches!(
+        key.as_str(),
+        claude::KEY | "openai-api-key" | "google-api-key" | "openrouter-api-key"
+    ) {
         voice::sync(&app);
     }
     if had {

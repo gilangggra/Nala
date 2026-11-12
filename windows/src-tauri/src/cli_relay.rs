@@ -526,6 +526,45 @@ pub async fn send(
     Ok(ChatReply { text })
 }
 
+/// Runs a single prompt through the installed CLI tool for `provider` (used by
+/// « OK Nala » voice fallback when a user relies on a CLI subscription).
+pub async fn ask_prompt(
+    provider: &str,
+    model: &str,
+    system: &str,
+    prompt: &str,
+    timeout: Duration,
+) -> Result<String, String> {
+    let Some((cli, exe)) = installed(provider) else {
+        let tool = clis_for(provider).first().map(|c| c.name()).unwrap_or(provider);
+        return Err(tf(
+            "{tool} is not installed. Install it from Settings → Chat, sign in once in a terminal, then ask again.",
+            &[("tool", tool)],
+        ));
+    };
+    if cli == Cli::Claude {
+        let m = if model.trim().is_empty() { "claude-haiku-4-5" } else { model };
+        claude_code::ask(&claude_code::Request {
+            model: m,
+            system,
+            prompt,
+            tools: &["WebSearch", "WebFetch"],
+            read_dir: None,
+            timeout,
+        })
+        .await
+    } else {
+        let request = Request {
+            model: None,
+            system,
+            prompt,
+            web: true,
+            no_web_policy: None,
+        };
+        ask(cli, &exe, &request).await
+    }
+}
+
 /// One chat turn as a single prompt for the tools other than Claude Code: the
 /// earlier plain turns, then a text file's contents or the window, then the question.
 fn chat_prompt(history: &[Value], first: bool, context: Option<&ChatContext>, query: &str) -> String {

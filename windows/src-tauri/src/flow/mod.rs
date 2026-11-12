@@ -486,7 +486,7 @@ pub fn flow_status(flow: State<Arc<Flow>>) -> FlowStatus {
             Ok(()) => "ok".into(),
             Err(why) => why.into(),
         },
-        has_claude_key: cleanup::has_key(),
+        has_claude_key: cleanup::has_key() || crate::voice::brain::has_any_provider(),
         mics: audio::input_devices(),
         platform: if cfg!(windows) { "windows" } else { "linux" },
         autostarted: crate::launched_at_login(),

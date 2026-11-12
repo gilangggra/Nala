@@ -54,18 +54,19 @@ fn pending() -> &'static Mutex<HashMap<u64, mpsc::Sender<String>>> {
 }
 static NEXT_ID: AtomicU64 = AtomicU64::new(1);
 
-/// Whether « OK Nala » can run: the offline speech model is downloaded.
-/// Local commands (music, volume, apps, pills, cancel) run on-device without
-/// an API key; open-ended questions use the Claude key when present.
-pub fn requirements_met() -> bool {
-    speech::is_ready()
+/// Whether « OK Nala » can run: the offline speech model is downloaded AND the
+/// user has at least one AI backend configured — a cloud API key (Anthropic,
+/// OpenAI, Google Gemini, OpenRouter), a local server (Ollama, LM Studio, or
+/// OpenAI-compatible), or an active CLI Relay subscription.
+pub fn requirements_met(app: &AppHandle) -> bool {
+    speech::is_ready() && brain::has_any_provider_for(app)
 }
 
 /// Starts or stops listening to follow the preference.
 pub fn sync(app: &AppHandle) {
     let wanted = crate::flow::get(app).is_some_and(|f| f.store.lock().unwrap().prefs.voice);
     let mut running = RUNNING.lock().unwrap();
-    match (wanted && requirements_met(), running.is_some()) {
+    match (wanted && requirements_met(app), running.is_some()) {
         (true, false) => {
             let stop = Arc::new(AtomicBool::new(false));
             let app2 = app.clone();
