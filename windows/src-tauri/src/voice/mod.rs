@@ -13,6 +13,7 @@
 // speaks itself.
 
 pub mod brain;
+pub mod intent;
 pub mod wake;
 
 use std::collections::HashMap;
@@ -53,9 +54,11 @@ fn pending() -> &'static Mutex<HashMap<u64, mpsc::Sender<String>>> {
 }
 static NEXT_ID: AtomicU64 = AtomicU64::new(1);
 
-/// Whether « OK Coucou » can run: the voice model and a Claude key.
+/// Whether « OK Nala » can run: the offline speech model is downloaded.
+/// Local commands (music, volume, apps, pills, cancel) run on-device without
+/// an API key; open-ended questions use the Claude key when present.
 pub fn requirements_met() -> bool {
-    speech::is_ready() && crate::secrets::present(crate::claude::KEY)
+    speech::is_ready()
 }
 
 /// Starts or stops listening to follow the preference.
@@ -184,7 +187,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
                     Some(rest) => {
                         crate::log::line("voice: « OK Nala » heard");
                         hide_at = None;
-                        if crate::flow::text::word_count(&rest) >= 2 {
+                        if crate::flow::text::word_count(&rest) >= 2 || intent::parse(&rest).is_some() {
                             Some(rest)
                         } else {
                             show(&app, Some(VoiceView { phase: "listening".into(), heard: rest.clone(), answer: String::new() }));
@@ -200,16 +203,25 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
                     None => None,
                 },
                 Mode::Command { text, .. } => {
-                    let full = format!("{text} {heard}").trim().to_string();
-                    Some(full)
+                    if intent::is_cancel(&heard) {
+                        Some(heard)
+                    } else {
+                        let full = format!("{text} {heard}").trim().to_string();
+                        Some(full)
+                    }
                 }
                 Mode::FollowUp { .. } => Some(heard),
             };
             let Some(question) = question else { continue };
             mode = Mode::Wake;
             vad.hangover = speech::config::VAD_DEFAULT_HANGOVER_FRAMES;
+            if intent::is_cancel(&question) {
+                crate::log::line("voice: cancelled by user");
+                show(&app, None);
+                continue;
+            }
             show(&app, Some(VoiceView { phase: "thinking".into(), heard: question.clone(), answer: String::new() }));
-            let reply = brain.respond(&app, &question);
+            let reply = intent::respond(&app, &question).or_else(|| brain.respond(&app, &question));
             let answer = reply.as_ref().map(|r| r.text.clone()).unwrap_or_default();
             if answer.is_empty() {
                 let done = reply.is_some_and(|r| r.acted);

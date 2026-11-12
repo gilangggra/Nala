@@ -54,10 +54,10 @@ export async function voicePage(page: HTMLElement, ctx: HubContext) {
     divider(),
     row(t("Parakeet, on your computer"), t("Hears « OK Nala » here, without the internet."), modelsControl(ctx, () => ctx.navigate("voice"))),
   );
-  if (prefs.voice && !status.hasClaudeKey) {
-    main.append(h("div", { class: "hub-warn", text: t("Nala answers with Claude: add your Claude key in Notch → Chat.") }));
-  } else if (prefs.voice && !ready) {
+  if (prefs.voice && !ready) {
     main.append(h("div", { class: "hub-warn", text: t("Download the voice model so Nala can hear you.") }));
+  } else if (prefs.voice && !status.hasClaudeKey) {
+    main.append(h("div", { class: "hub-warn", text: t("Nala answers with Claude: add your Claude key in Notch → Chat.") }));
   }
   page.append(main);
 

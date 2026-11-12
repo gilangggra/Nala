@@ -170,3 +170,33 @@ pub const HALLUCINATION_PHRASES: &[&str] = &[
     "abonnez vous",
 ];
 
+// ── Local Voice Intent Parser (« OK Nala » Fast Path) ─────────────────────────
+
+/// Minimum allowed media/music volume percentage.
+pub const VOICE_VOLUME_MIN: u8 = 0;
+
+/// Maximum allowed media/music volume percentage.
+pub const VOICE_VOLUME_MAX: u8 = 100;
+
+/// Target volume percentage when the user says "besarkan suara" / "volume up"
+/// without specifying an exact number.
+pub const VOICE_VOLUME_STEP_UP: u8 = 75;
+
+/// Target volume percentage when the user says "kecilkan suara" / "volume down"
+/// without specifying an exact number.
+pub const VOICE_VOLUME_STEP_DOWN: u8 = 25;
+
+/// Maximum character length of a target argument (app name, pill name, or song
+/// query) accepted by the deterministic local intent parser. Longer utterances
+/// are routed to the conversational AI brain.
+pub const VOICE_MAX_ARG_CHARS: usize = 120;
+
+/// Maximum word count for an application name in a local "open <app>" command.
+/// Prevents conversational sentences starting with "buka..." / "open..." from
+/// being misclassified as application launches.
+pub const VOICE_MAX_APP_WORDS: usize = 5;
+
+/// Maximum word count for a single pill name in a local pill command.
+pub const VOICE_MAX_PILL_WORDS: usize = 4;
+
+
