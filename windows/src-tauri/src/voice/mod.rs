@@ -155,22 +155,27 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
         match &mode {
             Mode::Command { until, .. } | Mode::FollowUp { until } if now > *until => {
                 mode = Mode::Wake;
-                vad.hangover = 25;
+                vad.hangover = speech::config::VAD_DEFAULT_HANGOVER_FRAMES;
                 show(&app, None);
             }
             _ => {}
         }
-        // Dictation and calls have the microphone: Coucou doesn't listen meanwhile.
+        // Dictation and calls have the microphone: Nala doesn't listen meanwhile.
         if pill::dictating(&app) || crate::notes::is_recording(&app) {
             vad.reset();
             continue;
         }
         let Some(chunk) = chunk else { continue };
         for segment in vad.feed(&chunk) {
-            if segment.len() < speech::SAMPLE_RATE as usize * 35 / 100 {
+            let is_wake_mode = matches!(mode, Mode::Wake);
+            if !wake::is_plausible_speech(&segment, is_wake_mode) {
                 continue;
             }
-            let Some(heard) = speech::transcribe(&segment).map(|t| t.text.trim().to_string()) else { continue };
+            let trimmed = wake::trim_silence(&segment);
+            if trimmed.is_empty() {
+                continue;
+            }
+            let Some(heard) = speech::transcribe(trimmed).map(|t| t.text.trim().to_string()) else { continue };
             if heard.is_empty() {
                 continue;
             }
@@ -183,9 +188,12 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
                             Some(rest)
                         } else {
                             show(&app, Some(VoiceView { phase: "listening".into(), heard: rest.clone(), answer: String::new() }));
-                            mode = Mode::Command { text: rest, until: now + Duration::from_secs(7) };
+                            mode = Mode::Command {
+                                text: rest,
+                                until: now + Duration::from_secs(speech::config::COMMAND_TIMEOUT_SECS),
+                            };
                             // A question may come with pauses in it.
-                            vad.hangover = 40;
+                            vad.hangover = speech::config::VAD_COMMAND_HANGOVER_FRAMES;
                             None
                         }
                     }
@@ -199,7 +207,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             };
             let Some(question) = question else { continue };
             mode = Mode::Wake;
-            vad.hangover = 25;
+            vad.hangover = speech::config::VAD_DEFAULT_HANGOVER_FRAMES;
             show(&app, Some(VoiceView { phase: "thinking".into(), heard: question.clone(), answer: String::new() }));
             let reply = brain.respond(&app, &question);
             let answer = reply.as_ref().map(|r| r.text.clone()).unwrap_or_default();
@@ -216,11 +224,11 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             show(&app, Some(VoiceView { phase: "speaking".into(), heard: question.clone(), answer: answer.clone() }));
             speak(&app, &answer);
             vad.reset();
-            // Drop what the microphone heard of Coucou's own voice.
+            // Drop what the microphone heard of Nala's own voice.
             while rx.try_recv().is_ok() {}
             if answer.trim_end().ends_with('?') {
-                mode = Mode::FollowUp { until: Instant::now() + Duration::from_secs(8) };
-                vad.hangover = 40;
+                mode = Mode::FollowUp { until: Instant::now() + Duration::from_secs(speech::config::FOLLOWUP_TIMEOUT_SECS) };
+                vad.hangover = speech::config::VAD_COMMAND_HANGOVER_FRAMES;
                 show(&app, Some(VoiceView { phase: "listening".into(), heard: String::new(), answer }));
             } else {
                 hide_at = Some(Instant::now() + Duration::from_secs(6));

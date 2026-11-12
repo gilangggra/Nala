@@ -1,5 +1,7 @@
-// « OK Coucou »: hearing the wake phrase in what Parakeet wrote, and telling
-// speech from silence on the microphone. Nothing here touches the OS.
+// « OK Nala »: hearing the wake phrase in what the speech model wrote, and
+// telling speech from silence on the microphone. Nothing here touches the OS.
+
+use crate::speech::config;
 
 /// Lower case, accents gone, everything but letters and digits a space.
 pub fn normalize(text: &str) -> String {
@@ -93,8 +95,11 @@ fn is_wake_pair(a: &str, b: &str) -> bool {
 }
 
 /// When `text` holds the wake phrase, what was said after it (maybe nothing).
-/// The words keep their case and punctuation, as Parakeet wrote them.
+/// The words keep their case and punctuation, as the model wrote them.
 pub fn after_wake(text: &str) -> Option<String> {
+    if crate::speech::is_hallucination(text) {
+        return None;
+    }
     let words: Vec<&str> = text.split_whitespace().collect();
     let norm: Vec<String> = words.iter().map(|w| normalize(w)).collect();
     // "o.k." and "o k" become two tokens: glue them.
@@ -155,21 +160,21 @@ pub struct Vad {
     pub hangover: usize,
 }
 
-pub const FRAME: usize = 480; // 30 ms at 16 kHz
-const PREROLL: usize = 16_000 * 3 / 10;
-const MAX_SEGMENT: usize = 16_000 * 12;
+pub const FRAME: usize = config::VAD_FRAME_SAMPLES; // 30 ms at 16 kHz
+const PREROLL: usize = config::VAD_PREROLL_SAMPLES;
+const MAX_SEGMENT: usize = config::VAD_MAX_SEGMENT_SAMPLES;
 
 impl Default for Vad {
     fn default() -> Self {
         Self {
-            floor: 0.004,
+            floor: config::VAD_INITIAL_FLOOR,
             in_speech: false,
             speech_frames: 0,
             silent_frames: 0,
             frame: Vec::with_capacity(FRAME),
             current: Vec::new(),
             preroll: std::collections::VecDeque::with_capacity(PREROLL),
-            hangover: 25,
+            hangover: config::VAD_DEFAULT_HANGOVER_FRAMES,
         }
     }
 }
@@ -188,10 +193,10 @@ impl Vad {
             if self.frame.len() < FRAME {
                 continue;
             }
-            let rms = (self.frame.iter().map(|x| x * x).sum::<f32>() / FRAME as f32).sqrt();
-            let speech = rms > (self.floor * 3.0).max(0.012);
+            let rms = frame_rms(&self.frame);
+            let speech = rms > (self.floor * config::VAD_FLOOR_MULTIPLIER).max(config::VAD_MIN_SPEECH_RMS);
             if !speech && !self.in_speech {
-                self.floor = self.floor * 0.97 + rms * 0.03;
+                self.floor = self.floor * config::VAD_FLOOR_DECAY + rms * config::VAD_FLOOR_ATTACK;
             }
             if self.in_speech {
                 self.current.extend_from_slice(&self.frame);
@@ -208,7 +213,7 @@ impl Vad {
                 }
             } else if speech {
                 self.speech_frames += 1;
-                if self.speech_frames >= 3 {
+                if self.speech_frames >= config::VAD_ONSET_FRAMES {
                     self.in_speech = true;
                     self.current = self.preroll.drain(..).collect();
                     self.current.extend_from_slice(&self.frame);
@@ -229,7 +234,7 @@ impl Vad {
         done
     }
 
-    /// Forgets what is being heard (Coucou speaks, or dictation starts).
+    /// Forgets what is being heard (Nala speaks, or dictation starts).
     pub fn reset(&mut self) {
         self.in_speech = false;
         self.speech_frames = 0;
@@ -238,6 +243,86 @@ impl Vad {
         self.preroll.clear();
         self.frame.clear();
     }
+}
+
+fn frame_rms(frame: &[f32]) -> f32 {
+    if frame.is_empty() {
+        return 0.0;
+    }
+    (frame.iter().map(|x| x * x).sum::<f32>() / frame.len() as f32).sqrt()
+}
+
+/// Fast pre-inference gate for the « OK Nala » loop.
+///
+/// Because `Vad::feed` includes 300 ms of pre-roll and 750–1200 ms of silent
+/// hangover in every emitted segment, a 90 ms keyboard click or desk tap
+/// produces a segment > 1.1 s long. Counting the actual voiced frames (`rms >=
+/// VAD_MIN_SPEECH_RMS`) and peak amplitude rejects brief transients before the
+/// ~1 GB Whisper model is ever invoked.
+pub fn is_plausible_speech(samples: &[f32], wake_mode: bool) -> bool {
+    if samples.len() < config::WAKE_MIN_SEGMENT_SAMPLES {
+        return false;
+    }
+    let min_frames = if wake_mode {
+        config::WAKE_MIN_ACTIVE_FRAMES
+    } else {
+        config::COMMAND_MIN_ACTIVE_FRAMES
+    };
+    let min_peak = if wake_mode {
+        config::WAKE_MIN_PEAK
+    } else {
+        config::COMMAND_MIN_PEAK
+    };
+    let mut active_frames = 0usize;
+    let mut peak = 0.0f32;
+    for chunk in samples.chunks(FRAME) {
+        if chunk.len() < FRAME / 2 {
+            continue;
+        }
+        for &s in chunk {
+            let abs = s.abs();
+            if abs > peak {
+                peak = abs;
+            }
+        }
+        if frame_rms(chunk) >= config::VAD_MIN_SPEECH_RMS {
+            active_frames += 1;
+        }
+    }
+    active_frames >= min_frames && peak >= min_peak
+}
+
+/// Trims leading and trailing silent frames from a VAD segment, keeping up to
+/// `VAD_TRIM_MARGIN_FRAMES` (90 ms) of natural margin on each side so the
+/// recognizer does not decode a full second of trailing hangover silence.
+pub fn trim_silence(samples: &[f32]) -> &[f32] {
+    if samples.is_empty() {
+        return &[];
+    }
+    let total_frames = samples.len().div_ceil(FRAME);
+    let mut first_voiced = None;
+    let mut last_voiced = None;
+    for idx in 0..total_frames {
+        let start = idx * FRAME;
+        let end = (start + FRAME).min(samples.len());
+        if frame_rms(&samples[start..end]) >= config::VAD_MIN_SPEECH_RMS {
+            if first_voiced.is_none() {
+                first_voiced = Some(idx);
+            }
+            last_voiced = Some(idx);
+        }
+    }
+    let (Some(first), Some(last)) = (first_voiced, last_voiced) else {
+        return &[];
+    };
+    let start_frame = first.saturating_sub(config::VAD_TRIM_MARGIN_FRAMES);
+    let end_frame = (last + 1 + config::VAD_TRIM_MARGIN_FRAMES).min(total_frames);
+    let start_sample = (start_frame * FRAME).min(samples.len());
+    let end_sample = (end_frame * FRAME).min(samples.len());
+    if start_sample >= end_sample {
+        return &[];
+    }
+    &samples[start_sample..end_sample]
 }
 
 /// "fr-FR" for a French answer, "id-ID" for an Indonesian answer, else None (the system's language).
@@ -324,5 +409,42 @@ mod tests {
     fn indonesian_answers_are_spoken_in_indonesian() {
         assert_eq!(speech_lang("Sudah saya tambahkan catatan untuk kamu."), Some("id-ID"));
         assert_eq!(speech_lang("Baik, musik sedang diputar di Spotify."), Some("id-ID"));
+    }
+
+    #[test]
+    fn short_clicks_and_transients_are_rejected_before_inference() {
+        let mut vad = Vad::default();
+        let silence = vec![0.0f32; 16_000];
+        // A 90 ms keyboard click (3 frames of 480 samples) followed by silence:
+        // Vad emits a segment (> 1.1 s including preroll + hangover), but
+        // `is_plausible_speech` rejects it in Wake mode because only 3 frames are active.
+        let click: Vec<f32> = (0..(3 * FRAME)).map(|i| (i as f32 * 0.2).sin() * 0.1).collect();
+        let _ = vad.feed(&silence);
+        let _ = vad.feed(&click);
+        let segments = vad.feed(&silence);
+        assert_eq!(segments.len(), 1);
+        assert!(segments[0].len() > config::WAKE_MIN_SEGMENT_SAMPLES);
+        assert!(!is_plausible_speech(&segments[0], true));
+
+        // A real wake phrase stretch (~600 ms of voiced speech = 20 frames) passes both Wake and Command gates,
+        // and `trim_silence` removes the long trailing hangover silence.
+        let speech_stretch: Vec<f32> = (0..(20 * FRAME)).map(|i| (i as f32 * 0.1).sin() * 0.25).collect();
+        let _ = vad.feed(&speech_stretch);
+        let voiced_segments = vad.feed(&silence);
+        assert_eq!(voiced_segments.len(), 1);
+        assert!(is_plausible_speech(&voiced_segments[0], true));
+        assert!(is_plausible_speech(&voiced_segments[0], false));
+
+        let trimmed = trim_silence(&voiced_segments[0]);
+        assert!(!trimmed.is_empty());
+        assert!(trimmed.len() < voiced_segments[0].len());
+        assert_eq!(trim_silence(&silence).len(), 0);
+    }
+
+    #[test]
+    fn hallucinated_repetitions_do_not_trigger_wake() {
+        assert_eq!(after_wake("OK Nala ya ya ya ya"), None);
+        assert_eq!(after_wake("[Musik]"), None);
+        assert_eq!(after_wake("Terima kasih telah menonton"), None);
     }
 }

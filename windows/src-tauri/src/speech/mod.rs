@@ -8,7 +8,9 @@
 // ~/.local/share/coucou/Models (Linux). From then on everything runs offline.
 
 pub mod audio;
+pub mod config;
 
+use std::collections::HashSet;
 use std::io::Write;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex, OnceLock};
@@ -24,7 +26,7 @@ use tauri::{AppHandle, Emitter};
 use crate::notes::builder::{TimedWord, Turn};
 
 /// Every model works on 16 kHz mono.
-pub const SAMPLE_RATE: u32 = 16_000;
+pub const SAMPLE_RATE: u32 = config::SAMPLE_RATE;
 
 struct ModelFile {
     name: &'static str,
@@ -439,7 +441,9 @@ fn load_lock() -> &'static Mutex<()> {
 }
 
 fn threads() -> i32 {
-    std::thread::available_parallelism().map(|n| n.get().clamp(1, 4) as i32).unwrap_or(2)
+    std::thread::available_parallelism()
+        .map(|n| n.get().clamp(1, config::MAX_RECOGNIZER_THREADS) as i32)
+        .unwrap_or(2)
 }
 
 /// The loaded recognizer, loading it on first use (about 2 s).
@@ -571,15 +575,15 @@ pub struct Transcript {
 
 /// Longest stretch given to the model at once. Longer audio is cut where it is
 /// quietest, near this length.
-const MAX_CHUNK_SECONDS: f64 = 28.0;
+const MAX_CHUNK_SECONDS: f64 = config::MAX_CHUNK_SECONDS;
 
 /// Silence given to the model before and after each stretch, in samples.
 ///
 /// A dictation starts the moment the key goes down: the microphone opens with
 /// a little click and the first word is already under way. Half a second of
 /// silence first helps model hearing the correct start of speech.
-const LEAD_SILENCE: usize = SAMPLE_RATE as usize / 2;
-const TAIL_SILENCE: usize = SAMPLE_RATE as usize * 3 / 10;
+const LEAD_SILENCE: usize = config::LEAD_SILENCE_SAMPLES;
+const TAIL_SILENCE: usize = config::TAIL_SILENCE_SAMPLES;
 
 /// `chunk` between the silences the model is given it with.
 pub fn padded(chunk: &[f32]) -> Vec<f32> {
@@ -588,6 +592,140 @@ pub fn padded(chunk: &[f32]) -> Vec<f32> {
     out.extend_from_slice(chunk);
     out.resize(out.len() + TAIL_SILENCE, 0.0);
     out
+}
+
+/// Checks whether an audio chunk has enough duration, peak amplitude, and RMS
+/// energy to contain actual speech rather than dead silence or background hum.
+pub fn has_transcribable_energy(samples: &[f32]) -> bool {
+    if samples.len() < config::MIN_CHUNK_SAMPLES {
+        return false;
+    }
+    let mut peak = 0.0f32;
+    let mut sum_sq = 0.0f64;
+    for &s in samples {
+        let abs = s.abs();
+        if abs > peak {
+            peak = abs;
+        }
+        let d = s as f64;
+        sum_sq += d * d;
+    }
+    if peak < config::MIN_TRANSCRIBE_PEAK {
+        return false;
+    }
+    let rms = (sum_sq / samples.len() as f64).sqrt() as f32;
+    rms >= config::MIN_TRANSCRIBE_RMS
+}
+
+/// Removes known non-speech tags (`[Musik]`, `(Music)`, `[BLANK_AUDIO]`, `♪`)
+/// and returns an empty string if the remaining text is a Whisper hallucination.
+pub fn clean_transcript_text(raw: &str) -> String {
+    let stripped = strip_non_speech_tags(raw);
+    let trimmed = stripped.trim();
+    if trimmed.is_empty() || is_hallucination(trimmed) {
+        return String::new();
+    }
+    trimmed.to_string()
+}
+
+fn strip_non_speech_tags(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    let chars: Vec<char> = raw.chars().collect();
+    let mut i = 0;
+    while i < chars.len() {
+        let c = chars[i];
+        if matches!(c, '♪' | '♫' | '🎵' | '🎶') {
+            i += 1;
+            continue;
+        }
+        let close = match c {
+            '[' => Some(']'),
+            '(' => Some(')'),
+            '*' => Some('*'),
+            _ => None,
+        };
+        if let Some(end_char) = close {
+            if let Some(rel_end) = chars[i + 1..].iter().position(|&x| x == end_char) {
+                let inner: String = chars[i + 1..i + 1 + rel_end].iter().collect();
+                let norm_inner = crate::voice::wake::normalize(&inner).replace('_', " ");
+                let norm_inner = norm_inner.trim();
+                if config::HALLUCINATION_TAGS.iter().any(|&tag| norm_inner == tag) {
+                    i += rel_end + 2;
+                    continue;
+                }
+            }
+        }
+        out.push(c);
+        i += 1;
+    }
+    out.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// Detects Whisper hallucinations on silence or noise:
+/// 1. Full-utterance subtitle/outro hallucinations (e.g. "Terima kasih telah menonton").
+/// 2. Consecutive single-word repetition loops (>= 4 identical words in a row).
+/// 3. Consecutive 2- or 3-word phrase repetition loops (>= 3 identical n-grams in a row).
+/// 4. Low lexical diversity on long outputs (>= 8 words with < 25% unique words).
+pub fn is_hallucination(text: &str) -> bool {
+    let norm = crate::voice::wake::normalize(text);
+    if norm.is_empty() {
+        return true;
+    }
+    let norm_spaced = norm.replace('_', " ");
+    let norm_trimmed = norm_spaced.trim();
+    if config::HALLUCINATION_TAGS.contains(&norm_trimmed)
+        || config::HALLUCINATION_PHRASES.contains(&norm_trimmed)
+    {
+        return true;
+    }
+
+    let words: Vec<&str> = norm_trimmed.split_whitespace().collect();
+    if words.is_empty() {
+        return true;
+    }
+
+    // 1. Consecutive single-word repeats (e.g. "ya ya ya ya")
+    let mut streak = 1usize;
+    for pair in words.windows(2) {
+        if pair[0] == pair[1] {
+            streak += 1;
+            if streak >= config::HALLUCINATION_MAX_WORD_REPEATS {
+                return true;
+            }
+        } else {
+            streak = 1;
+        }
+    }
+
+    // 2. Consecutive 2-word and 3-word phrase repeats
+    for n in [2usize, 3usize] {
+        if words.len() >= n * config::HALLUCINATION_MAX_NGRAM_REPEATS {
+            for start in 0..=words.len() - n * config::HALLUCINATION_MAX_NGRAM_REPEATS {
+                let base = &words[start..start + n];
+                let mut reps = 1usize;
+                while start + (reps + 1) * n <= words.len()
+                    && &words[start + reps * n..start + (reps + 1) * n] == base
+                {
+                    reps += 1;
+                    if reps >= config::HALLUCINATION_MAX_NGRAM_REPEATS {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    // 3. Global unique-word ratio on longer segments
+    if words.len() >= config::HALLUCINATION_DIVERSITY_MIN_WORDS {
+        let unique: HashSet<&str> = words.iter().copied().collect();
+        if unique.len() * config::HALLUCINATION_UNIQUE_RATIO_DEN
+            < words.len() * config::HALLUCINATION_UNIQUE_RATIO_NUM
+        {
+            return true;
+        }
+    }
+
+    false
 }
 
 /// Transcribes 16 kHz mono audio using the default or active model.
@@ -600,7 +738,7 @@ pub fn transcribe_with(samples: &[f32], engine: Option<&str>, language: Option<&
     let rec = recognizer_with(engine, language)?;
     let mut out = Transcript::default();
     for (offset, chunk) in audio::split_for_model(samples, SAMPLE_RATE, MAX_CHUNK_SECONDS) {
-        if chunk.len() < (SAMPLE_RATE as usize) / 4 {
+        if !has_transcribable_energy(chunk) {
             continue;
         }
         let stream = rec.create_stream();
@@ -608,6 +746,10 @@ pub fn transcribe_with(samples: &[f32], engine: Option<&str>, language: Option<&
         stream.accept_waveform(SAMPLE_RATE as i32, &audio);
         rec.decode(&stream);
         let Some(result) = stream.get_result() else { continue };
+        let text = clean_transcript_text(result.text.trim());
+        if text.is_empty() {
+            continue;
+        }
         // The words' times count from the start of the silence: take it off.
         let start = (offset as f64 - LEAD_SILENCE as f64) / SAMPLE_RATE as f64;
         let mut words = words_from_tokens(&result.tokens, result.timestamps.as_deref().unwrap_or(&[]), start, audio.len() as f64 / SAMPLE_RATE as f64);
@@ -617,9 +759,8 @@ pub fn transcribe_with(samples: &[f32], engine: Option<&str>, language: Option<&
             w.start = w.start.max(from);
             w.end = w.end.max(w.start);
         }
-        let text = result.text.trim();
         // If words is empty (e.g. models without token timestamps), approximate from text
-        if words.is_empty() && !text.is_empty() {
+        if words.is_empty() {
             let split_words: Vec<&str> = text.split_whitespace().collect();
             let duration = chunk.len() as f64 / SAMPLE_RATE as f64;
             let word_dur = duration / split_words.len().max(1) as f64;
@@ -633,12 +774,10 @@ pub fn transcribe_with(samples: &[f32], engine: Option<&str>, language: Option<&
                 });
             }
         }
-        if !text.is_empty() {
-            if !out.text.is_empty() {
-                out.text.push(' ');
-            }
-            out.text.push_str(text);
+        if !out.text.is_empty() {
+            out.text.push(' ');
         }
+        out.text.push_str(&text);
         out.words.extend(words);
     }
     Some(out)
@@ -677,18 +816,18 @@ pub fn words_from_tokens(tokens: &[String], timestamps: &[f32], offset: f64, len
 
 /// The voices of a recording, as turns "0", "1"… Empty when it can't tell.
 pub fn diarize(samples: &[f32]) -> Vec<Turn> {
-    if !DIARIZER.is_present() || samples.len() < SAMPLE_RATE as usize * 2 {
+    if !DIARIZER.is_present() || samples.len() < config::DIARIZER_MIN_SAMPLES {
         return Vec::new();
     }
-    let mut config = OfflineSpeakerDiarizationConfig::default();
-    config.segmentation.pyannote.model = Some(DIARIZER.path("segmentation.int8.onnx"));
-    config.segmentation.num_threads = threads();
-    config.embedding.model = Some(DIARIZER.path("embedding.onnx"));
-    config.embedding.num_threads = threads();
-    config.clustering.num_clusters = -1;
+    let mut cfg = OfflineSpeakerDiarizationConfig::default();
+    cfg.segmentation.pyannote.model = Some(DIARIZER.path("segmentation.int8.onnx"));
+    cfg.segmentation.num_threads = threads();
+    cfg.embedding.model = Some(DIARIZER.path("embedding.onnx"));
+    cfg.embedding.num_threads = threads();
+    cfg.clustering.num_clusters = -1;
     // Higher than the default 0.5: a voice is not split in two over a call.
-    config.clustering.threshold = 0.7;
-    let Some(d) = OfflineSpeakerDiarization::create(&config) else {
+    cfg.clustering.threshold = config::DIARIZER_CLUSTER_THRESHOLD;
+    let Some(d) = OfflineSpeakerDiarization::create(&cfg) else {
         crate::log::line("diarizer could not be loaded");
         return Vec::new();
     };
@@ -761,6 +900,50 @@ mod tests {
         assert_eq!(resolve_engine(Some("parakeet"), true, false), "whisper");
         assert_eq!(resolve_engine(Some("whisper"), false, false), "whisper");
         assert_eq!(resolve_engine(Some("parakeet"), false, false), "parakeet");
+    }
+
+    #[test]
+    fn whisper_hallucinations_and_non_speech_tags_are_filtered() {
+        // Non-speech tags are stripped; if nothing else remains, output is empty.
+        assert_eq!(clean_transcript_text("[Musik]"), "");
+        assert_eq!(clean_transcript_text("(Music) [Applause]"), "");
+        assert_eq!(clean_transcript_text("[BLANK_AUDIO]"), "");
+        assert_eq!(clean_transcript_text("♪ ♫"), "");
+        assert_eq!(clean_transcript_text("[Musik] Halo Nala, putar lagu."), "Halo Nala, putar lagu.");
+        // Legitimate brackets/parentheses in dictation are preserved.
+        assert_eq!(clean_transcript_text("Fungsi array[0] dan (x + y)"), "Fungsi array[0] dan (x + y)");
+
+        // Known Whisper silence/subtitle hallucinations are rejected.
+        assert!(is_hallucination("Terima kasih telah menonton."));
+        assert!(is_hallucination("Thank you for watching!"));
+        assert!(is_hallucination("Subtitles by the Amara.org community"));
+        assert!(is_hallucination("Sous-titres réalisés par la communauté d'Amara.org"));
+
+        // Normal polite phrases are preserved.
+        assert!(!is_hallucination("Terima kasih banyak atas bantuannya."));
+        assert!(!is_hallucination("Thank you, Nala!"));
+
+        // Repetitive decoder loops are rejected.
+        assert!(is_hallucination("ya ya ya ya"));
+        assert!(is_hallucination("oke oke oke oke oke"));
+        assert!(is_hallucination("terima kasih terima kasih terima kasih"));
+        assert!(is_hallucination("saya tidak tahu saya tidak tahu saya tidak tahu"));
+
+        // Valid wake phrases with double syllables ("ok cou cou", "Okay, cool cool") are preserved.
+        assert!(!is_hallucination("ok cou cou ajoute Stripe"));
+        assert!(!is_hallucination("Okay, cool cool."));
+    }
+
+    #[test]
+    fn silent_or_tiny_chunks_are_not_transcribed() {
+        let too_short = vec![0.2f32; config::MIN_CHUNK_SAMPLES - 1];
+        assert!(!has_transcribable_energy(&too_short));
+
+        let silent = vec![0.0005f32; config::MIN_CHUNK_SAMPLES + 500];
+        assert!(!has_transcribable_energy(&silent));
+
+        let voiced = vec![0.05f32; config::MIN_CHUNK_SAMPLES + 500];
+        assert!(has_transcribable_energy(&voiced));
     }
 }
 
