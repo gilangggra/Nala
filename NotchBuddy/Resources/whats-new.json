@@ -2,7 +2,7 @@
   "about": "What's new, shown once in the notch after Nala updates itself (WhatsNew.swift). Every Mac release adds its entry here, in the 16 languages, before release.sh: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
   "releases": [
     {
-      "version": "0.6.0",
+      "version": "1.0.0",
       "items": [
         {
           "icon": "terminal",

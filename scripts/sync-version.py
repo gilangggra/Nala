@@ -89,6 +89,31 @@ def set_version(version: str) -> None:
         rf"\g<1>{version}\2",
     )
 
+    # 9. windows/src/whats-new/whats-new.json
+    win_whats_new = ROOT / "windows/src/whats-new/whats-new.json"
+    replace_once(
+        win_whats_new,
+        r'("releases":\s*\[\s*\{\s*"version":\s*")[0-9.]+(")',
+        rf"\g<1>{version}\2",
+    )
+
+    # 10. NotchBuddy/Resources/whats-new.json
+    mac_whats_new = ROOT / "NotchBuddy/Resources/whats-new.json"
+    replace_once(
+        mac_whats_new,
+        r'("releases":\s*\[\s*\{\s*"version":\s*")[0-9.]+(")',
+        rf"\g<1>{version}\2",
+    )
+
+    # 11. CHANGELOG.md (first release header)
+    changelog = ROOT / "CHANGELOG.md"
+    replace_once(
+        changelog,
+        r"(^## \[?)[0-9.]+(\]? - \d{4}-\d{2}-\d{2})",
+        rf"\g<1>{version}\2",
+        flags=re.MULTILINE,
+    )
+
     print(f"Updated all manifests to version {version}")
 
 
