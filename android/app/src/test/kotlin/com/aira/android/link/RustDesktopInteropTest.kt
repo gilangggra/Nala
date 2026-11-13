@@ -42,7 +42,7 @@ class RustDesktopInteropTest {
         val manifest = ReferenceFiles.file("windows/Cargo.toml").absolutePath
         proc = try {
             ProcessBuilder(
-                "cargo", "test", "--manifest-path", manifest, "-p", "nala", "--lib", "--locked", "--",
+                "cargo", "test", "--manifest-path", manifest, "-p", "aira", "--lib", "--locked", "--",
                 "--ignored", "--nocapture", "phone_link::interop::interop_server",
             ).redirectErrorStream(true).start()
         } catch (_: Exception) {
@@ -55,11 +55,17 @@ class RustDesktopInteropTest {
         }.apply { isDaemon = true; start() }
         // The first start compiles the whole app: allow for it.
         val deadline = System.currentTimeMillis() + 20 * 60_000
+        val captured = mutableListOf<String>()
         while (System.currentTimeMillis() < deadline) {
-            val l = lines.poll(5, TimeUnit.SECONDS) ?: continue
-            if (l.startsWith("{\"listening\"")) return JSONObject(l)
+            val l = lines.poll(1, TimeUnit.SECONDS)
+            if (l != null) {
+                captured.add(l)
+                if (l.startsWith("{\"listening\"")) return JSONObject(l)
+            } else if (proc?.isAlive == false) {
+                error("the Rust desktop exited early with code ${proc?.exitValue()}:\n" + captured.takeLast(30).joinToString("\n"))
+            }
         }
-        error("the Rust desktop did not start")
+        error("the Rust desktop did not start within 20 minutes:\n" + captured.takeLast(30).joinToString("\n"))
     }
 
     /** Sends one command and waits until the desktop has done it. */

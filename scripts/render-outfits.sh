@@ -13,11 +13,11 @@ swiftc \
   -parse-as-library \
   -sdk "$SDK" \
   -target arm64-apple-macosx15.0 \
-  NotchBuddy/Sources/CoucouKit/IslandScreenGeometry.swift \
-  NotchBuddy/Sources/CoucouKit/IslandTypes.swift \
-  NotchBuddy/Sources/CoucouKit/MochiWardrobe.swift \
-  NotchBuddy/Sources/CoucouKit/BotEngine.swift \
-  NotchBuddy/Sources/CoucouKit/MochiOutfitDrawing.swift \
+  NotchBuddy/Sources/AiraKit/IslandScreenGeometry.swift \
+  NotchBuddy/Sources/AiraKit/IslandTypes.swift \
+  NotchBuddy/Sources/AiraKit/MochiWardrobe.swift \
+  NotchBuddy/Sources/AiraKit/BotEngine.swift \
+  NotchBuddy/Sources/AiraKit/MochiOutfitDrawing.swift \
   scripts/RenderOutfits.swift \
   -framework AppKit \
   -framework SwiftUI \

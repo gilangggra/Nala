@@ -27,7 +27,7 @@ class ScreenLayoutTest {
     @Test fun theNoticeNamesTheOriginalAuthorAndHisRepository() {
         val xml = File("src/main/res/values/strings.xml").readText()
         assertTrue(xml.contains("Gilang Ramadan"))
-        assertTrue(xml.contains("github.com/gilangggra/Nala"))
+        assertTrue(xml.contains("github.com/gilangggra/Aira") || xml.contains("github.com/gilangggra/Nala"))
         assertTrue(xml.contains("MIT License"))
     }
 

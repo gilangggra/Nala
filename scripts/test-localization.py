@@ -54,7 +54,8 @@ def main():
             if arguments(unit["value"]) != arguments(target.get("value", "")):
                 errors.append(f"{key!r} {path}: format arguments differ")
     project = (ROOT / "NotchBuddy/project.yml").read_text().split("\ntargets:\n", 1)[1]
-    for name in ("NotchBuddy", "CoucouAppStore"):
+    appstore_target = "AiraAppStore" if re.search(r"^  AiraAppStore:\n", project, re.M) else "CoucouAppStore"
+    for name in ("NotchBuddy", appstore_target):
         target = re.search(rf"^  {name}:\n(.*?)(?=^  \w+:|\Z)", project, re.M | re.S)
         if not target or not re.search(r"^          - zh-Hant$", target[1], re.M):
             errors.append(f"{name}: zh-Hant is missing from bundle localizations")

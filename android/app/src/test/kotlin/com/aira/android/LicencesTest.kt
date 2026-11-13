@@ -34,7 +34,7 @@ class LicencesTest {
     @Test fun theNoticesNameWhoOwnsWhatAndTheArtworkIsNotMit() {
         val n = asset("NOTICES.txt")
         assertTrue(n.contains("Gilang Ramadan"))
-        assertTrue(n.contains("https://github.com/gilangggra/Nala"))
+        assertTrue(n.contains("https://github.com/gilangggra/Aira") || n.contains("https://github.com/gilangggra/Nala"))
         assertTrue(n.contains("released under the MIT License"))
         assertTrue(n.contains("LICENSE-ASSETS.md"))
         assertTrue(n.contains("ZXing Core 3.5.3") && n.contains("Apache License, Version 2.0"))
