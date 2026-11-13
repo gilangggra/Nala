@@ -93,10 +93,10 @@ pub const WAKE_MIN_PEAK: f32 = 0.018;
 /// Minimum peak sample amplitude required for a Command / FollowUp segment.
 pub const COMMAND_MIN_PEAK: f32 = 0.012;
 
-/// Seconds to wait for the command after hearing « OK Nala » alone.
+/// Seconds to wait for the command after hearing « OK Aira » alone.
 pub const COMMAND_TIMEOUT_SECS: u64 = 7;
 
-/// Seconds to wait for a follow-up answer after Nala asks a question.
+/// Seconds to wait for a follow-up answer after Aira asks a question.
 pub const FOLLOWUP_TIMEOUT_SECS: u64 = 8;
 
 // ── Whisper Anti-Hallucination Filter ─────────────────────────────────────────
@@ -170,7 +170,7 @@ pub const HALLUCINATION_PHRASES: &[&str] = &[
     "abonnez vous",
 ];
 
-// ── Local Voice Intent Parser (« OK Nala » Fast Path) ─────────────────────────
+// ── Local Voice Intent Parser (« OK Aira » Fast Path) ─────────────────────────
 
 /// Minimum allowed media/music volume percentage.
 pub const VOICE_VOLUME_MIN: u8 = 0;
@@ -199,21 +199,21 @@ pub const VOICE_MAX_APP_WORDS: usize = 5;
 /// Maximum word count for a single pill name in a local pill command.
 pub const VOICE_MAX_PILL_WORDS: usize = 4;
 
-// ── Multi-Provider Voice Brain (« OK Nala » Conversational Adapter) ───────────
+// ── Multi-Provider Voice Brain (« OK Aira » Conversational Adapter) ───────────
 
-/// Default low-latency Anthropic model for « OK Nala ».
+/// Default low-latency Anthropic model for « OK Aira ».
 pub const VOICE_ANTHROPIC_FAST_MODEL: &str = "claude-haiku-4-5";
 
-/// Default low-latency OpenAI model for « OK Nala ».
+/// Default low-latency OpenAI model for « OK Aira ».
 pub const VOICE_OPENAI_FAST_MODEL: &str = "gpt-4o-mini";
 
-/// Default low-latency Google Gemini model for « OK Nala ».
+/// Default low-latency Google Gemini model for « OK Aira ».
 pub const VOICE_GOOGLE_FAST_MODEL: &str = "gemini-2.0-flash";
 
-/// Default OpenRouter model for « OK Nala ».
+/// Default OpenRouter model for « OK Aira ».
 pub const VOICE_OPENROUTER_FAST_MODEL: &str = "openrouter/auto";
 
-/// Seconds of inactivity before « OK Nala » forgets the in-memory voice conversation.
+/// Seconds of inactivity before « OK Aira » forgets the in-memory voice conversation.
 pub const VOICE_BRAIN_FORGET_SECS: u64 = 90;
 
 /// Maximum tool-execution turns per single voice question.

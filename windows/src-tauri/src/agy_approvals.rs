@@ -79,7 +79,7 @@ pub fn pre_tool_timeout(home: &Path) -> Option<u64> {
         .iter()
         .filter_map(|g| g.get("hooks").and_then(Value::as_array))
         .flatten()
-        .find(|h| h.get("command").and_then(Value::as_str).is_some_and(|c| c.contains("nala-hook") || c.contains("coucou-hook")))
+        .find(|h| h.get("command").and_then(Value::as_str).is_some_and(|c| c.contains("aira-hook") || c.contains("nala-hook") || c.contains("coucou-hook")))
         // Antigravity's default when no timeout is written is 30 s.
         .map(|h| h.get("timeout").and_then(Value::as_f64).map_or(30, |t| t.max(0.0) as u64))
 }
@@ -157,7 +157,7 @@ mod tests {
 
     fn hooks(timeout: Option<u64>) -> String {
         let t = timeout.map(|t| format!(r#","timeout":{t}"#)).unwrap_or_default();
-        format!(r#"{{"coucou":{{"PreToolUse":[{{"matcher":"*","hooks":[{{"type":"command","command":"/x/nala-hook --agent antigravity PreToolUse"{t}}}]}}]}}}}"#)
+        format!(r#"{{"coucou":{{"PreToolUse":[{{"matcher":"*","hooks":[{{"type":"command","command":"/x/aira-hook --agent antigravity PreToolUse"{t}}}]}}]}}}}"#)
     }
 
     fn run(command: &str) -> Value {

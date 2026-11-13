@@ -1,13 +1,13 @@
 [package]
-name = "nala"
-description = "Nala for Windows and Linux — Mochi lives at the top of your screen"
+name = "aira"
+description = "Aira for Windows and Linux — Mochi lives at the top of your screen"
 authors = ["Gilang Ramadan"]
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [lib]
-name = "nala_lib"
+name = "aira_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

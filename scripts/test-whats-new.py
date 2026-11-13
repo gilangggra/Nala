@@ -75,11 +75,12 @@ def check_windows_manifests(version):
         fail(f"windows/Cargo.toml says {cargo_v!r}, expected {version!r}")
 
     cargo_lock_text = (ROOT / "windows/Cargo.lock").read_text(encoding="utf-8")
-    for crate_name in ("nala", "nala-hook"):
+    for crate_name in ("aira", "aira-hook", "nala", "nala-hook"):
         m_lock = re.search(rf'name\s*=\s*"{crate_name}"\s*\r?\nversion\s*=\s*"([^"]+)"', cargo_lock_text)
-        lock_v = m_lock.group(1) if m_lock else ""
-        if lock_v != version:
-            fail(f"windows/Cargo.lock ({crate_name}) says {lock_v!r}, expected {version!r}")
+        if m_lock:
+            lock_v = m_lock.group(1)
+            if lock_v != version:
+                fail(f"windows/Cargo.lock ({crate_name}) says {lock_v!r}, expected {version!r}")
 
     pkgbuild_text = (ROOT / "linux/arch/PKGBUILD").read_text(encoding="utf-8")
     m_pkg = re.search(r"^pkgver=([0-9.]+)", pkgbuild_text, re.MULTILINE)

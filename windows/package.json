@@ -1,5 +1,5 @@
 {
-  "name": "nala-windows",
+  "name": "aira-windows",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -10,8 +10,8 @@
     "test": "node --import ./tests/setup.mjs --test \"tests/**/*.test.mjs\"",
     "icons": "node scripts/gen-icons.mjs",
     "tauri": "tauri",
-    "predev": "cargo build --release -p nala-hook",
-    "prebuild": "cargo build --release -p nala-hook",
+    "predev": "cargo build --release -p aira-hook",
+    "prebuild": "cargo build --release -p aira-hook",
     "pack": "tauri build && node scripts/pack.mjs"
   },
   "devDependencies": {

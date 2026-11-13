@@ -1,6 +1,6 @@
 [package]
-name = "nala-hook"
-description = "Relays Claude Code hook events to Nala over a named pipe (Windows) or a Unix socket (Linux)"
+name = "aira-hook"
+description = "Relays Claude Code hook events to Aira over a named pipe (Windows) or a Unix socket (Linux)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

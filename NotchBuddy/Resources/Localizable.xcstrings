@@ -28168,97 +28168,97 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا يسمعك Nala: الميكروفون غير مسموح به أو غير متاح."
+            "value": "لا يسمعك Aira: الميكروفون غير مسموح به أو غير متاح."
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala আপনাকে শুনতে পাচ্ছে না: মাইক্রোফোনের অনুমতি নেই বা পাওয়া যাচ্ছে না।"
+            "value": "Aira আপনাকে শুনতে পাচ্ছে না: মাইক্রোফোনের অনুমতি নেই বা পাওয়া যাচ্ছে না।"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala kann dich nicht hören: Das Mikrofon ist nicht erlaubt oder nicht verfügbar."
+            "value": "Aira kann dich nicht hören: Das Mikrofon ist nicht erlaubt oder nicht verfügbar."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala can't hear you: the microphone is not allowed or not available."
+            "value": "Aira can't hear you: the microphone is not allowed or not available."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala no te oye: el micrófono no está permitido o no está disponible."
+            "value": "Aira no te oye: el micrófono no está permitido o no está disponible."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala ne t'entend pas : le micro n'est pas autorisé ou pas disponible."
+            "value": "Aira ne t'entend pas : le micro n'est pas autorisé ou pas disponible."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala आपको सुन नहीं पा रहा: माइक्रोफ़ोन की अनुमति नहीं है या वह उपलब्ध नहीं।"
+            "value": "Aira आपको सुन नहीं पा रहा: माइक्रोफ़ोन की अनुमति नहीं है या वह उपलब्ध नहीं।"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala tidak bisa mendengarmu: mikrofon tidak diizinkan atau tidak tersedia."
+            "value": "Aira tidak bisa mendengarmu: mikrofon tidak diizinkan atau tidak tersedia."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala にあなたの声が聞こえません。マイクが許可されていないか、利用できません。"
+            "value": "Aira にあなたの声が聞こえません。マイクが許可されていないか、利用できません。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "앗, Nala가 못 듣고 있어요. 마이크가 허용되지 않았거나 쓸 수 없는 상태예요."
+            "value": "앗, Aira가 못 듣고 있어요. 마이크가 허용되지 않았거나 쓸 수 없는 상태예요."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O Nala não te ouve: o microfone não está permitido ou indisponível."
+            "value": "O Aira não te ouve: o microfone não está permitido ou indisponível."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala вас не слышит: микрофон не разрешён или недоступен."
+            "value": "Aira вас не слышит: микрофон не разрешён или недоступен."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala ไม่ได้ยินเสียงคุณ: ไมโครโฟนไม่ได้รับอนุญาตหรือไม่พร้อมใช้งาน"
+            "value": "Aira ไม่ได้ยินเสียงคุณ: ไมโครโฟนไม่ได้รับอนุญาตหรือไม่พร้อมใช้งาน"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala seni duyamıyor: mikrofona izin verilmemiş veya mikrofon kullanılamıyor."
+            "value": "Aira seni duyamıyor: mikrofona izin verilmemiş veya mikrofon kullanılamıyor."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala 听不到你：麦克风未获允许或不可用。"
+            "value": "Aira 听不到你：麦克风未获允许或不可用。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nala 聽不到你的聲音：麥克風未獲授權或無法使用。"
+            "value": "Aira 聽不到你的聲音：麥克風未獲授權或無法使用。"
           }
         }
       }

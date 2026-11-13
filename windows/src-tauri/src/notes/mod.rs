@@ -238,7 +238,7 @@ pub fn toggle(app: &AppHandle) {
         stop(app);
     } else if let Err(err) = start(app) {
         let (text, action) = if err == "models" {
-            (t("Download the voice model first, in Nala → Settings → Recognition."), Some((t("Open Settings"), "openSettings")))
+            (t("Download the voice model first, in Aira → Settings → Recognition."), Some((t("Open Settings"), "openSettings")))
         } else {
             (err, None)
         };
@@ -290,7 +290,7 @@ fn start_inner(app: &AppHandle, taker: &Arc<NoteTaker>) -> Result<String, String
     .map_err(|err| {
         crate::log::line(format!("notes: microphone: {err}"));
         let _ = std::fs::remove_dir_all(&dir);
-        t("Nala can't hear you: the microphone is not allowed or not available.")
+        t("Aira can't hear you: the microphone is not allowed or not available.")
     })?;
     // Without the computer's sound, the call is noted from the microphone alone.
     let (system, system_channel) = match Channel::new(&dir.join("system.wav")) {
@@ -351,8 +351,8 @@ fn spawn_live(
                 // `stop` here is the live loop's flag: the module's function.
                 crate::notes::stop(&app);
                 let text = match why {
-                    AutoStop::Silence => t("Nobody has spoken for 15 minutes: Nala stopped recording the call."),
-                    AutoStop::Length => t("The call has been recorded for 4 hours: Nala stopped recording it."),
+                    AutoStop::Silence => t("Nobody has spoken for 15 minutes: Aira stopped recording the call."),
+                    AutoStop::Length => t("The call has been recorded for 4 hours: Aira stopped recording it."),
                 };
                 pill::announce(&app, "mic", "#F7B32B", text, None, 30);
                 break;
@@ -448,7 +448,7 @@ fn words_in(path: &std::path::Path) -> Result<(Vec<TimedWord>, Vec<f32>), String
         return Ok((Vec::new(), Vec::new()));
     }
     let samples = audio::read_wav(path).map_err(|e| e.to_string())?;
-    let transcript = speech::transcribe(&samples).ok_or_else(|| t("Download the voice model first, in Nala → Settings → Recognition."))?;
+    let transcript = speech::transcribe(&samples).ok_or_else(|| t("Download the voice model first, in Aira → Settings → Recognition."))?;
     Ok((transcript.words, samples))
 }
 
@@ -662,7 +662,7 @@ pub fn notes_state(taker: State<Arc<NoteTaker>>) -> NotesState {
 #[tauri::command]
 pub async fn notes_start(app: AppHandle) -> Result<String, String> {
     tauri::async_runtime::spawn_blocking(move || {
-        start(&app).map_err(|e| if e == "models" { t("Download the voice model first, in Nala → Settings → Recognition.") } else { e })
+        start(&app).map_err(|e| if e == "models" { t("Download the voice model first, in Aira → Settings → Recognition.") } else { e })
     })
     .await
     .map_err(|e| e.to_string())?

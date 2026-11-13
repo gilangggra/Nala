@@ -362,7 +362,7 @@ async fn download_all(app: &AppHandle, target_engine: &str) -> Result<(), String
     let client = reqwest::Client::builder()
         .connect_timeout(Duration::from_secs(20))
         .read_timeout(Duration::from_secs(60))
-        .user_agent(concat!("Nala/", env!("CARGO_PKG_VERSION")))
+        .user_agent(concat!("Aira/", env!("CARGO_PKG_VERSION")))
         .build()
         .map_err(|e| e.to_string())?;
     let mut last_emit = Instant::now();
@@ -909,7 +909,7 @@ mod tests {
         assert_eq!(clean_transcript_text("(Music) [Applause]"), "");
         assert_eq!(clean_transcript_text("[BLANK_AUDIO]"), "");
         assert_eq!(clean_transcript_text("♪ ♫"), "");
-        assert_eq!(clean_transcript_text("[Musik] Halo Nala, putar lagu."), "Halo Nala, putar lagu.");
+        assert_eq!(clean_transcript_text("[Musik] Halo Aira, putar lagu."), "Halo Aira, putar lagu.");
         // Legitimate brackets/parentheses in dictation are preserved.
         assert_eq!(clean_transcript_text("Fungsi array[0] dan (x + y)"), "Fungsi array[0] dan (x + y)");
 
@@ -921,7 +921,7 @@ mod tests {
 
         // Normal polite phrases are preserved.
         assert!(!is_hallucination("Terima kasih banyak atas bantuannya."));
-        assert!(!is_hallucination("Thank you, Nala!"));
+        assert!(!is_hallucination("Thank you, Aira!"));
 
         // Repetitive decoder loops are rejected.
         assert!(is_hallucination("ya ya ya ya"));

@@ -527,6 +527,21 @@
    "ko": "에이전트",
    "ja": "エージェント"
   },
+  "Aira can't hear you: the microphone is not allowed or not available.": {
+   "zh-Hans": "Aira 听不到你：麦克风未获允许或不可用。",
+   "hi": "Aira आपको सुन नहीं पा रहा: माइक्रोफ़ोन की अनुमति नहीं है या वह उपलब्ध नहीं।",
+   "es": "Aira no te oye: el micrófono no está permitido o no está disponible.",
+   "ar": "لا يسمعك Aira: الميكروفون غير مسموح به أو غير متاح.",
+   "fr": "Aira ne t'entend pas : le micro n'est pas autorisé ou pas disponible.",
+   "bn": "Aira আপনাকে শুনতে পাচ্ছে না: মাইক্রোফোনের অনুমতি নেই বা পাওয়া যাচ্ছে না।",
+   "pt-BR": "O Aira não te ouve: o microfone não está permitido ou indisponível.",
+   "ru": "Aira вас не слышит: микрофон не разрешён или недоступен.",
+   "id": "Aira tidak bisa mendengarmu: mikrofon tidak diizinkan atau tidak tersedia.",
+   "de": "Aira kann dich nicht hören: Das Mikrofon ist nicht erlaubt oder nicht verfügbar.",
+   "tr": "Aira seni duyamıyor: mikrofona izin verilmemiş veya mikrofon kullanılamıyor.",
+   "ko": "앗, Aira가 못 듣고 있어요. 마이크가 허용되지 않았거나 쓸 수 없는 상태예요.",
+   "ja": "Aira にあなたの声が聞こえません。マイクが許可されていないか、利用できません。"
+  },
   "Alert me when a coin moves {0} %": {
    "zh-Hans": "币价变动 {0} % 时提醒我",
    "hi": "कोई कॉइन {0} % हिले तो सूचित करें",
@@ -5716,21 +5731,6 @@
    "tr": "Nala'nun yanıt dili",
    "ko": "Nala의 응답 언어",
    "ja": "Nala の返答言語"
-  },
-  "Nala can't hear you: the microphone is not allowed or not available.": {
-   "zh-Hans": "Nala 听不到你：麦克风未获允许或不可用。",
-   "hi": "Nala आपको सुन नहीं पा रहा: माइक्रोफ़ोन की अनुमति नहीं है या वह उपलब्ध नहीं।",
-   "es": "Nala no te oye: el micrófono no está permitido o no está disponible.",
-   "ar": "لا يسمعك Nala: الميكروفون غير مسموح به أو غير متاح.",
-   "fr": "Nala ne t'entend pas : le micro n'est pas autorisé ou pas disponible.",
-   "bn": "Nala আপনাকে শুনতে পাচ্ছে না: মাইক্রোফোনের অনুমতি নেই বা পাওয়া যাচ্ছে না।",
-   "pt-BR": "O Nala não te ouve: o microfone não está permitido ou indisponível.",
-   "ru": "Nala вас не слышит: микрофон не разрешён или недоступен.",
-   "id": "Nala tidak bisa mendengarmu: mikrofon tidak diizinkan atau tidak tersedia.",
-   "de": "Nala kann dich nicht hören: Das Mikrofon ist nicht erlaubt oder nicht verfügbar.",
-   "tr": "Nala seni duyamıyor: mikrofona izin verilmemiş veya mikrofon kullanılamıyor.",
-   "ko": "앗, Nala가 못 듣고 있어요. 마이크가 허용되지 않았거나 쓸 수 없는 상태예요.",
-   "ja": "Nala にあなたの声が聞こえません。マイクが許可されていないか、利用できません。"
   },
   "Nala can't paste yet, or see Esc: it needs the Accessibility permission. Turn on Nala in System Settings → Privacy & Security → Accessibility. If it is already on, remove it with − and add it again: a new build of Nala needs it again.": {
    "zh-Hans": "Nala 还不能粘贴，也无法识别 Esc：它需要“辅助功能”权限。请在“系统设置”→“隐私与安全性”→“辅助功能”中打开 Nala。如果已经打开，请用“−”移除后重新添加：新版本的 Nala 需要重新授权。",

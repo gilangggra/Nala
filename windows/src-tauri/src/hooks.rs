@@ -38,12 +38,13 @@ pub const HOOK_EVENTS: &[(&str, u64)] = &[
     ("SubagentStop", 10),
 ];
 
-/// Marker that identifies a Nala (or legacy Coucou) entry inside settings.json.
-const MARKER: &str = "nala-hook";
-const LEGACY_MARKER: &str = "coucou-hook";
+/// Marker that identifies an Aira (or legacy Nala/Coucou) entry inside settings.json.
+const MARKER: &str = "aira-hook";
+const LEGACY_MARKER: &str = "nala-hook";
+const UPSTREAM_MARKER: &str = "coucou-hook";
 
 fn is_marker(c: &str) -> bool {
-    c.contains(MARKER) || c.contains(LEGACY_MARKER)
+    c.contains(MARKER) || c.contains(LEGACY_MARKER) || c.contains(UPSTREAM_MARKER)
 }
 
 #[derive(Serialize)]
@@ -152,7 +153,7 @@ fn merged(existing: &Value) -> Result<Value, String> {
 }
 
 fn unexpected(what: &str) -> String {
-    crate::i18n::tf("settings.json: {what} has an unexpected type — Nala has not touched it.", &[("what", what)])
+    crate::i18n::tf("settings.json: {what} has an unexpected type — Aira has not touched it.", &[("what", what)])
 }
 
 /// Settings with every Coucou entry removed, and nothing else changed.
@@ -595,7 +596,7 @@ mod tests {
     /// the home directory at a temp directory, and that is process-wide.
     #[test]
     fn writing_backs_up_preserves_and_refuses_a_changed_file() {
-        let tmp = std::env::temp_dir().join(format!("nala-hooks-{}", std::process::id()));
+        let tmp = std::env::temp_dir().join(format!("aira-hooks-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&tmp);
         std::fs::create_dir_all(tmp.join(".claude")).unwrap();
         std::env::set_var(platform::HOME_VAR, &tmp);

@@ -58,7 +58,7 @@ fn is_coucou(word: &str) -> bool {
     )
 }
 
-/// How Parakeet may write "nala", in one word.
+/// How Parakeet may write "nala", in one word (retained for backward compatibility).
 fn is_nala(word: &str) -> bool {
     matches!(
         word,
@@ -73,9 +73,24 @@ fn is_nala(word: &str) -> bool {
     )
 }
 
-/// Matches either target name (Coucou or Nala).
+/// How Whisper/Parakeet may write "aira", in one word.
+fn is_aira(word: &str) -> bool {
+    matches!(
+        word,
+        "aira"
+            | "ayra"
+            | "eyra"
+            | "aera"
+            | "airah"
+            | "ayrah"
+            | "eyrah"
+            | "ira"
+    )
+}
+
+/// Matches target name (Aira, Nala, or Coucou).
 fn is_wake_name(word: &str) -> bool {
-    is_coucou(word) || is_nala(word)
+    is_aira(word) || is_nala(word) || is_coucou(word)
 }
 
 /// …or in two.
@@ -90,8 +105,12 @@ fn is_nala_pair(a: &str, b: &str) -> bool {
     matches!((a, b), ("na", "la") | ("nah", "la"))
 }
 
+fn is_aira_pair(a: &str, b: &str) -> bool {
+    matches!((a, b), ("ai", "ra") | ("ay", "ra"))
+}
+
 fn is_wake_pair(a: &str, b: &str) -> bool {
-    is_coucou_pair(a, b) || is_nala_pair(a, b)
+    is_aira_pair(a, b) || is_nala_pair(a, b) || is_coucou_pair(a, b)
 }
 
 /// When `text` holds the wake phrase, what was said after it (maybe nothing).
@@ -112,7 +131,7 @@ pub fn after_wake(text: &str) -> Option<String> {
             ok_end = Some(if norm[i] == "o" { i + 2 } else { i + 1 });
         }
         if let Some(j) = ok_end {
-            // A word made of two ("ok coucou" / "ok nala" written as one token is rare but happens).
+            // A word made of two ("ok coucou" / "ok nala" / "ok aira" written as one token is rare but happens).
             if let Some(w) = norm.get(j) {
                 let parts: Vec<&str> = w.split(' ').collect();
                 if parts.len() == 1 && is_wake_name(parts[0]) {
@@ -125,18 +144,20 @@ pub fn after_wake(text: &str) -> Option<String> {
                 }
             }
         }
-        // "okcoucou" / "oknala" / "heynala" in one piece.
+        // "okcoucou" / "oknala" / "okaira" in one piece.
         if let Some(rest) = norm[i]
             .strip_prefix("okay")
             .or_else(|| norm[i].strip_prefix("ok"))
             .or_else(|| norm[i].strip_prefix("hey"))
+            .or_else(|| norm[i].strip_prefix("hai"))
+            .or_else(|| norm[i].strip_prefix("halo"))
         {
             if is_wake_name(rest.trim()) {
                 return Some(words[i + 1..].join(" ").trim().to_string());
             }
         }
-        // Direct invocation at sentence start, e.g. "Nala, play music" or "Nala! What's the time"
-        if i == 0 && words.len() > 1 && is_nala(&norm[0]) {
+        // Direct invocation at sentence start, e.g. "Aira, play music" or "Aira! What's the time"
+        if i == 0 && words.len() > 1 && (is_aira(&norm[0]) || is_nala(&norm[0])) {
             return Some(words[1..].join(" ").trim_start_matches([',', '.', '!', ' ']).trim().to_string());
         }
         i += 1;
@@ -373,7 +394,16 @@ mod tests {
         assert_eq!(after_wake("Okay, Google."), None);
         assert_eq!(after_wake("on a dit coucou à Paul"), None);
         assert_eq!(after_wake("ok let's go"), None);
-        // Nala wake phrases
+        // Aira wake phrases
+        assert_eq!(after_wake("OK Aira, play some music.").as_deref(), Some("play some music."));
+        assert_eq!(after_wake("Hai Aira, apa kabar?").as_deref(), Some("apa kabar?"));
+        assert_eq!(after_wake("Hey Aira, buka VS Code.").as_deref(), Some("buka VS Code."));
+        assert_eq!(after_wake("Okay, Aira!").as_deref(), Some(""));
+        assert_eq!(after_wake("O.K. Ayra what's the weather").as_deref(), Some("what's the weather"));
+        assert_eq!(after_wake("ok ai ra buka Spotify").as_deref(), Some("buka Spotify"));
+        assert_eq!(after_wake("Aira, play some jazz.").as_deref(), Some("play some jazz."));
+        assert_eq!(after_wake("Aira! Bukakan file laporan.").as_deref(), Some("Bukakan file laporan."));
+        // Legacy Nala wake phrases (supported during transition)
         assert_eq!(after_wake("OK Nala, play some music.").as_deref(), Some("play some music."));
         assert_eq!(after_wake("Hey Nala, apa kabar?").as_deref(), Some("apa kabar?"));
         assert_eq!(after_wake("Okay, Nala!").as_deref(), Some(""));
@@ -443,6 +473,7 @@ mod tests {
 
     #[test]
     fn hallucinated_repetitions_do_not_trigger_wake() {
+        assert_eq!(after_wake("OK Aira ya ya ya ya"), None);
         assert_eq!(after_wake("OK Nala ya ya ya ya"), None);
         assert_eq!(after_wake("[Musik]"), None);
         assert_eq!(after_wake("Terima kasih telah menonton"), None);

@@ -35,12 +35,12 @@ def set_version(version: str) -> None:
     lock_path = ROOT / "windows/package-lock.json"
     replace_once(
         lock_path,
-        r'("name":\s*"nala-windows",\s*"version":\s*")[0-9.]+(")',
+        r'("name":\s*"(?:aira-windows|nala-windows)",\s*"version":\s*")[0-9.]+(")',
         rf"\g<1>{version}\2",
     )
     replace_once(
         lock_path,
-        r'("":\s*\{\s*"name":\s*"nala-windows",\s*"version":\s*")[0-9.]+(")',
+        r'("":\s*\{\s*"name":\s*"(?:aira-windows|nala-windows)",\s*"version":\s*")[0-9.]+(")',
         rf"\g<1>{version}\2",
     )
 
@@ -48,7 +48,7 @@ def set_version(version: str) -> None:
     tauri_path = ROOT / "windows/src-tauri/tauri.conf.json"
     replace_once(
         tauri_path,
-        r'("productName":\s*"Nala",\s*"version":\s*")[0-9.]+(")',
+        r'("productName":\s*"(?:Aira|Nala)",\s*"version":\s*")[0-9.]+(")',
         rf"\g<1>{version}\2",
     )
 
@@ -60,14 +60,17 @@ def set_version(version: str) -> None:
         rf"\g<1>{version}\2",
     )
 
-    # 5. windows/Cargo.lock (workspace crates: nala and nala-hook)
+    # 5. windows/Cargo.lock (workspace crates: aira/nala and aira-hook/nala-hook)
     cargo_lock = ROOT / "windows/Cargo.lock"
-    for crate_name in ("nala", "nala-hook"):
-        replace_once(
-            cargo_lock,
-            rf'(name\s*=\s*"{crate_name}"\s*\r?\nversion\s*=\s*")[0-9.]+(")',
-            rf"\g<1>{version}\2",
-        )
+    for crate_name in ("aira", "aira-hook", "nala", "nala-hook"):
+        try:
+            replace_once(
+                cargo_lock,
+                rf'(name\s*=\s*"{crate_name}"\s*\r?\nversion\s*=\s*")[0-9.]+(")',
+                rf"\g<1>{version}\2",
+            )
+        except Exception:
+            pass
 
     # 6. linux/arch/PKGBUILD
     pkgbuild = ROOT / "linux/arch/PKGBUILD"
@@ -129,14 +132,10 @@ def read_versions() -> dict[str, str]:
         re.MULTILINE,
     ).group(1)
     cargo_lock_text = (ROOT / "windows/Cargo.lock").read_text(encoding="utf-8")
-    cargo_lock_nala = re.search(
-        r'name\s*=\s*"nala"\s*\r?\nversion\s*=\s*"([^"]+)"',
-        cargo_lock_text,
-    ).group(1)
-    cargo_lock_hook = re.search(
-        r'name\s*=\s*"nala-hook"\s*\r?\nversion\s*=\s*"([^"]+)"',
-        cargo_lock_text,
-    ).group(1)
+    m_main = re.search(r'name\s*=\s*"(?:aira|nala)"\s*\r?\nversion\s*=\s*"([^"]+)"', cargo_lock_text)
+    cargo_lock_main = m_main.group(1) if m_main else ""
+    m_hook = re.search(r'name\s*=\s*"(?:aira-hook|nala-hook)"\s*\r?\nversion\s*=\s*"([^"]+)"', cargo_lock_text)
+    cargo_lock_hook = m_hook.group(1) if m_hook else ""
     pkgbuild = re.search(
         r"^pkgver=([0-9.]+)",
         (ROOT / "linux/arch/PKGBUILD").read_text(encoding="utf-8"),
@@ -169,8 +168,8 @@ def read_versions() -> dict[str, str]:
         "windows/package-lock.json (root)": pkg_lock_root,
         "windows/src-tauri/tauri.conf.json": tauri,
         "windows/Cargo.toml": cargo_toml,
-        "windows/Cargo.lock (nala)": cargo_lock_nala,
-        "windows/Cargo.lock (nala-hook)": cargo_lock_hook,
+        "windows/Cargo.lock (app)": cargo_lock_main,
+        "windows/Cargo.lock (hook)": cargo_lock_hook,
         "linux/arch/PKGBUILD": pkgbuild,
         "NotchBuddy/project.yml": mac_proj,
         "NotchBuddy/Resources/Info.plist": mac_plist,

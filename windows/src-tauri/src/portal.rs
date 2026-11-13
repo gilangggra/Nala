@@ -41,8 +41,8 @@ const IFACE: &str = "org.freedesktop.portal.GlobalShortcuts";
 const REQUEST: &str = "org.freedesktop.portal.Request";
 const SESSION: &str = "org.freedesktop.portal.Session";
 /// Tauri's identifier. Told to the portal so the desktop files the shortcuts
-/// under Nala rather than under an unnamed app.
-const APP_ID: &str = "fr.louisraille.nala";
+/// under Aira rather than under an unnamed app.
+const APP_ID: &str = "com.aira.desktop";
 /// For the calls themselves, which answer at once: the user's answer comes
 /// later, in a Response signal.
 const CALL_TIMEOUT: Duration = Duration::from_secs(10);

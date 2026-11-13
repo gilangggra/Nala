@@ -253,8 +253,8 @@ mod tests {
         set_for_test("fr");
         // From the Mac's catalog.
         assert_eq!(t("Allow"), "Autoriser");
-        // From extra.json.
-        assert_eq!(t("Open Nala"), "Ouvrir Nala");
+        // From extra.json / strings.json.
+        assert_eq!(t("Open Aira"), "Ouvrir Aira");
         assert_eq!(t("A string nobody translated"), "A string nobody translated");
         assert_eq!(tf("Open {name}", &[("name", "Vercel")]), "Ouvrir Vercel");
         set_for_test("en");

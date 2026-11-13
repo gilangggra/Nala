@@ -23,13 +23,13 @@ use crate::CONNECT_TIMEOUT;
 /// the one error worth retrying: the server exists and a slot will free up.
 const ERROR_PIPE_BUSY: i32 = 231;
 
-/// `\\.\pipe\nala-<sid>`. The SID keeps two accounts on the same machine from
+/// `\\.\pipe\aira-<sid>`. The SID keeps two accounts on the same machine from
 /// ever meeting on the same pipe; the name falls back to the user name only if
 /// the SID cannot be read at all, which should not happen.
 fn pipe_path() -> String {
     let key = current_user_sid()
         .unwrap_or_else(|| std::env::var("USERNAME").unwrap_or_else(|_| "user".into()));
-    format!(r"\\.\pipe\nala-{key}")
+    format!(r"\\.\pipe\aira-{key}")
 }
 
 /// Opens the pipe. Retries only while the server is busy: any other error means
