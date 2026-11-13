@@ -12,8 +12,10 @@ import { HOST_OS } from "./pills";
 
 export const MAX_PROJECTS = 10;
 
-const PROJECTS_KEY = "nala.launch.projects";
-const FOLDER_KEY = "nala.launch.folder";
+const PROJECTS_KEY = "aira.launch.projects";
+const LEGACY_PROJECTS_KEY = "nala.launch.projects";
+const FOLDER_KEY = "aira.launch.folder";
+const LEGACY_FOLDER_KEY = "nala.launch.folder";
 
 /** The folder without its trailing separators ("C:\" and "/" stay as they are). */
 export function normalizeFolder(path: string): string {
@@ -71,7 +73,8 @@ function write(key: string, value: string) {
 
 function readProjects(): string[] {
   try {
-    const list = JSON.parse(read(PROJECTS_KEY) ?? "[]");
+    const raw = read(PROJECTS_KEY) ?? read(LEGACY_PROJECTS_KEY) ?? "[]";
+    const list = JSON.parse(raw);
     return Array.isArray(list) ? list.filter((p): p is string => typeof p === "string").slice(0, MAX_PROJECTS) : [];
   } catch {
     return [];
@@ -87,7 +90,7 @@ export class Launcher {
   constructor(windows: boolean) {
     this.windows = windows;
     this.projects = readProjects();
-    this.folder = read(FOLDER_KEY) || this.projects[0] || null;
+    this.folder = read(FOLDER_KEY) || read(LEGACY_FOLDER_KEY) || this.projects[0] || null;
   }
 
   /** Each Claude Code session teaches it a project. */

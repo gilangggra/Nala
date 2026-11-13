@@ -32,7 +32,7 @@ class NsdDiscovery(context: Context) : DiscoverySource {
         stop()
         this.onFound = onFound
         lock = runCatching {
-            wifi?.createMulticastLock("nala-discovery")?.apply { setReferenceCounted(false); acquire() }
+            wifi?.createMulticastLock("aira-discovery")?.apply { setReferenceCounted(false); acquire() }
         }.getOrNull()
         val l = object : NsdManager.DiscoveryListener {
             override fun onDiscoveryStarted(serviceType: String) { Log.d(TAG, "browsing") }

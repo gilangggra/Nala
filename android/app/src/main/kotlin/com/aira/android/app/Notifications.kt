@@ -198,7 +198,7 @@ class Notifications(private val context: Context) {
     private fun wakeScreen() = runCatching {
         val pm = context.getSystemService(android.os.PowerManager::class.java)
         if (pm.isInteractive) return@runCatching
-        pm.newWakeLock(android.os.PowerManager.SCREEN_BRIGHT_WAKE_LOCK or android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP, "nala:approval")
+        pm.newWakeLock(android.os.PowerManager.SCREEN_BRIGHT_WAKE_LOCK or android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP, "aira:approval")
             .acquire(WAKE_MS)
     }
 

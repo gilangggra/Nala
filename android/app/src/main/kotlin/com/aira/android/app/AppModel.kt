@@ -101,7 +101,7 @@ class AppModel(private val context: Context) : LinkListener {
     var discovery by mutableStateOf(DiscoveryState.IDLE); private set
     /** The pairing the running link uses (with the address in force); the token stays in memory only as long as the link does. */
     @Volatile private var currentPairing: PairingPayload? = null
-    private val probeExecutor = java.util.concurrent.Executors.newSingleThreadExecutor { r -> Thread(r, "nala-probe").apply { isDaemon = true } }
+    private val probeExecutor = java.util.concurrent.Executors.newSingleThreadExecutor { r -> Thread(r, "aira-probe").apply { isDaemon = true } }
     /** Which way the link reaches the computer now (null until connected), and why the relay failed, if it did. */
     var route by mutableStateOf<com.aira.android.link.Route?>(null); private set
     var relayIssue by mutableStateOf(com.aira.android.link.RelayIssue.NONE); private set

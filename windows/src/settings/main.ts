@@ -216,7 +216,7 @@ function claudeSection(status: HookStatus): HTMLElement {
     if (!status.hookReady) {
       body.append(h("div", {
         class: "notice warn",
-        text: t("nala-hook.exe is not in place yet. Restart Aira; if it still fails, build it with `cargo build -p nala-hook`."),
+        text: t("aira-hook.exe is not in place yet. Restart Aira; if it still fails, build it with `cargo build -p aira-hook`."),
       }));
     }
 
@@ -1449,7 +1449,7 @@ function applyLanguage() {
 
 function applyDirection() {
   document.documentElement.dir = isRtl() ? "rtl" : "ltr";
-  document.title = "Nala";
+  document.title = "Aira";
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────────

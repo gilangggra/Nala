@@ -38,7 +38,7 @@ class RustDesktopInteropTest {
     }
 
     private fun startDesktop(): JSONObject {
-        assumeTrue("set COUCOU_RUST_INTEROP=1 to run against the Rust desktop", System.getenv("NALA_RUST_INTEROP") == "1" || System.getenv("COUCOU_RUST_INTEROP") == "1")
+        assumeTrue("set AIRA_RUST_INTEROP=1 to run against the Rust desktop", System.getenv("AIRA_RUST_INTEROP") == "1" || System.getenv("NALA_RUST_INTEROP") == "1" || System.getenv("COUCOU_RUST_INTEROP") == "1")
         val manifest = ReferenceFiles.file("windows/Cargo.toml").absolutePath
         proc = try {
             ProcessBuilder(

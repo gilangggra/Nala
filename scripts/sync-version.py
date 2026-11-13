@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Synchronize or verify Nala's version across all manifests.
+"""Synchronize or verify Aira's version across all manifests.
 
 Usage:
     python3 scripts/sync-version.py              # check that all manifests agree

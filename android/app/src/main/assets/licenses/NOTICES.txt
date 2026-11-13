@@ -1,14 +1,14 @@
-NALA FOR ANDROID: LICENCES AND NOTICES
+AIRA FOR ANDROID: LICENCES AND NOTICES
 
-Nala for Android, by Gilang Ramadan, is part of Nala (https://github.com/gilangggra/Nala). It is free, has no ads and no analytics.
+Aira for Android, by Gilang Ramadan, is part of Aira (https://github.com/gilangggra/Aira). It is free, has no ads and no analytics.
 
-1. The code of Nala
+1. The code of Aira
 
-The source code of Nala is Copyright (c) 2026 Gilang Ramadan and is released under the MIT License. The full text is below ("MIT License").
+The source code of Aira is Copyright (c) 2026 Gilang Ramadan and is released under the MIT License. The full text is below ("MIT License").
 
 2. The name, the character, the icon and the sounds
 
-The names "Nala", the character, the app icon and the sounds are Copyright (c) 2026 Gilang Ramadan. All rights reserved (see LICENSE-ASSETS.md in https://github.com/gilangggra/Nala).
+The names "Aira", the character, the app icon and the sounds are Copyright (c) 2026 Gilang Ramadan. All rights reserved (see LICENSE-ASSETS.md in https://github.com/gilangggra/Aira).
 
 3. ZXing
 

@@ -1,4 +1,4 @@
-// « OK Nala »: say it, then ask anything. Turning it on, how Nala answers
+// « OK Aira »: say it, then ask anything. Turning it on, how Aira answers
 // out loud, and what leaves the computer. Port of the Mac's Settings → Voice.
 
 import { h, clear } from "../../views/dom";
@@ -43,7 +43,7 @@ function elevenKey(): HTMLElement {
 export async function voicePage(page: HTMLElement, ctx: HubContext) {
   const status = await ctx.refresh();
   const prefs = status.prefs;
-  page.append(ctx.hero("voice", "OK Nala", t("Say « OK Aira », then ask anything: add a pill, play music, the weather, an email to prepare.")));
+  page.append(ctx.hero("voice", "OK Aira", t("Say « OK Aira », then ask anything: add a pill, play music, the weather, an email to prepare.")));
 
   const activeModel = prefs.engine === "parakeet" ? status.models.parakeet : (status.models.whisper ?? status.models.parakeet);
   const ready = activeModel.state === "ready";

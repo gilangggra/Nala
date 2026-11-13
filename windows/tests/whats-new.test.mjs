@@ -154,8 +154,8 @@ test("the blue only when Mochi has nothing else to say", () => {
 });
 
 test("All changes and the coffee", () => {
-  assert.equal(releasePage("windows", "0.5.2"), "https://github.com/gilangggra/Nala/releases/tag/windows-v0.5.2");
-  assert.equal(releasePage("linux", "0.5.2"), "https://github.com/gilangggra/Nala/releases/tag/linux-v0.5.2");
+  assert.equal(releasePage("windows", "0.5.2"), "https://github.com/gilangggra/Aira/releases/tag/windows-v0.5.2");
+  assert.equal(releasePage("linux", "0.5.2"), "https://github.com/gilangggra/Aira/releases/tag/linux-v0.5.2");
   const site = readFileSync(new URL("../../docs/index.html", import.meta.url), "utf8");
   assert.ok(site.includes(COFFEE_URL), "the same link as the Coucou page");
 });

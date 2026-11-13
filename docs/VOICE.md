@@ -1,12 +1,12 @@
-# « OK Nala » : Voice Control & Offline Speech Architecture
+# « OK Aira » : Voice Control & Offline Speech Architecture
 
-This document covers the architecture of **« OK Nala »** hands-free voice control and **Flow Dictation** across **Windows, Linux, and macOS**.
+This document covers the architecture of **« OK Aira »** hands-free voice control and **Flow Dictation** across **Windows, Linux, and macOS**.
 
 ---
 
 ## 1. Windows & Linux Architecture (`windows/src-tauri/src/`)
 
-On Windows and Linux, speech recognition runs 100% locally via statically linked `sherpa-onnx` (`v1.13.8`, ONNX Runtime CPU INT8) with dual-engine support and synchronized preferences between **Flow Dictation**, **Call Notetaker**, and **« OK Nala » Voice Control**.
+On Windows and Linux, speech recognition runs 100% locally via statically linked `sherpa-onnx` (`v1.13.8`, ONNX Runtime CPU INT8) with dual-engine support and synchronized preferences between **Flow Dictation**, **Call Notetaker**, and **« OK Aira » Voice Control**.
 
 ### Offline Speech Engines (`speech/mod.rs`)
 
@@ -21,19 +21,19 @@ On Windows and Linux, speech recognition runs 100% locally via statically linked
 1. **Dynamic Language Resolution (`speech::resolve_whisper_language`)**:
    - Default preference in `flow::store::Prefs` is `"auto"`.
    - When `language == "auto"`:
-     - If the active Nala UI/system language (`crate::i18n::current()`) is Indonesian (`"id"`), Whisper pins `Some("id")` so short utterances (such as *« OK Nala »* or brief commands) are never misclassified.
+     - If the active Aira UI/system language (`crate::i18n::current()`) is Indonesian (`"id"`), Whisper pins `Some("id")` so short utterances (such as *« OK Aira »* or brief commands) are never misclassified.
      - For other UI languages (`"en"`, `"fr"`, `"de"`, etc.), Whisper receives `None`, enabling native multilingual language identification.
    - When the user explicitly selects a language (`"id"`, `"en"`, `"zh-Hans"`, `"pt-BR"`, etc.), the tag is normalized to its 2-letter ISO-639-1 code (`"id"`, `"en"`, `"zh"`, `"pt"`, etc.) and passed to `OfflineWhisperModelConfig`.
 2. **Unified Recognizer Cache (`speech::set_prefs`)**:
    - `flow::setup`, `flow::flow_set_prefs`, and `lib::language_changed` keep `speech` synchronized with `prefs.engine` and `prefs.language`.
    - `flow`, `voice`, and `notes` share the single cached `OfflineRecognizer` slot without model eviction/reload thrashing.
 
-### « OK Nala » Voice Pipeline (`voice/`)
+### « OK Aira » Voice Pipeline (`voice/`)
 
 | File | Responsibility |
 |---|---|
 | `voice/mod.rs` | Background microphone loop (`cpal` 16 kHz mono), pause-on-dictation/call/lock, wake word spotting, command capture, and execution dispatch |
-| `voice/wake.rs` | Energy-based adaptive VAD (`Detector`), wake-phrase matcher (`match_wake` for *"OK Nala"*, *"Hey Nala"*, *"Dis Nala"*, *"Halo Nala"*, plus phonetic variants), cancel phrase matcher (*"batal"*, *"batalkan"*, *"cancel"*, *"annule"*), and reply language detector (`speech_lang` → `"id-ID"`, `"fr-FR"`, or `"en-US"`) |
+| `voice/wake.rs` | Energy-based adaptive VAD (`Detector`), wake-phrase matcher (`match_wake` for *"OK Aira"*, *"Hey Aira"*, *"Dis Aira"*, *"Halo Aira"*, plus phonetic variants), cancel phrase matcher (*"batal"*, *"batalkan"*, *"cancel"*, *"annule"*), and reply language detector (`speech_lang` → `"id-ID"`, `"fr-FR"`, or `"en-US"`) |
 | `voice/intent.rs` | Deterministic local intent parser (Indonesian, English, French) for music/Spotify, pills, mail, opening apps/URLs, agent status, approvals, timers, and queries |
 | `voice/brain.rs` | Fallback AI reasoning and tool-calling when a command requires conversational context or web search |
 | `voice/tts.rs` | Spoken replies via ElevenLabs (optional) or native WebView `speechSynthesis` using the detected locale (`id-ID`, `fr-FR`, `en-US`) |
@@ -47,7 +47,7 @@ Chaque phase = une PR, avec ses tests, et rien ne sort de ce qui est demandé da
 
 ## L'idée
 
-Coucou écoute en permanence (si l'utilisateur l'a activé). On dit « OK Nala » : l'île compacte s'ouvre, Mochi fait
+Coucou écoute en permanence (si l'utilisateur l'a activé). On dit « OK Aira » : l'île compacte s'ouvre, Mochi fait
 une petite émote d'écoute et affiche « À l'écoute… » avec la transcription en direct. On dit ce qu'on veut, Coucou le fait,
 Mochi réagit (content, ou « je n'ai pas compris »), l'île se referme. Coucou ne parle pas (pas de synthèse vocale pour l'instant).
 
@@ -74,7 +74,7 @@ Nouveau dossier `NotchBuddy/Sources/App/Voice/` :
 
 | Fichier | Rôle |
 |---|---|
-| `VoiceSettings.swift` | Interrupteur, phrase de réveil (« OK Nala » par défaut, « Dis Coucou », « Hey Coucou »), langues (réutiliser `MacDictation.automaticLocales()`), raccourci pour couper le micro. |
+| `VoiceSettings.swift` | Interrupteur, phrase de réveil (« OK Aira » par défaut, « Dis Coucou », « Hey Coucou »), langues (réutiliser `MacDictation.automaticLocales()`), raccourci pour couper le micro. |
 | `VoiceAudio.swift` | `AVAudioEngine`, entrée 16 kHz mono. Détection de voix par énergie (seuil adaptatif au bruit de fond) qui ne réveille la reconnaissance que quand quelqu'un parle. |
 | `WakeSpotter.swift` | Protocole + implémentations : `SpeechWakeSpotter` (SFSpeechRecognizer, macOS 15, `contextualStrings = ["Coucou", "OK Coucou"]`) et `AnalyzerWakeSpotter` (SpeechAnalyzer, macOS 26). Correspondance tolérante : « ok coucou », « okay coucou », « OK cuckoo », « ok kuku »… |
 | `CommandListener.swift` | Après le réveil : capture la commande, transcription partielle en direct, fin sur 1,2 s de silence ou 10 s max. « Annule » / « laisse tomber » ferme. |
@@ -128,7 +128,7 @@ routines (« mode focus » = playlist + ne pas déranger + pilules de travail).
 **Phase 1 : écoute et réveil.** Réglages → Voix (désactivé par défaut, explication du point orange), permission micro
 et reconnaissance vocale, `VoiceAudio` + détection de voix, `SpeechWakeSpotter`, état `listening` de l'île avec
 l'émote de Mochi et la transcription. Pas encore d'actions : la commande s'affiche, c'est tout.
-Critères : réveil en moins de ~1 s après « OK Nala », pas de déclenchement sur « coucou » tout seul dans une phrase,
+Critères : réveil en moins de ~1 s après « OK Aira », pas de déclenchement sur « coucou » tout seul dans une phrase,
 CPU au repos mesuré et < 1 %, 0 % et micro fermé quand c'est éteint, pause écran verrouillé / Économie d'énergie / dictée du chat.
 Tests : correspondance de la phrase de réveil (table de variantes), transitions de l'île.
 
@@ -151,7 +151,7 @@ Passer aussi la détection sur `SpeechAnalyzer` quand macOS 26 est là.
 
 **Phase 7 : finitions.** Réglage de la sensibilité, liste des faux déclenchements, traductions (le catalogue de chaînes
 existant), `docs/SPEC.md`, section README, CHANGELOG, puis release (règles de release de CLAUDE.md).
-Piste pour plus tard : un petit modèle Core ML dédié à « OK Nala » sur le Neural Engine, pour descendre encore le CPU.
+Piste pour plus tard : un petit modèle Core ML dédié à « OK Aira » sur le Neural Engine, pour descendre encore le CPU.
 
 ## Build App Store (sandbox)
 

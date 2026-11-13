@@ -3070,7 +3070,7 @@
    "bn": "একবার `hermes plugins enable coucou` দিয়ে চালু করুন, তারপর Hermes-এর নতুন সেশন শুরু করুন।",
    "pt-BR": "Ative uma vez com `hermes plugins enable coucou` e depois inicie uma nova sessão do Hermes.",
    "ru": "Включите его один раз командой `hermes plugins enable coucou`, затем начните новую сессию Hermes.",
-   "id": "Aktifkan sekali dengan `hermes plugins enable nala`, lalu mulai sesi Hermes baru.",
+   "id": "Aktifkan sekali dengan `hermes plugins enable aira`, lalu mulai sesi Hermes baru.",
    "de": "Aktiviere es einmal mit `hermes plugins enable coucou` und starte dann eine neue Hermes-Sitzung.",
    "tr": "Bir kez `hermes plugins enable coucou` ile etkinleştir, ardından yeni bir Hermes oturumu başlat.",
    "ko": "`hermes plugins enable coucou`로 한 번 켜고, 새 Hermes 세션을 시작해 주세요.",
@@ -3421,20 +3421,20 @@
    "ko": "전부 통과",
    "ja": "すべて正常"
   },
-  "nala-hook.exe is not in place yet. Restart Aira; if it still fails, build it with `cargo build -p nala-hook`.": {
-   "zh-Hans": "nala-hook.exe 尚未就位。请重启 Aira；如果仍然失败，请用 `cargo build -p nala-hook` 构建它。",
-   "hi": "nala-hook.exe अभी अपनी जगह पर नहीं है। Aira फिर से शुरू करें; अगर फिर भी न हो, तो इसे `cargo build -p nala-hook` से बनाएँ।",
-   "es": "nala-hook.exe aún no está en su sitio. Reinicia Aira; si sigue fallando, compílalo con `cargo build -p nala-hook`.",
-   "ar": "nala-hook.exe ليس في مكانه بعد. أعد تشغيل Aira؛ وإن استمر الفشل فابنِه بالأمر `cargo build -p nala-hook`.",
-   "fr": "nala-hook.exe n'est pas encore en place. Redémarre Aira ; si ça échoue encore, compile-le avec `cargo build -p nala-hook`.",
-   "bn": "nala-hook.exe এখনো জায়গামতো নেই। Aira আবার চালু করুন; তবুও না হলে `cargo build -p nala-hook` দিয়ে এটি বানান।",
-   "pt-BR": "O nala-hook.exe ainda não está no lugar. Reinicie o Aira; se continuar falhando, compile-o com `cargo build -p nala-hook`.",
-   "ru": "nala-hook.exe ещё не на месте. Перезапустите Aira; если не поможет, соберите его командой `cargo build -p nala-hook`.",
-   "id": "nala-hook.exe belum ada di tempatnya. Mulai ulang Aira; jika masih gagal, build dengan `cargo build -p nala-hook`.",
-   "de": "nala-hook.exe ist noch nicht vorhanden. Starte Aira neu; falls es weiterhin fehlschlägt, erstelle die Datei mit `cargo build -p nala-hook`.",
-   "tr": "nala-hook.exe henüz yerinde değil. Aira'yı yeniden başlat; sorun sürerse `cargo build -p nala-hook` ile derle.",
-   "ko": "nala-hook.exe가 아직 제자리에 없어요. Aira를 재시작해 주세요. 그래도 안 되면 `cargo build -p nala-hook`로 빌드해 주세요.",
-   "ja": "nala-hook.exe がまだ配置されていません。Aira を再起動してください。それでも失敗する場合は `cargo build -p nala-hook` でビルドしてください。"
+  "aira-hook.exe is not in place yet. Restart Aira; if it still fails, build it with `cargo build -p aira-hook`.": {
+   "zh-Hans": "aira-hook.exe 尚未就位。请重启 Aira；如果仍然失败，请用 `cargo build -p aira-hook` 构建它。",
+   "hi": "aira-hook.exe अभी अपनी जगह पर नहीं है। Aira फिर से शुरू करें; अगर फिर भी न हो, तो इसे `cargo build -p aira-hook` से बनाएँ।",
+   "es": "aira-hook.exe aún no está en su sitio. Reinicia Aira; si sigue fallando, compílalo con `cargo build -p aira-hook`.",
+   "ar": "aira-hook.exe ليس في مكانه بعد. أعد تشغيل Aira؛ وإن استمر الفشل فابنِه بالأمر `cargo build -p aira-hook`.",
+   "fr": "aira-hook.exe n'est pas encore en place. Redémarre Aira ; si ça échoue encore, compile-le avec `cargo build -p aira-hook`.",
+   "bn": "aira-hook.exe এখনো জায়গামতো নেই। Aira আবার চালু করুন; তবুও না হলে `cargo build -p aira-hook` দিয়ে এটি বানান।",
+   "pt-BR": "O aira-hook.exe ainda não está no lugar. Reinicie o Aira; se continuar falhando, compile-o com `cargo build -p aira-hook`.",
+   "ru": "aira-hook.exe ещё не на месте. Перезапустите Aira; если не поможет, соберите его командой `cargo build -p aira-hook`.",
+   "id": "aira-hook.exe belum ada di tempatnya. Mulai ulang Aira; jika masih gagal, build dengan `cargo build -p aira-hook`.",
+   "de": "aira-hook.exe ist noch nicht vorhanden. Starte Aira neu; falls es weiterhin fehlschlägt, erstelle die Datei mit `cargo build -p aira-hook`.",
+   "tr": "aira-hook.exe henüz yerinde değil. Aira'yı yeniden başlat; sorun sürerse `cargo build -p aira-hook` ile derle.",
+   "ko": "aira-hook.exe가 아직 제자리에 없어요. Aira를 재시작해 주세요. 그래도 안 되면 `cargo build -p aira-hook`로 빌드해 주세요.",
+   "ja": "aira-hook.exe がまだ配置されていません。Aira を再起動してください。それでも失敗する場合は `cargo build -p aira-hook` でビルドしてください。"
   },
   "failing": {
    "zh-Hans": "失败",

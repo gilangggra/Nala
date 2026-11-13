@@ -1,11 +1,11 @@
-# Nala for Android
+# Aira for Android
 
-The Android app of [Nala](https://github.com/gilangggra/Nala) by Gilang Ramadan. It shows your coding
+The Android app of [Aira](https://github.com/gilangggra/Aira) by Gilang Ramadan. It shows your coding
 agents on your phone and lets you approve or deny their permission requests, answer their questions and chat
 through your computer's AI providers.
 
 The code and assets are © Gilang Ramadan under the MIT License (see [LICENSE](LICENSE)). The app is free: no ads, no billing, no analytics.
-It speaks English, French, Spanish, Brazilian Portuguese, Simplified Chinese, Hindi, Bengali, Russian, Indonesian and Arabic (Settings > Language, or Android 13's own per-app language screen); the look is dark or light (Settings > Theme). Download the signed APK from the [Releases](https://github.com/gilangggra/Nala/releases) (Android 11 or later; it needs Nala 0.5.0 or later on Windows or Linux).
+It speaks English, French, Spanish, Brazilian Portuguese, Simplified Chinese, Hindi, Bengali, Russian, Indonesian and Arabic (Settings > Language, or Android 13's own per-app language screen); the look is dark or light (Settings > Theme). Download the signed APK from the [Releases](https://github.com/gilangggra/Aira/releases) (Android 11 or later; it needs Aira 0.5.0 or later on Windows or Linux).
 
 ## Screenshots
 
