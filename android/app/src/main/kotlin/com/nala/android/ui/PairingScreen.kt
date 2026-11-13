@@ -106,7 +106,7 @@ private fun PasteSheet(model: AppModel, onDismiss: () -> Unit) {
         Text(stringResource(R.string.paste_hint), Modifier.padding(top = 4.dp, bottom = 12.dp), style = TypeScale.SECONDARY.style(dim))
         OutlinedTextField(
             text, { text = it; bad = false }, Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(14.dp),
-            placeholder = { Text("nala://pair?…", color = Color(Tokens.DARK.textFaint)) },
+            placeholder = { Text("aira://pair?…", color = Color(Tokens.DARK.textFaint)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = white, unfocusedTextColor = white, cursorColor = white,

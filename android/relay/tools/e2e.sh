@@ -36,17 +36,17 @@ esac
 
 echo "waiting for the relay ($MODE) on port $PORT"
 for _ in $(seq 1 120); do
-  if curl -fsS "http://127.0.0.1:${PORT}/" 2>/dev/null | grep -q "Nala link relay"; then break; fi
+  if curl -fsS "http://127.0.0.1:${PORT}/" 2>/dev/null | grep -q "Aira link relay"; then break; fi
   sleep 1
 done
-curl -fsS "http://127.0.0.1:${PORT}/" | grep -q "Nala link relay" || { echo "the relay did not start"; cat "$LOG/relay.log"; exit 1; }
+curl -fsS "http://127.0.0.1:${PORT}/" | grep -q "Aira link relay" || { echo "the relay did not start"; cat "$LOG/relay.log"; exit 1; }
 
 # Build the Rust test binary first: with a cold cache it takes minutes, longer than the phone side waits for the welcome.
 echo "building the computer side (Rust)"
-(cd "$ROOT/windows" && cargo test -p nala --lib --no-run)
+(cd "$ROOT/windows" && cargo test -p aira --lib --no-run)
 
 echo "starting the computer side (Rust)"
-(cd "$ROOT/windows" && cargo test -p nala --lib relay_client::tests::e2e -- --ignored --nocapture >"$LOG/pc.log" 2>&1) &
+(cd "$ROOT/windows" && cargo test -p aira --lib relay_client::tests::e2e -- --ignored --nocapture >"$LOG/pc.log" 2>&1) &
 PC_PID=$!
 
 echo "running the phone side (Kotlin)"

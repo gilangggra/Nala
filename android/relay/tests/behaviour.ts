@@ -37,7 +37,7 @@ export interface Harness {
 
 export const randomRoom = () => Buffer.from(crypto.getRandomValues(new Uint8Array(16))).toString("base64url");
 export const proofOf = (seed: number) => Buffer.from(new Uint8Array(32).fill(seed)).toString("base64url");
-export const offer = (proof: string) => `nala.v1, nala.join.${proof}`;
+export const offer = (proof: string) => `aira.v1, aira.join.${proof}`;
 const isConn = (c: Conn | { refused: number }): c is Conn => !("refused" in c);
 
 export async function open(h: Harness, room: string, role: string, o: Options = {}): Promise<Conn> {
@@ -66,7 +66,7 @@ export function behaviour(name: string, make: () => Promise<Harness>) {
     };
 
     it("answers the health check and nothing else on /", async () => {
-      expect(await h.http("/")).toEqual({ status: 200, text: "Nala link relay" });
+      expect(await h.http("/")).toEqual({ status: 200, text: "Aira link relay" });
       expect((await h.http("/", "POST")).status).toBe(405);
       expect((await h.http("/elsewhere")).status).toBe(404);
     });
@@ -92,8 +92,8 @@ export function behaviour(name: string, make: () => Promise<Harness>) {
 
     it("refuses a missing or malformed join proof with 400", async () => {
       const room = randomRoom();
-      for (const protocols of ["", "nala.v1", "nala.join." + proofOf(1), "nala.v1, nala.join.short", "nala.v1, nala.join." + proofOf(1) + "A",
-        "nala.v1, nala.join." + proofOf(1) + ", nala.join." + proofOf(2), "other, nala.join." + proofOf(1)]) {
+      for (const protocols of ["", "aira.v1", "aira.join." + proofOf(1), "aira.v1, aira.join.short", "aira.v1, aira.join." + proofOf(1) + "A",
+        "aira.v1, aira.join." + proofOf(1) + ", aira.join." + proofOf(2), "other, aira.join." + proofOf(1)]) {
         expect(await h.connect(room, "pc", { protocols }), protocols).toEqual({ refused: 400 });
       }
     });

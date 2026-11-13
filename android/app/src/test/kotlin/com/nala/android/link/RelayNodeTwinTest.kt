@@ -49,7 +49,7 @@ class RelayNodeTwinTest {
     private inner class Host(k: RelayCrypto.PairingKey = key) : AutoCloseable {
         val ws: WsConnection = WsClient.open(
             RelayUrl.parse("ws://127.0.0.1:$port")!!, "/v1/room/$room?role=pc",
-            listOf("Authorization" to "Bearer $access"), listOf("nala.v1", "nala.join.${RelayCrypto.joinProof(k)}"),
+            listOf("Authorization" to "Bearer $access"), listOf("aira.v1", "aira.join.${RelayCrypto.joinProof(k)}"),
             3_000, RelayCrypto.MAX_FRAME + 1024,
         )
         val lines = LinkedBlockingQueue<String>()

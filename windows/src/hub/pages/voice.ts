@@ -43,28 +43,28 @@ function elevenKey(): HTMLElement {
 export async function voicePage(page: HTMLElement, ctx: HubContext) {
   const status = await ctx.refresh();
   const prefs = status.prefs;
-  page.append(ctx.hero("voice", "OK Nala", t("Say « OK Nala », then ask anything: add a pill, play music, the weather, an email to prepare.")));
+  page.append(ctx.hero("voice", "OK Nala", t("Say « OK Aira », then ask anything: add a pill, play music, the weather, an email to prepare.")));
 
   const activeModel = prefs.engine === "parakeet" ? status.models.parakeet : (status.models.whisper ?? status.models.parakeet);
   const ready = activeModel.state === "ready";
   page.append(label(t("Listening")));
   const main = card(
-    row(t("Listen for « OK Nala »"), t("The microphone stays open; only what follows « OK Nala » goes further."),
+    row(t("Listen for « OK Aira »"), t("The microphone stays open; only what follows « OK Aira » goes further."),
       toggle(prefs.voice, (on) => void ctx.setPrefs((p) => (p.voice = on)).then(() => ctx.navigate("voice")))),
     divider(),
-    row(t("Parakeet, on your computer"), t("Hears « OK Nala » here, without the internet."), modelsControl(ctx, () => ctx.navigate("voice"))),
+    row(t("Parakeet, on your computer"), t("Hears « OK Aira » here, without the internet."), modelsControl(ctx, () => ctx.navigate("voice"))),
   );
   if (prefs.voice && !ready) {
-    main.append(h("div", { class: "hub-warn", text: t("Download the voice model so Nala can hear you.") }));
+    main.append(h("div", { class: "hub-warn", text: t("Download the voice model so Aira can hear you.") }));
   } else if (prefs.voice && !status.hasClaudeKey) {
-    main.append(h("div", { class: "hub-warn", text: t("Nala answers with Claude: add your Claude key in Notch → Chat.") }));
+    main.append(h("div", { class: "hub-warn", text: t("Aira answers with Claude: add your Claude key in Notch → Chat.") }));
   }
   page.append(main);
 
   page.append(label(t("Answers")));
   const outputs: [VoiceOutput, string][] = [["system", t("System voice")], ["elevenlabs", "ElevenLabs"], ["off", t("Text only")]];
   const answers = card(
-    row(t("Nala answers out loud"), null, segmented(outputs, prefs.voiceOutput, (v) => void ctx.setPrefs((p) => (p.voiceOutput = v)).then(() => ctx.navigate("voice")))),
+    row(t("Aira answers out loud"), null, segmented(outputs, prefs.voiceOutput, (v) => void ctx.setPrefs((p) => (p.voiceOutput = v)).then(() => ctx.navigate("voice")))),
   );
   if (prefs.voiceOutput === "elevenlabs") {
     answers.append(
@@ -78,8 +78,8 @@ export async function voicePage(page: HTMLElement, ctx: HubContext) {
 
   page.append(label(t("Privacy")));
   page.append(card(
-    h("div", { class: "hub-note", text: t("Your voice never leaves this computer: Parakeet turns it into text here. Only the words after « OK Nala » go to Anthropic with your Claude key, and to ElevenLabs if you picked it for the answers.") }),
+    h("div", { class: "hub-note", text: t("Your voice never leaves this computer: Parakeet turns it into text here. Only the words after « OK Aira » go to Anthropic with your Claude key, and to ElevenLabs if you picked it for the answers.") }),
     divider(),
-    h("div", { class: "hub-note", text: t("An email is never sent by Nala: your mail app opens with it written, and you send it.") }),
+    h("div", { class: "hub-note", text: t("An email is never sent by Aira: your mail app opens with it written, and you send it.") }),
   ));
 }

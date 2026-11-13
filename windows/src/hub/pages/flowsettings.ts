@@ -116,10 +116,10 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
   if (status.keys === "wayland") {
     keysCard.append(h("div", {
       class: "hub-warn",
-      text: t("On Wayland, the desktop holds the dictation key for Nala: Ctrl+Alt+V, or the keys you picked when it asked. The first paste asks once to let Nala type for you."),
+      text: t("On Wayland, the desktop holds the dictation key for Aira: Ctrl+Alt+V, or the keys you picked when it asked. The first paste asks once to let Aira type for you."),
     }));
   } else if (status.keys !== "ok") {
-    keysCard.append(h("div", { class: "hub-warn", text: t("Nala can't watch the keyboard here: use the pill's microphone to dictate.") }));
+    keysCard.append(h("div", { class: "hub-warn", text: t("Aira can't watch the keyboard here: use the pill's microphone to dictate.") }));
   }
   page.append(anchor("flow.keys", keysCard));
 
@@ -127,13 +127,13 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
   page.append(label(t("Microphone")));
   const mics: [string, string][] = [["", t("System default")], ...status.mics.map((m): [string, string] => [m.name, m.name])];
   if (prefs.mic && !mics.some(([id]) => id === prefs.mic)) mics.push([prefs.mic, prefs.mic]);
-  const micCard = card(row(t("Microphone"), t("The one Nala listens to for dictation and calls."), select(mics, prefs.mic, (mic) => void ctx.setPrefs((p) => (p.mic = mic)))));
+  const micCard = card(row(t("Microphone"), t("The one Aira listens to for dictation and calls."), select(mics, prefs.mic, (mic) => void ctx.setPrefs((p) => (p.mic = mic)))));
   // Silence while you speak (flow/hush.rs): Windows mutes each app on its own.
   if (status.platform === "windows") {
     micCard.append(
       divider(),
       row(t("Mute the computer while you speak"),
-        t("Videos, music and calls go quiet while Nala listens to you, then come back. Nala's own sounds keep playing."),
+        t("Videos, music and calls go quiet while Aira listens to you, then come back. Aira's own sounds keep playing."),
         toggle(prefs.muteOthers, (on) => void ctx.setPrefs((p) => (p.muteOthers = on)))),
     );
   }
@@ -176,7 +176,7 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
   // ── App ──
   page.append(label(t("App")));
   page.append(anchor("flow.app", card(
-    row(t("Open this window when you open Nala"), t("Not when Nala starts with the computer."), toggle(prefs.openAtLaunch, (on) => void ctx.setPrefs((p) => (p.openAtLaunch = on)))),
+    row(t("Open this window when you open Aira"), t("Not when Aira starts with the computer."), toggle(prefs.openAtLaunch, (on) => void ctx.setPrefs((p) => (p.openAtLaunch = on)))),
   )));
 
   // ── Privacy ──
@@ -187,7 +187,7 @@ export async function flowSettingsPage(page: HTMLElement, ctx: HubContext) {
     row(t("Keep the history"), null, select(keep, String(prefs.keepDays), (v) => void ctx.setPrefs((p) => (p.keepDays = Number(v))))),
     divider(),
     confirmRow,
-    h("div", { class: "hub-note", text: t("The history, the statistics and your notes stay on this computer, in Nala's folder. Dictations are never saved as audio; a call's audio is deleted as soon as its transcript is written.") }),
+    h("div", { class: "hub-note", text: t("The history, the statistics and your notes stay on this computer, in Aira's folder. Dictations are never saved as audio; a call's audio is deleted as soon as its transcript is written.") }),
   );
   const saveErase = pageSave(privacy);
   const erase = () => {

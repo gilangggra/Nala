@@ -1,5 +1,5 @@
 {
-  "about": "What's new, shown once in the notch after Nala updates itself (WhatsNew.swift). Every Mac release adds its entry here, in the 16 languages, before release.sh: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
+  "about": "What's new, shown once in the notch after Aira updates itself (WhatsNew.swift). Every Mac release adds its entry here, in the 16 languages, before release.sh: 1 to 4 items, a short title and one line each, an icon from scripts/test-whats-new.py. python3 scripts/test-whats-new.py checks it.",
   "releases": [
     {
       "version": "1.0.0",
@@ -407,22 +407,22 @@
         {
           "icon": "sparkles",
           "title": {
-            "en": "Nala in a corner",
-            "fr": "Nala dans un coin",
-            "es": "Nala en una esquina",
-            "pt-BR": "Nala num canto",
-            "ru": "Nala в углу",
-            "zh-Hans": "把 Nala 放到角落",
-            "hi": "कोने में Nala",
-            "ar": "Nala في الزاوية",
-            "bn": "কোণে Nala",
-            "id": "Nala di sudut",
-            "de": "Nala in einer Ecke",
-            "tr": "Köşede Nala",
-            "th": "Nala ที่มุมจอ",
-            "zh-Hant": "把 Nala 放到角落",
-            "ko": "구석의 Nala",
-            "ja": "Nala を画面の隅に"
+            "en": "Aira in a corner",
+            "fr": "Aira dans un coin",
+            "es": "Aira en una esquina",
+            "pt-BR": "Aira num canto",
+            "ru": "Aira в углу",
+            "zh-Hans": "把 Aira 放到角落",
+            "hi": "कोने में Aira",
+            "ar": "Aira في الزاوية",
+            "bn": "কোণে Aira",
+            "id": "Aira di sudut",
+            "de": "Aira in einer Ecke",
+            "tr": "Köşede Aira",
+            "th": "Aira ที่มุมจอ",
+            "zh-Hant": "把 Aira 放到角落",
+            "ko": "구석의 Aira",
+            "ja": "Aira を画面の隅に"
           },
           "detail": {
             "en": "Drag Mochi to a corner of the screen, or pick one in Settings → General → Position.",
@@ -656,21 +656,21 @@
         {
           "icon": "shield",
           "title": {
-            "en": "Nala keeps listening",
-            "fr": "Nala reste à l’écoute",
-            "es": "Nala sigue escuchando",
-            "pt-BR": "O Nala continua ouvindo",
-            "ru": "Nala всегда на связи",
-            "zh-Hans": "Nala 始终在线",
-            "hi": "Nala हमेशा सुनता रहे",
-            "ar": "Nala يبقى منصتًا",
-            "bn": "Nala সবসময় শোনে",
-            "id": "Nala terus mendengarkan",
-            "de": "Nala hört weiter zu",
-            "tr": "Nala dinlemeye devam eder",
-            "th": "Nala ฟังต่อเนื่อง",
-            "zh-Hant": "Nala 始終在線",
-            "ja": "Nala は聞き続けます"
+            "en": "Aira keeps listening",
+            "fr": "Aira reste à l’écoute",
+            "es": "Aira sigue escuchando",
+            "pt-BR": "O Aira continua ouvindo",
+            "ru": "Aira всегда на связи",
+            "zh-Hans": "Aira 始终在线",
+            "hi": "Aira हमेशा सुनता रहे",
+            "ar": "Aira يبقى منصتًا",
+            "bn": "Aira সবসময় শোনে",
+            "id": "Aira terus mendengarkan",
+            "de": "Aira hört weiter zu",
+            "tr": "Aira dinlemeye devam eder",
+            "th": "Aira ฟังต่อเนื่อง",
+            "zh-Hant": "Aira 始終在線",
+            "ja": "Aira は聞き続けます"
           },
           "detail": {
             "en": "One failed connection no longer cuts Claude Code off, and only Nala’s own hooks are touched.",

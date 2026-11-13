@@ -258,12 +258,12 @@ class MainActivity : ComponentActivity() {
         handle(intent)
     }
 
-    /** A nala://pair link (from the camera app or a browser) or a tap on an approval notification. */
+    /** An aira://pair (or legacy nala://pair) link (from the camera app or a browser) or a tap on an approval notification. */
     private fun handle(i: Intent?) {
         i ?: return
         Log.d("NalaLaunch", "MainActivity intent: action=${i.action} data=${i.data != null}")
         i.data?.let { uri ->
-            if (uri.scheme == "nala") {
+            if (uri.scheme == "aira" || uri.scheme == "nala") {
                 // Opened from the camera app or a browser: never paired without the user's OK.
                 if (!model.requestPairing(uri.toString())) model.message = getString(R.string.msg_bad_link)
                 i.data = null // handled once: a rotation must not ask again

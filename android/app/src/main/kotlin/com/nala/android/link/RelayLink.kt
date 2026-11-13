@@ -70,7 +70,7 @@ class RelayConnector(
                 url = url,
                 path = "/v1/room/${relay.room}?role=phone",
                 headers = listOf("Authorization" to "Bearer ${relay.access}"),
-                protocols = listOf(SUBPROTOCOL, "nala.join.${RelayCrypto.joinProof(key)}"),
+                protocols = listOf(SUBPROTOCOL, "aira.join.${RelayCrypto.joinProof(key)}"),
                 connectTimeoutMs = timeoutMs,
                 maxMessage = RelayCrypto.MAX_FRAME + 1024,
                 sockets = sockets,
@@ -162,7 +162,7 @@ class RelayConnector(
     }
 
     companion object {
-        const val SUBPROTOCOL = "nala.v1"
+        const val SUBPROTOCOL = "aira.v1"
     }
 }
 
@@ -192,7 +192,7 @@ class RelayStreamSocket(
     private var pending: ByteArray = EMPTY
     private var pendingAt = 0
 
-    private val reader = Thread({ pump() }, "nala-relay-reader").apply { isDaemon = true; start() }
+    private val reader = Thread({ pump() }, "aira-relay-reader").apply { isDaemon = true; start() }
 
     private fun pump() {
         try {

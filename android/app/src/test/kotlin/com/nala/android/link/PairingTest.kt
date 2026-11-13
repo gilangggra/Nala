@@ -11,7 +11,7 @@ import java.security.cert.CertificateException
 class PairingTest {
     private val fp = "ab".repeat(32)
     private val token = "A1b2C3d4E5f6G7h8I9j0"
-    private val good = "nala://pair?v=1&host=192.168.1.20&port=47821&fp=$fp&token=$token&name=My%20PC"
+    private val good = "aira://pair?v=1&host=192.168.1.20&port=47821&fp=$fp&token=$token&name=My%20PC"
 
     @Test fun parsesAWellFormedLink() {
         val p = PairingPayload.parse(good)!!
@@ -22,13 +22,20 @@ class PairingTest {
         assertEquals("My PC", p.desktopName)
     }
 
+    @Test fun parsesLegacyNalaLink() {
+        val legacy = good.replace("aira://", "nala://")
+        val p = PairingPayload.parse(legacy)!!
+        assertEquals("192.168.1.20", p.host)
+        assertEquals(fp, p.certSha256)
+    }
+
     @Test fun toleratesSurroundingWhitespace() {
         assertNotNull(PairingPayload.parse("  $good\n"))
     }
 
     @Test fun rejectsEverythingElse() {
         val bad = listOf(
-            "", "https://pair?v=1", "nala://other?v=1&host=h&port=1&fp=$fp&token=$token",
+            "", "https://pair?v=1", "aira://other?v=1&host=h&port=1&fp=$fp&token=$token",
             "coucou://pair?v=1&host=192.168.1.20&port=47821&fp=$fp&token=$token&name=My%20PC",
             good.replace("v=1", "v=2"), good.replace("port=47821", "port=0"), good.replace("port=47821", "port=70000"),
             good.replace("port=47821", "port=abc"), good.replace("fp=$fp", "fp=short"), good.replace("host=192.168.1.20&", ""),

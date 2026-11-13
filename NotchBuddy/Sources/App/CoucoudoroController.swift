@@ -90,9 +90,9 @@ final class CoucoudoroController: ObservableObject {
         guard let notice, let until = noticeUntil, date < until else { return nil }
         switch notice {
         case .restStarts:
-            return String(localized: "coucoudoro.pill.rest", defaultValue: "Coucoudoro · Rest")
+            return String(localized: "coucoudoro.pill.rest", defaultValue: "Airadoro · Rest")
         case .workStarts:
-            return String(localized: "coucoudoro.pill.work", defaultValue: "Coucoudoro · Work")
+            return String(localized: "coucoudoro.pill.work", defaultValue: "Airadoro · Work")
         }
     }
 
@@ -102,13 +102,13 @@ final class CoucoudoroController: ObservableObject {
         if phase != .idle, let left = remaining(at: date) {
             return CoucoudoroEngine.clock(left)
         }
-        return "Coucoudoro"
+        return "Airadoro"
     }
 
     static func text(for event: CoucoudoroEvent) -> String {
         switch event {
-        case .restStarts: String(localized: "coucoudoro.pill.rest", defaultValue: "Coucoudoro · Rest")
-        case .workStarts: String(localized: "coucoudoro.pill.work", defaultValue: "Coucoudoro · Work")
+        case .restStarts: String(localized: "coucoudoro.pill.rest", defaultValue: "Airadoro · Rest")
+        case .workStarts: String(localized: "coucoudoro.pill.work", defaultValue: "Airadoro · Work")
         }
     }
 
