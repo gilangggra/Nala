@@ -199,7 +199,7 @@ final class LiveActivityRelay {
             startSent = start
             let targets = phones.filter { !$0.value.startToken.isEmpty }
             if targets.isEmpty {
-                log("no iPhone token yet: open Coucou on the iPhone once, with Live Activities allowed")
+                log("no iPhone token yet: open Aira on the iPhone once, with Live Activities allowed")
                 return
             }
             var reached = 0

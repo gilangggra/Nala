@@ -25,7 +25,7 @@ import com.aira.android.core.ThemePolicy
 import com.aira.android.core.Tokens
 
 /**
- * The look of the Coucou website (docs/site.css): a near-black page (or a pale one in the light theme), slightly lighter cards with a
+ * The look of the Aira website (docs/site.css): a near-black page (or a pale one in the light theme), slightly lighter cards with a
  * thin border, soft blue accent, rounded corners and pill-shaped buttons. Mochi itself is untouched.
  */
 private fun scheme(p: Palette, t: Tokens): ColorScheme {

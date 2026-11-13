@@ -1,13 +1,13 @@
 import SwiftUI
 
-// MARK: - Coucoudoro card
+// MARK: - Airadoro card
 
-/// The focused Coucoudoro pill: the clock, the last event, and start / pause / stop.
-struct CoucoudoroCardView: View {
-    @ObservedObject private var coucoudoro = CoucoudoroController.shared
+/// The focused Airadoro pill: the clock, the last event, and start / pause / stop.
+struct AiradoroCardView: View {
+    @ObservedObject private var airadoro = AiradoroController.shared
 
     private var accent: Color {
-        Color(hex: PillCatalog.definition(for: CoucoudoroController.pillId)?.color ?? "#0EA5E9")
+        Color(hex: PillCatalog.definition(for: AiradoroController.pillId)?.color ?? "#0EA5E9")
     }
 
     var body: some View {
@@ -19,22 +19,22 @@ struct CoucoudoroCardView: View {
     }
 
     private func card(at date: Date) -> some View {
-        let left = coucoudoro.remaining(at: date) ?? CoucoudoroSettings.config.work
+        let left = airadoro.remaining(at: date) ?? AiradoroSettings.config.work
         let subtitle: String = {
-            if coucoudoro.paused { return String(localized: "coucoudoro.paused", defaultValue: "Paused") }
-            switch coucoudoro.phase {
-            case .work: return String(localized: "coucoudoro.work", defaultValue: "Work")
-            case .rest: return String(localized: "coucoudoro.rest", defaultValue: "Rest")
-            case .idle: return String(localized: "coucoudoro.ready", defaultValue: "Ready")
+            if airadoro.paused { return String(localized: "airadoro.paused", defaultValue: "Paused") }
+            switch airadoro.phase {
+            case .work: return String(localized: "airadoro.work", defaultValue: "Work")
+            case .rest: return String(localized: "airadoro.rest", defaultValue: "Rest")
+            case .idle: return String(localized: "airadoro.ready", defaultValue: "Ready")
             }
         }()
-        let banner = coucoudoro.paused ? nil : coucoudoro.banner(at: date)
+        let banner = airadoro.paused ? nil : airadoro.banner(at: date)
         return VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 6) {
                 Circle()
                     .fill(accent)
                     .frame(width: 7, height: 7)
-                Text(verbatim: "Coucoudoro")
+                Text(verbatim: "Airadoro")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(Color(hex: "#F5F6F8"))
                 Text(subtitle)
@@ -47,7 +47,7 @@ struct CoucoudoroCardView: View {
             .padding(.trailing, 36)
 
             HStack(alignment: .center, spacing: 8) {
-                Text(verbatim: CoucoudoroEngine.clock(left))
+                Text(verbatim: AiradoroEngine.clock(left))
                     .font(.system(size: 18, weight: .semibold))
                     .monospacedDigit()
                     .foregroundColor(Color(hex: "#F5F6F8"))
@@ -72,14 +72,14 @@ struct CoucoudoroCardView: View {
 
     @ViewBuilder private var controls: some View {
         HStack(spacing: 6) {
-            if coucoudoro.phase == .idle {
-                button(String(localized: "coucoudoro.start", defaultValue: "Start"), filled: true) { coucoudoro.begin() }
-            } else if coucoudoro.paused {
-                button(String(localized: "coucoudoro.resume", defaultValue: "Resume"), filled: true) { coucoudoro.resume() }
-                button(String(localized: "coucoudoro.stop", defaultValue: "Stop"), filled: false) { coucoudoro.end() }
+            if airadoro.phase == .idle {
+                button(String(localized: "airadoro.start", defaultValue: "Start"), filled: true) { airadoro.begin() }
+            } else if airadoro.paused {
+                button(String(localized: "airadoro.resume", defaultValue: "Resume"), filled: true) { airadoro.resume() }
+                button(String(localized: "airadoro.stop", defaultValue: "Stop"), filled: false) { airadoro.end() }
             } else {
-                button(String(localized: "coucoudoro.pause", defaultValue: "Pause"), filled: false) { coucoudoro.pause() }
-                button(String(localized: "coucoudoro.stop", defaultValue: "Stop"), filled: false) { coucoudoro.end() }
+                button(String(localized: "airadoro.pause", defaultValue: "Pause"), filled: false) { airadoro.pause() }
+                button(String(localized: "airadoro.stop", defaultValue: "Stop"), filled: false) { airadoro.end() }
             }
         }
     }
@@ -97,20 +97,20 @@ struct CoucoudoroCardView: View {
     }
 }
 
-// MARK: - Coucoudoro pill
+// MARK: - Airadoro pill
 
 /// The capsule in the pill grid. A fresh event replaces the clock for a few seconds.
-struct CoucoudoroPill: View {
+struct AiradoroPill: View {
     let task: AgentTask
     @ObservedObject var state: AppState
     @Binding var swapping: Bool
     let onTap: () -> Void
-    @ObservedObject private var coucoudoro = CoucoudoroController.shared
+    @ObservedObject private var airadoro = AiradoroController.shared
     @State private var isHovered = false
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 0.5)) { timeline in
-            let label = coucoudoro.pillLabel(at: timeline.date)
+            let label = airadoro.pillLabel(at: timeline.date)
             Button(action: { onTap() }) {
                 ZStack(alignment: .topTrailing) {
                     ZStack {

@@ -125,7 +125,7 @@ object StatusPolicy {
      * - Quiet hours silence those too (no sound, no pill) but the notice stays in the shade.
      *   A question is never silenced: like a permission request it needs the user.
      * - A muted agent ([UserSettings.mutedAgents]) is silent for those too, but never for a question.
-     * - Inside Coucou the screen already shows everything: no notification, no pill. The sound stays.
+     * - Inside Aira the screen already shows everything: no notification, no pill. The sound stays.
      * - The notification is always posted quietly (shade only): the sound is Mochi's own and the pill
      *   is the on-screen alert, so nothing overlaps or rings twice.
      */

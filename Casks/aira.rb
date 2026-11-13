@@ -1,11 +1,11 @@
-cask "coucou" do
-  version "0.5.8"
-  sha256 "b6732b578f6f51cfc053bcc9e6f3468315d67dfc38d90a2c7c1ebd94c09f83d5"
+cask "aira" do
+  version "1.0.0"
+  sha256 :no_check
 
-  url "https://github.com/Louis-CFM/coucou/releases/download/v#{version}/Coucou.zip"
-  name "Coucou"
+  url "https://github.com/gilangggra/Aira/releases/download/v#{version}/Aira.zip"
+  name "Aira"
   desc "Notch companion that keeps an eye on your AI coding agents"
-  homepage "https://github.com/Louis-CFM/coucou"
+  homepage "https://github.com/gilangggra/Aira"
 
   # Only the Mac's tags (vX.Y.Z): windows-v…, linux-v… and android-v… are other apps.
   livecheck do
@@ -14,15 +14,16 @@ cask "coucou" do
     strategy :github_releases
   end
 
-  # Coucou updates itself from the notch: brew leaves the installed app alone.
+  # Aira updates itself from the notch: brew leaves the installed app alone.
   auto_updates true
   depends_on macos: :sequoia
 
-  app "Coucou.app"
+  app "Aira.app"
 
   uninstall quit: "fr.louisraille.NotchBuddy"
 
   zap trash: [
+    "~/Library/Application Support/Aira",
     "~/Library/Application Support/Coucou",
     "~/Library/Application Support/NotchBuddy",
     "~/Library/Preferences/fr.louisraille.NotchBuddy.plist",

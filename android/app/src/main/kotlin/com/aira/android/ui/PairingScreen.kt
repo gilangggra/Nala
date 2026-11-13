@@ -90,7 +90,7 @@ fun PairingScreen(model: AppModel, onScan: () -> Unit, onAbout: () -> Unit) {
     if (pasteOpen) PasteSheet(model, onDismiss = { pasteOpen = false })
 }
 
-/** The pairing link as text, for people who cannot scan. A link that is not a Coucou one is refused here, with the same words as everywhere. */
+/** The pairing link as text, for people who cannot scan. A link that is not an Aira one is refused here, with the same words as everywhere. */
 @Composable
 private fun PasteSheet(model: AppModel, onDismiss: () -> Unit) {
     var text by remember { mutableStateOf("") }

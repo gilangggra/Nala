@@ -26,7 +26,7 @@ permissions:
   contents: read
 
 # On: a linux-v* tag publishes. Run this workflow by hand first and try the
-# Coucou-Linux artifact; set this to 'false' to build tags without publishing.
+# Aira-Linux artifact; set this to 'false' to build tags without publishing.
 env:
   PUBLISH: 'true'
 

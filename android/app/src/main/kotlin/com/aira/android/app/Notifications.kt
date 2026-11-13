@@ -233,7 +233,7 @@ class Notifications(private val context: Context) {
 
     fun cancelStatus(pillId: String) = runCatching { nm.cancel(STATUS_TAG, statusId(pillId)) }
 
-    /** Coucou is on screen: the notices are redundant. */
+    /** Aira is on screen: the notices are redundant. */
     fun cancelAllStatus() {
         runCatching { nm.activeNotifications.filter { it.tag == STATUS_TAG }.forEach { nm.cancel(it.tag, it.id) } }
     }

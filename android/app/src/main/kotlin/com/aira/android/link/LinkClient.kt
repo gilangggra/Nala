@@ -164,8 +164,8 @@ class LinkClient(
         if (running) return
         running = true
         fatal = false
-        writer = Executors.newSingleThreadExecutor { r -> Thread(r, "coucou-link-writer").apply { isDaemon = true } }
-        thread = Thread(::loop, "coucou-link").apply { isDaemon = true; start() }
+        writer = Executors.newSingleThreadExecutor { r -> Thread(r, "aira-link-writer").apply { isDaemon = true } }
+        thread = Thread(::loop, "aira-link").apply { isDaemon = true; start() }
     }
 
     @Synchronized override fun stop() {
@@ -200,7 +200,7 @@ class LinkClient(
                     runCatching { s.close() }
                 }
             } catch (_: InterruptedException) { }
-        }, "coucou-link-check").apply { isDaemon = true; start() }
+        }, "aira-link-check").apply { isDaemon = true; start() }
     }
 
     /** Sends allow/deny for a pending approval. False if it is unknown, expired, decided or the link is down. */
@@ -325,7 +325,7 @@ class LinkClient(
         } catch (_: Exception) {
             // interrupted or link closed: the reader notices on its own
         }
-    }, "coucou-link-ping").apply { isDaemon = true; start() }
+    }, "aira-link-ping").apply { isDaemon = true; start() }
 
     private fun read(input: InputStream, onFirstMessage: () -> Unit) {
         var first = true

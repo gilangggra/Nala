@@ -1,7 +1,7 @@
 package com.aira.android
 
-/** Strings required by the author's permission (see android/PERMISSION.md). */
+/** Attribution and application metadata (see android/PERMISSION.md). */
 object Attribution {
-    const val REPO_URL = "https://github.com/Louis-CFM/coucou"
-    const val APP_NAME = "Coucou for Android"
+    const val REPO_URL = "https://github.com/gilangggra/Aira"
+    const val APP_NAME = "Aira for Android"
 }

@@ -1,7 +1,7 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "coucoudoro.hint": {
+    "airadoro.hint": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -101,7 +101,7 @@
         }
       }
     },
-    "coucoudoro.work": {
+    "airadoro.work": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -201,7 +201,7 @@
         }
       }
     },
-    "coucoudoro.rest": {
+    "airadoro.rest": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -301,7 +301,7 @@
         }
       }
     },
-    "coucoudoro.unit": {
+    "airadoro.unit": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -401,7 +401,7 @@
         }
       }
     },
-    "coucoudoro.pill.rest": {
+    "airadoro.pill.rest": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -501,7 +501,7 @@
         }
       }
     },
-    "coucoudoro.pill.work": {
+    "airadoro.pill.work": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -601,7 +601,7 @@
         }
       }
     },
-    "coucoudoro.start": {
+    "airadoro.start": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -701,7 +701,7 @@
         }
       }
     },
-    "coucoudoro.stop": {
+    "airadoro.stop": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -801,7 +801,7 @@
         }
       }
     },
-    "coucoudoro.pause": {
+    "airadoro.pause": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -901,7 +901,7 @@
         }
       }
     },
-    "coucoudoro.resume": {
+    "airadoro.resume": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -1001,7 +1001,7 @@
         }
       }
     },
-    "coucoudoro.ready": {
+    "airadoro.ready": {
       "localizations": {
         "ar": {
           "stringUnit": {
@@ -1101,7 +1101,7 @@
         }
       }
     },
-    "coucoudoro.paused": {
+    "airadoro.paused": {
       "localizations": {
         "ar": {
           "stringUnit": {

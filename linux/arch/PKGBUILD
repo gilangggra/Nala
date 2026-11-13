@@ -1,15 +1,15 @@
-# Maintainer: FabioLukas123
-# Coucou for Arch Linux — built from the Tauri app in windows/, which runs on
+# Maintainer: Gilang Ramadan <mynameisgilangr@gmail.com>
+# Aira for Arch Linux — built from the Tauri app in windows/, which runs on
 # Windows and Linux alike.
 
-pkgname=coucou-git
-_pkgname=coucou
+pkgname=aira-git
+_pkgname=aira
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="Mochi lives at the top of your screen and keeps an eye on your Claude Code sessions"
 arch=('x86_64' 'aarch64')
-url="https://github.com/Louis-CFM/coucou"
-license=("MIT" "LicenseRef-coucou-assets")
+url="https://github.com/gilangggra/Aira"
+license=("MIT" "LicenseRef-aira-assets")
 depends=(
   'webkit2gtk-4.1'
   'gtk3'
@@ -25,15 +25,15 @@ depends=(
 optdepends=(
   'gnome-keyring: store API keys (or any other Secret Service provider)'
   'kwallet: store API keys (or any other Secret Service provider)'
-  'speech-dispatcher: « OK Coucou » answers out loud where the webview has no voice'
-  'espeak-ng: « OK Coucou » answers out loud where the webview has no voice'
+  'speech-dispatcher: « OK Aira » answers out loud where the webview has no voice'
+  'espeak-ng: « OK Aira » answers out loud where the webview has no voice'
 )
 makedepends=('git' 'cargo' 'nodejs' 'npm')
 provides=("$_pkgname")
 conflicts=("$_pkgname")
 # makepkg's default LTO and debug flags make the Rust build very slow.
 options=('!lto' '!debug')
-source=("$_pkgname::git+https://github.com/Louis-CFM/coucou.git")
+source=("$_pkgname::git+https://github.com/gilangggra/Aira.git")
 sha256sums=('SKIP')
 
 pkgver() {
@@ -54,19 +54,19 @@ build() {
   cd "$_pkgname/windows"
   export RUSTUP_TOOLCHAIN=stable
   export CARGO_TARGET_DIR="$PWD/target"
-  # beforeBuildCommand builds the front end and the coucou-hook relay.
+  # beforeBuildCommand builds the front end and the aira-hook relay.
   npx tauri build --no-bundle
 }
 
 package() {
   cd "$_pkgname"
-  install -Dm755 windows/target/release/coucou "$pkgdir/usr/bin/coucou"
-  # Found next to the app, then copied into ~/.local/share/coucou/bin at launch.
-  install -Dm755 windows/target/release/coucou-hook "$pkgdir/usr/bin/coucou-hook"
-  install -Dm644 linux/arch/coucou.desktop "$pkgdir/usr/share/applications/fr.louisraille.coucou.desktop"
-  install -Dm644 windows/src-tauri/icons/32x32.png "$pkgdir/usr/share/icons/hicolor/32x32/apps/coucou.png"
-  install -Dm644 windows/src-tauri/icons/128x128.png "$pkgdir/usr/share/icons/hicolor/128x128/apps/coucou.png"
-  install -Dm644 windows/src-tauri/icons/128x128@2x.png "$pkgdir/usr/share/icons/hicolor/256x256/apps/coucou.png"
+  install -Dm755 windows/target/release/aira "$pkgdir/usr/bin/aira"
+  # Found next to the app, then copied into ~/.local/share/aira/bin at launch.
+  install -Dm755 windows/target/release/aira-hook "$pkgdir/usr/bin/aira-hook"
+  install -Dm644 linux/arch/aira.desktop "$pkgdir/usr/share/applications/com.aira.desktop"
+  install -Dm644 windows/src-tauri/icons/32x32.png "$pkgdir/usr/share/icons/hicolor/32x32/apps/aira.png"
+  install -Dm644 windows/src-tauri/icons/128x128.png "$pkgdir/usr/share/icons/hicolor/128x128/apps/aira.png"
+  install -Dm644 windows/src-tauri/icons/128x128@2x.png "$pkgdir/usr/share/icons/hicolor/256x256/apps/aira.png"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 LICENSE-ASSETS.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE-ASSETS.md"
 }

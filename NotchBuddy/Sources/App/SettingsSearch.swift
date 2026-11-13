@@ -131,8 +131,8 @@ final class SettingsSearch: ObservableObject {
             e("chat.others", .chat, "chat.other-providers.title", ["Google AI", "OpenAI", "DeepSeek", "Gemini"]),
             e("chat.local", .chat, "chat.local.title", ["Ollama", "LM Studio"]),
             e("integrations.all", .integrations, "Integrations",
-              ["Stripe", "GitHub", "Vercel", "n8n", "Notion", "Resend", "Cal.com", "WhatsApp", "Spotify", "Crypto", "Coucoudoro",
-               "crypto.exchange", "crypto.currency", "coucoudoro.work", "coucoudoro.rest", "coucoudoro.hint"]),
+              ["Stripe", "GitHub", "Vercel", "n8n", "Notion", "Resend", "Cal.com", "WhatsApp", "Spotify", "Crypto", "Airadoro",
+               "crypto.exchange", "crypto.currency", "airadoro.work", "airadoro.rest", "airadoro.hint"]),
             // Notch → Voice, Shortcuts
             e("voice.wake", .voice, "«\u{202F}OK Coucou\u{202F}» — voice wake word", ["Enable voice command", "Request permissions"]),
             e("voice.language", .voice, "Language", ["voice.listen-language", "voice.language"]),

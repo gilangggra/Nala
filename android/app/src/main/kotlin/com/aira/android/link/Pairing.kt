@@ -9,7 +9,7 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.X509TrustManager
 
 /**
- * What the desktop shows as a QR code: coucou://pair?v=1&host=...&port=...&fp=...&token=...&name=...
+ * What the desktop shows as a QR code: aira://pair?v=1&host=...&port=...&fp=...&token=...&name=...
  * (and, when its relay is on, &relay=...&room=...&key=...&access=..., see docs/RELAY_LINK.md).
  * `fp` is the SHA-256 (hex) of the desktop's TLS certificate; `token` is the shared pairing secret.
  */

@@ -8,7 +8,7 @@ import javax.net.ssl.SSLContext
 
 /**
  * Finding the paired computer again when its address changed (another Wi-Fi, a hotspot). The computer announces
- * `_coucou._tcp` on the local network while its phone link is on (docs/ANDROID_LINK.md, "Finding the computer").
+ * `_aira._tcp` on the local network while its phone link is on (docs/ANDROID_LINK.md, "Finding the computer").
  *
  * The announcement is a hint, never a credential: it carries the protocol version and the first 16 hex characters of the
  * certificate's SHA-256. The phone matches on that id, then checks the **full** pinned certificate with a bare TLS

@@ -52,7 +52,7 @@ settings:
       DEVELOPMENT_TEAM: 256AUJ9555
       OTHER_CODE_SIGN_FLAGS: "--timestamp"
       CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
-      CODE_SIGN_ENTITLEMENTS: Resources/Coucou.entitlements
+      CODE_SIGN_ENTITLEMENTS: Resources/Aira.entitlements
     ReleaseCloud:
       CODE_SIGNING_REQUIRED: YES
       CODE_SIGNING_ALLOWED: YES
@@ -73,7 +73,15 @@ schemes:
   CoucouAppStore:
     build:
       targets:
-        CoucouAppStore: all
+        AiraAppStore: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  AiraAppStore:
+    build:
+      targets:
+        AiraAppStore: all
     run:
       config: Debug
     archive:
@@ -89,7 +97,15 @@ schemes:
   CoucouAppStoreCloud:
     build:
       targets:
-        CoucouAppStore: all
+        AiraAppStore: all
+    run:
+      config: DebugCloud
+    archive:
+      config: Release
+  AiraAppStoreCloud:
+    build:
+      targets:
+        AiraAppStore: all
     run:
       config: DebugCloud
     archive:
@@ -97,7 +113,15 @@ schemes:
   CoucouPhone:
     build:
       targets:
-        CoucouPhone: all
+        AiraPhone: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  AiraPhone:
+    build:
+      targets:
+        AiraPhone: all
     run:
       config: Debug
     archive:
@@ -107,7 +131,15 @@ schemes:
   CoucouPhoneProduction:
     build:
       targets:
-        CoucouPhone: all
+        AiraPhone: all
+    run:
+      config: DebugCloud
+    archive:
+      config: Release
+  AiraPhoneProduction:
+    build:
+      targets:
+        AiraPhone: all
     run:
       config: DebugCloud
     archive:
@@ -137,8 +169,8 @@ targets:
     info:
       path: Resources/Info.plist
       properties:
-        CFBundleName: Coucou
-        CFBundleDisplayName: Coucou
+        CFBundleName: Aira
+        CFBundleDisplayName: Aira
         CFBundleIdentifier: fr.louisraille.NotchBuddy
         CFBundleVersion: "25"
         CFBundleShortVersionString: "1.0.0"
@@ -147,12 +179,12 @@ targets:
         NSHighResolutionCapable: YES
         NSSupportsAutomaticGraphicsSwitching: YES
         NSAppleEventsUsageDescription: "Pour sauter au terminal, envoyer des mails et piloter Musique et Spotify."
-        NSMicrophoneUsageDescription: "Coucou uses the microphone when you dictate, and to note your calls when you ask it to."
-        NSAudioCaptureUsageDescription: "Coucou records what your Mac plays only while you note a call, to write down what the other people say."
-        NSSpeechRecognitionUsageDescription: "Coucou turns your voice into the text of a chat message."
+        NSMicrophoneUsageDescription: "Aira uses the microphone when you dictate, and to note your calls when you ask it to."
+        NSAudioCaptureUsageDescription: "Aira records what your Mac plays only while you note a call, to write down what the other people say."
+        NSSpeechRecognitionUsageDescription: "Aira turns your voice into the text of a chat message."
         NSAccessibilityUsageDescription: "Pour lire le titre de la fenêtre active et l'attacher comme contexte."
-        NSContactsUsageDescription: "Coucou looks up an email address when you ask it, by voice, to prepare an email."
-        NSFocusStatusUsageDescription: "Coucou stays quiet about new WhatsApp messages while a Focus is on."
+        NSContactsUsageDescription: "Aira looks up an email address when you ask it, by voice, to prepare an email."
+        NSFocusStatusUsageDescription: "Aira stays quiet about new WhatsApp messages while a Focus is on."
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         CFBundleLocalizations:
@@ -175,14 +207,14 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: fr.louisraille.NotchBuddy
-        PRODUCT_NAME: Coucou
+        PRODUCT_NAME: Aira
         INFOPLIST_FILE: Resources/Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         MACOSX_DEPLOYMENT_TARGET: "15.0"
         ENABLE_SANDBOX: NO
       configs:
         DebugCloud:
-          CODE_SIGN_ENTITLEMENTS: Resources/CoucouCloud.entitlements
+          CODE_SIGN_ENTITLEMENTS: Resources/AiraCloud.entitlements
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: "DEBUG PHONE_LINK"
           # The build run every day from Xcode: optimized like Release, so Mochi's
           # drawing costs what it costs for users (unoptimized Swift was ~2× the CPU).
@@ -190,11 +222,11 @@ targets:
         # The distributed build carries the iPhone sync (off until the user
         # turns it on in Settings), so it needs iCloud and its Developer ID profile.
         Release:
-          CODE_SIGN_ENTITLEMENTS: Resources/CoucouReleaseCloud.entitlements
+          CODE_SIGN_ENTITLEMENTS: Resources/AiraReleaseCloud.entitlements
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: PHONE_LINK
           PROVISIONING_PROFILE_SPECIFIER: "Coucou Developer ID"
         ReleaseCloud:
-          CODE_SIGN_ENTITLEMENTS: Resources/CoucouReleaseCloud.entitlements
+          CODE_SIGN_ENTITLEMENTS: Resources/AiraReleaseCloud.entitlements
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: PHONE_LINK
           PROVISIONING_PROFILE_SPECIFIER: "Coucou Developer ID"
     dependencies:
@@ -203,11 +235,13 @@ targets:
       - name: "Write Git Hash to Info.plist"
         script: |
           HASH=$(git -C "${SRCROOT}/.." rev-parse --short HEAD 2>/dev/null || echo "unknown")
+          /usr/libexec/PlistBuddy -c "Set :AiraGitHash ${HASH}" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}" 2>/dev/null \
+            || /usr/libexec/PlistBuddy -c "Add :AiraGitHash string ${HASH}" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
           /usr/libexec/PlistBuddy -c "Set :CoucouGitHash ${HASH}" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}" 2>/dev/null \
             || /usr/libexec/PlistBuddy -c "Add :CoucouGitHash string ${HASH}" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
         showEnvVars: false
 
-  CoucouAppStore:
+  AiraAppStore:
     type: application
     platform: macOS
     sources:
@@ -230,8 +264,8 @@ targets:
     info:
       path: Resources/InfoAppStore.plist
       properties:
-        CFBundleName: Coucou
-        CFBundleDisplayName: Coucou
+        CFBundleName: Aira
+        CFBundleDisplayName: Aira
         CFBundleIdentifier: fr.louisraille.Coucou
         CFBundleVersion: "20"
         CFBundleShortVersionString: "2.0"
@@ -241,8 +275,8 @@ targets:
         NSSupportsAutomaticGraphicsSwitching: YES
         LSApplicationCategoryType: public.app-category.developer-tools
         ITSAppUsesNonExemptEncryption: NO
-        NSMicrophoneUsageDescription: "Coucou uses the microphone when you dictate a chat message."
-        NSSpeechRecognitionUsageDescription: "Coucou turns your voice into the text of a chat message."
+        NSMicrophoneUsageDescription: "Aira uses the microphone when you dictate a chat message."
+        NSSpeechRecognitionUsageDescription: "Aira turns your voice into the text of a chat message."
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         CFBundleLocalizations:
@@ -265,39 +299,39 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: fr.louisraille.Coucou
-        PRODUCT_NAME: Coucou
+        PRODUCT_NAME: Aira
         INFOPLIST_FILE: Resources/InfoAppStore.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         MACOSX_DEPLOYMENT_TARGET: "15.0"
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_ENTITLEMENTS: Resources/CoucouAppStore.entitlements
+        CODE_SIGN_ENTITLEMENTS: Resources/AiraAppStore.entitlements
         DEVELOPMENT_TEAM: 256AUJ9555
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: APPSTORE
         CODE_SIGNING_ALLOWED: YES
       configs:
         DebugCloud:
-          CODE_SIGN_ENTITLEMENTS: Resources/CoucouAppStoreCloud.entitlements
+          CODE_SIGN_ENTITLEMENTS: Resources/AiraAppStoreCloud.entitlements
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: "APPSTORE PHONE_LINK"
         # App Store archive: same iCloud entitlements; Xcode switches push to
         # production when exporting for the App Store.
         Release:
-          CODE_SIGN_ENTITLEMENTS: Resources/CoucouAppStoreCloud.entitlements
+          CODE_SIGN_ENTITLEMENTS: Resources/AiraAppStoreCloud.entitlements
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: "APPSTORE PHONE_LINK"
 
   # iPhone app. Same bundle ID as the Mac App Store build, for universal purchase.
-  CoucouPhone:
+  AiraPhone:
     type: application
     platform: iOS
     deploymentTarget: "18.0"
     dependencies:
-      - target: CoucouWidgets
-      - target: CoucouNotificationContent
+      - target: AiraWidgets
+      - target: AiraNotificationContent
     sources:
       - path: Sources/Phone
         type: group
       # Shared with the Mac targets (they get it through Sources/).
-      - path: Sources/CoucouKit
+      - path: Sources/AiraKit
         type: group
       - path: PhoneAssets.xcassets
         buildPhase: resources
@@ -316,8 +350,8 @@ targets:
     info:
       path: Resources/InfoPhone.plist
       properties:
-        CFBundleName: Coucou
-        CFBundleDisplayName: Coucou
+        CFBundleName: Aira
+        CFBundleDisplayName: Aira
         CFBundleIdentifier: fr.louisraille.Coucou
         CFBundleVersion: "21"
         CFBundleShortVersionString: "2.0"
@@ -333,38 +367,41 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         ITSAppUsesNonExemptEncryption: NO
-        NSFaceIDUsageDescription: "Coucou asks for Face ID before allowing a command from your iPhone."
-        NSMicrophoneUsageDescription: "Coucou uses the microphone when you dictate an instruction for Claude Code."
-        NSSpeechRecognitionUsageDescription: "Coucou turns your voice into the text of an instruction for Claude Code."
+        NSFaceIDUsageDescription: "Aira asks for Face ID before allowing a command from your iPhone."
+        NSMicrophoneUsageDescription: "Aira uses the microphone when you dictate an instruction for Claude Code."
+        NSSpeechRecognitionUsageDescription: "Aira turns your voice into the text of an instruction for Claude Code."
         NSSupportsLiveActivities: YES
         # Lets Mochi move at 120 Hz on ProMotion screens, like the Mac's notch.
         CADisableMinimumFrameDurationOnPhone: YES
         # Steps change often while an agent works: without this, iOS holds back
         # updates once its budget is spent, and "waiting for your OK" came late.
         NSSupportsLiveActivitiesFrequentUpdates: YES
-        # coucou://session/<id>: the widgets open a session in the app.
+        # aira://session/<id>: the widgets open a session in the app.
         CFBundleURLTypes:
           - CFBundleURLName: fr.louisraille.Coucou
             CFBundleURLSchemes:
+              - aira
               - coucou
         # Which APNs environment the Live Activity tokens belong to (read by the Mac).
+        AiraAPNsEnvironment: $(AIRA_APNS_ENV)
         CoucouAPNsEnvironment: $(COUCOU_APNS_ENV)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: fr.louisraille.Coucou
-        PRODUCT_NAME: Coucou
+        PRODUCT_NAME: AiraPhone
         INFOPLIST_FILE: Resources/InfoPhone.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         # Mochi in other colors, picked in Settings (UIApplication.setAlternateIconName).
         ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "AppIcon-Blue AppIcon-Green AppIcon-Purple AppIcon-Pink AppIcon-Graphite"
         ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: NO
+        AIRA_APNS_ENV: production
         COUCOU_APNS_ENV: production
         IPHONEOS_DEPLOYMENT_TARGET: "18.0"
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_ENTITLEMENTS: Resources/CoucouPhone.entitlements
+        CODE_SIGN_ENTITLEMENTS: Resources/AiraPhone.entitlements
         DEVELOPMENT_TEAM: 256AUJ9555
         CODE_SIGNING_REQUIRED: YES
         CODE_SIGNING_ALLOWED: YES
@@ -372,21 +409,23 @@ targets:
         OTHER_CODE_SIGN_FLAGS: ""
       configs:
         Debug:
+          AIRA_APNS_ENV: development
           COUCOU_APNS_ENV: development
         DebugCloud:
-          CODE_SIGN_ENTITLEMENTS: Resources/CoucouPhoneProduction.entitlements
+          CODE_SIGN_ENTITLEMENTS: Resources/AiraPhoneProduction.entitlements
+          AIRA_APNS_ENV: development
           COUCOU_APNS_ENV: development
 
   # Home Screen and Lock Screen widgets (Solo, Team, List, accessories). They
   # read the sessions the iPhone app saves to the shared App Group.
-  CoucouWidgets:
+  AiraWidgets:
     type: app-extension
     platform: iOS
     deploymentTarget: "18.0"
     sources:
       - path: Sources/Widgets
         type: group
-      - path: Sources/CoucouKit
+      - path: Sources/AiraKit
         type: group
       - path: Sources/Phone/SharedSessions.swift
       - path: Sources/Phone/MacStubs.swift
@@ -398,8 +437,8 @@ targets:
     info:
       path: Resources/InfoWidgets.plist
       properties:
-        CFBundleName: CoucouWidgets
-        CFBundleDisplayName: Coucou
+        CFBundleName: AiraWidgets
+        CFBundleDisplayName: Aira
         CFBundleIdentifier: fr.louisraille.Coucou.Widgets
         CFBundleVersion: "21"
         CFBundleShortVersionString: "2.0"
@@ -410,14 +449,14 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: fr.louisraille.Coucou.Widgets
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) WIDGET_EXTENSION"
-        PRODUCT_NAME: CoucouWidgets
+        PRODUCT_NAME: AiraWidgets
         INFOPLIST_FILE: Resources/InfoWidgets.plist
         IPHONEOS_DEPLOYMENT_TARGET: "18.0"
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_ENTITLEMENTS: Resources/CoucouWidgets.entitlements
+        CODE_SIGN_ENTITLEMENTS: Resources/AiraWidgets.entitlements
         DEVELOPMENT_TEAM: 256AUJ9555
         CODE_SIGNING_REQUIRED: YES
         CODE_SIGNING_ALLOWED: YES
@@ -427,14 +466,14 @@ targets:
         APPLICATION_EXTENSION_API_ONLY: YES
 
   # The expanded approval notification: Mochi alive, with the command.
-  CoucouNotificationContent:
+  AiraNotificationContent:
     type: app-extension
     platform: iOS
     deploymentTarget: "18.0"
     sources:
       - path: Sources/NotificationContent
         type: group
-      - path: Sources/CoucouKit
+      - path: Sources/AiraKit
         type: group
       - path: Sources/Phone/MochiLive.swift
       - path: Sources/Phone/MacStubs.swift
@@ -443,8 +482,8 @@ targets:
     info:
       path: Resources/InfoNotificationContent.plist
       properties:
-        CFBundleName: CoucouNotificationContent
-        CFBundleDisplayName: Coucou
+        CFBundleName: AiraNotificationContent
+        CFBundleDisplayName: Aira
         CFBundleIdentifier: fr.louisraille.Coucou.NotificationContent
         CFBundleVersion: "21"
         CFBundleShortVersionString: "2.0"
@@ -453,13 +492,13 @@ targets:
           NSExtensionPointIdentifier: com.apple.usernotifications.content-extension
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).NotificationViewController
           NSExtensionAttributes:
-            UNNotificationExtensionCategory: COUCOU_APPROVAL
+            UNNotificationExtensionCategory: AIRA_APPROVAL
             UNNotificationExtensionInitialContentSizeRatio: 0.45
             UNNotificationExtensionDefaultContentHidden: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: fr.louisraille.Coucou.NotificationContent
-        PRODUCT_NAME: CoucouNotificationContent
+        PRODUCT_NAME: AiraNotificationContent
         INFOPLIST_FILE: Resources/InfoNotificationContent.plist
         IPHONEOS_DEPLOYMENT_TARGET: "18.0"
         TARGETED_DEVICE_FAMILY: "1"

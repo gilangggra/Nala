@@ -18,7 +18,7 @@ import com.aira.android.core.Licences
 import com.aira.android.core.TypeScale
 
 /**
- * Settings > About > Licences: who made what, the full MIT text of Coucou's code, the notice for the artwork, and the Apache 2.0 text with
+ * Settings > About > Licences: who made what, the full MIT text of Aira's code, the notice for the artwork, and the Apache 2.0 text with
  * the libraries it covers. The words are legal text in files under assets/licenses, shown as they are (nothing here is translated).
  */
 @Composable

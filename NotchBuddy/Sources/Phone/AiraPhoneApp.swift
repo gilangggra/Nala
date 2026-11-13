@@ -7,7 +7,7 @@ import CloudKit
 // (SessionPublisher on the Mac, PhoneLink here).
 
 @main
-struct CoucouPhoneApp: App {
+struct AiraPhoneApp: App {
     @UIApplicationDelegateAdaptor(PhoneAppDelegate.self) var delegate
     @Environment(\.scenePhase) private var scenePhase
 
@@ -82,11 +82,12 @@ final class PhoneAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificatio
         Task { @MainActor in
             let link = PhoneLink.shared
             switch (kind, action) {
-            case ("done", NotificationActions.reply):
+            case ("done", NotificationActions.reply), ("done", NotificationActions.legacyReply):
                 let text = typed.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !text.isEmpty { _ = await link.sendInstruction(text, pillId: pillId) }
-            case ("question", let picked) where picked.hasPrefix(NotificationActions.pickPrefix):
-                let index = Int(picked.dropFirst(NotificationActions.pickPrefix.count)) ?? -1
+            case ("question", let picked) where picked.hasPrefix(NotificationActions.pickPrefix) || picked.hasPrefix(NotificationActions.legacyPickPrefix):
+                let prefix = picked.hasPrefix(NotificationActions.pickPrefix) ? NotificationActions.pickPrefix : NotificationActions.legacyPickPrefix
+                let index = Int(picked.dropFirst(prefix.count)) ?? -1
                 if options.indices.contains(index) {
                     _ = await link.answer(fingerprint: fingerprint, pillId: pillId, selections: [[options[index]]])
                 }
@@ -103,12 +104,12 @@ final class PhoneAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificatio
         let link = PhoneLink.shared
         link.noteICloudAlert(fingerprint)
         switch action {
-        case NotificationActions.deny:
+        case NotificationActions.deny, NotificationActions.legacyDeny:
             // Awaited so the decision is saved before iOS suspends the app again.
             let summary = link.sessions.first { $0.approvalFingerprint == fingerprint }?.approvalCommand
             _ = await link.decide(.deny, fingerprint: fingerprint, pillId: pillId,
                                   summary: summary ?? "Denied from the notification")
-        case NotificationActions.allow:
+        case NotificationActions.allow, NotificationActions.legacyAllow:
             // Answered right there: iOS had the iPhone unlocked by its owner first.
             _ = await link.allowFromOutside(fingerprint: fingerprint, pillId: pillId, from: "a notification")
         default:

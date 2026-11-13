@@ -19,7 +19,7 @@ import com.aira.android.core.mood
  * are unchanged), on the shared card with a gradient in the colour of the state. A small Mochi in the state of the most urgent
  * agent sits on the left; on the right are the headline, a badge for what waits for you and up to three short lines, each with a
  * dot in the state's tone. It never updates on a timer (updatePeriodMillis = 0): the app pushes a new picture when something
- * changes, so it costs nothing while nothing happens. A tap anywhere opens Coucou; there is no button here.
+ * changes, so it costs nothing while nothing happens. A tap anywhere opens Aira; there is no button here.
  */
 class GlanceWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {

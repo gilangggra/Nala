@@ -40,7 +40,7 @@ class DemoLink(
             try {
                 while (running) { step(); Thread.sleep(stepDelayMs) }
             } catch (_: InterruptedException) { }
-        }, "coucou-demo").apply { isDaemon = true; start() }
+        }, "aira-demo").apply { isDaemon = true; start() }
     }
 
     @Synchronized override fun stop() {

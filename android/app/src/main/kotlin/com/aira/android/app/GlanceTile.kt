@@ -12,7 +12,7 @@ import com.aira.android.core.Glance
 
 /**
  * The quick-settings tile: on while the computer is connected, its second line is the headline of [Glance]. A tap
- * opens Coucou (it never approves or changes anything). The system calls [onStartListening] when the shade opens, so
+ * opens Aira (it never approves or changes anything). The system calls [onStartListening] when the shade opens, so
  * it needs no timer; [requestUpdate] asks it to refresh when the picture changes while the shade is open.
  */
 class GlanceTile : TileService() {

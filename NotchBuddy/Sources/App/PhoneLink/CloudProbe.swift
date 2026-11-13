@@ -19,9 +19,9 @@ import CloudKit
 final class CloudProbe {
     static let shared = CloudProbe()
 
-    static let containerID = "iCloud.fr.louisraille.Coucou"
-    static let zoneID = CKRecordZone.ID(zoneName: "Coucou", ownerName: CKCurrentUserDefaultName)
-    private static let subscriptionID = "coucou-zone-mac"
+    static let containerID = "iCloud.com.aira.app"
+    static let zoneID = CKRecordZone.ID(zoneName: "Aira", ownerName: CKCurrentUserDefaultName)
+    private static let subscriptionID = "aira-zone-mac"
 
     private let container = CKContainer(identifier: CloudProbe.containerID)
     private var database: CKDatabase { container.privateCloudDatabase }
@@ -39,7 +39,7 @@ final class CloudProbe {
 
     private var appLabel: String {
         #if APPSTORE
-        "CoucouAppStore"
+        "AiraAppStore"
         #else
         "NotchBuddy"
         #endif

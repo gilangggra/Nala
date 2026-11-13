@@ -12,7 +12,7 @@ import com.aira.android.link.Found
 import java.net.Inet4Address
 
 /**
- * Browses for `_coucou._tcp` with the framework's NsdManager (no library). A multicast lock is held only while
+ * Browses for `_aira._tcp` with the framework's NsdManager (no library). A multicast lock is held only while
  * browsing and released the moment it stops. Services are resolved one at a time (NsdManager allows one resolve at a time);
  * what comes back is only what the computer announced: its name, an IPv4 address, the port and the short fingerprint id.
  * The caller decides if it is the paired computer, and checks the certificate; nothing here is trusted.
