@@ -5,7 +5,7 @@ import java.io.File
 /** Locates the desktop reference sources (windows/src/...) so tests can compare against them. */
 object ReferenceFiles {
     private fun repoRoot(): File {
-        var dir: File? = File(System.getProperty("user.dir")).absoluteFile
+        var dir: File? = File(System.getProperty("user.dir") ?: ".").absoluteFile
         while (dir != null) {
             if (File(dir, "windows/src/core/pills.ts").exists()) return dir
             dir = dir.parentFile

@@ -16,12 +16,12 @@ import org.junit.Test
  * fixed credentials. Run by android/relay/tools/e2e.sh; skipped everywhere else (it needs COUCOU_E2E_RELAY_URL).
  */
 class RelayE2ETest {
-    private val url = System.getenv("COUCOU_E2E_RELAY_URL")
+    private val url = System.getenv("AIRA_E2E_RELAY_URL") ?: System.getenv("NALA_E2E_RELAY_URL") ?: System.getenv("COUCOU_E2E_RELAY_URL")
     private val room = RelayCrypto.base64UrlEncode(ByteArray(16) { 0x11 })
     private val key = RelayCrypto.base64UrlEncode(ByteArray(32) { 0x22 })
     private val access = RelayCrypto.base64UrlEncode(ByteArray(32) { 0x33 })
 
-    private fun pairing(accessKey: String = access) = RelayPairing(url, room, key, accessKey)
+    private fun pairing(accessKey: String = access) = RelayPairing(url ?: "", room, key, accessKey)
 
     @Test fun aWrongAccessKeyIsRefusedByTheRealRelay() {
         assumeTrue("needs COUCOU_E2E_RELAY_URL", url != null)

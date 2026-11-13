@@ -50,7 +50,10 @@ class LanguagesTest {
     @Test fun englishIsTheSingleSourceOfTheKeys() {
         val english = Regex("""<(?:string|plurals) name="([a-z_0-9]+)"""").findAll(read("src/main/res/values/strings.xml")).map { it.groupValues[1] }.toSet()
         val source = read("../i18n/app-strings.json")
-        val declared = Regex("""^ {4}"([a-z_0-9]+)":""", RegexOption.MULTILINE).findAll(source).map { it.groupValues[1] }.toSet()
+        val declared = Regex("""^ {2,8}"([a-z_0-9]+)":""", RegexOption.MULTILINE).findAll(source)
+            .map { it.groupValues[1] }
+            .filter { it !in setOf("_about", "strings", "plurals", "one", "two", "few", "many", "other", "zero") }
+            .toSet()
         assertEquals(declared, english)
     }
 
