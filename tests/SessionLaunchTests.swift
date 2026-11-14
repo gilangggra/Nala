@@ -7,9 +7,12 @@ enum SessionLaunchTests {
         let s = LaunchScript.script(prompt: "fix the \"login\" bug; rm -rf / && echo $HOME `id`", folder: "/Users/me/My Project's")
         precondition(s.hasPrefix("#!/bin/sh\nrm -f \"$0\"\n"), "removes itself first")
         precondition(s.contains("cd '/Users/me/My Project'\\''s' || exit 1"), "folder quoted")
-        precondition(s.contains("export COUCOU_PROMPT='fix the \"login\" bug; rm -rf / && echo $HOME `id`'"),
+        precondition(s.contains("export AIRA_PROMPT='fix the \"login\" bug; rm -rf / && echo $HOME `id`'") ||
+                     s.contains("export COUCOU_PROMPT='fix the \"login\" bug; rm -rf / && echo $HOME `id`'"),
                      "prompt kept whole in single quotes: nothing in it runs")
-        precondition(s.contains("claude \"$COUCOU_PROMPT\""), "Claude Code gets the prompt from the variable")
+        precondition(s.contains("claude \"${AIRA_PROMPT:-$COUCOU_PROMPT}\"") ||
+                     s.contains("claude \"$AIRA_PROMPT\"") ||
+                     s.contains("claude \"$COUCOU_PROMPT\""), "Claude Code gets the prompt from the variable")
         let empty = LaunchScript.script(prompt: "   ", folder: "/tmp")
         precondition(empty.contains("-lic 'claude; exec $SHELL -l'"), "no prompt: plain claude")
 
