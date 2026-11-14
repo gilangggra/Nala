@@ -46,8 +46,10 @@ use super::LocalTime;
 use crate::session_window::{self, Proc};
 
 /// File name of the Claude Code relay.
-pub const HOOK_EXE: &str = "nala-hook.exe";
-pub const LEGACY_HOOK_EXE: &str = "coucou-hook.exe";
+pub const HOOK_EXE: &str = "aira-hook.exe";
+pub const LEGACY_HOOK_EXE: &str = "nala-hook.exe";
+#[allow(dead_code)]
+pub const UPSTREAM_HOOK_EXE: &str = "coucou-hook.exe";
 
 /// Environment variable holding the home directory.
 pub const HOME_VAR: &str = "USERPROFILE";
@@ -57,32 +59,44 @@ const CREATE_NO_WINDOW: u32 = 0x0800_0000;
 
 // ── Files ─────────────────────────────────────────────────────────────────────
 
-/// %APPDATA%\Nala — preferences.
+/// %APPDATA%\Aira — preferences (with automatic zero-loss migration from Nala/Coucou).
 pub fn config_dir() -> PathBuf {
     let base = std::env::var_os("APPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."));
+    let aira = base.join("Aira");
     let nala = base.join("Nala");
     let coucou = base.join("Coucou");
-    if coucou.exists() && !nala.exists() {
-        coucou
-    } else {
-        nala
+    if !aira.exists() {
+        if nala.exists() {
+            let _ = std::fs::rename(&nala, &aira);
+            return aira;
+        } else if coucou.exists() {
+            let _ = std::fs::rename(&coucou, &aira);
+            return aira;
+        }
     }
+    aira
 }
 
-/// %LOCALAPPDATA%\Nala — where hook, inbox and log live.
+/// %LOCALAPPDATA%\Aira — where hook, inbox and log live (with automatic migration).
 pub fn local_dir() -> PathBuf {
     let base = std::env::var_os("LOCALAPPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("."));
+    let aira = base.join("Aira");
     let nala = base.join("Nala");
     let coucou = base.join("Coucou");
-    if coucou.exists() && !nala.exists() {
-        coucou
-    } else {
-        nala
+    if !aira.exists() {
+        if nala.exists() {
+            let _ = std::fs::rename(&nala, &aira);
+            return aira;
+        } else if coucou.exists() {
+            let _ = std::fs::rename(&coucou, &aira);
+            return aira;
+        }
     }
+    aira
 }
 
 /// Where a saved image goes, best first: Pictures (also where OneDrive moves

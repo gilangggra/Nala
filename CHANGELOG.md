@@ -1,11 +1,21 @@
 # Changelog
 
-All notable changes to **Nala** will be documented in this file.
+All notable changes to **Aira** will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
+
+### Changed
+- **Comprehensive Ecosystem Rebrand to Aira**:
+  - Full brand transition from Nala to **Aira** across all platforms (macOS, Windows, Linux, Android, iOS).
+  - Windows Rust Core, named pipes (`\\.\pipe\aira-*`), binaries (`aira.exe`, `aira-hook.exe`), and user data `%APPDATA%\Aira` (with zero-loss automatic migration from legacy `%APPDATA%\Nala`).
+  - Android package namespace migrated to `com.aira.android` with application class `AiraApp` and widget provider metadata `aira_*_widget_info`.
+  - Phone link subprotocol harmonized to `aira.v1`, join proofs `aira.join.*`, and mDNS discovery service type `_aira._tcp`.
+  - Cloudflare Relay Server (`android/relay/`) updated to `aira-link-relay` with regenerated and validated cryptographic test vectors.
+  - Voice AI engine wake word updated to « OK Aira » / « Hey Aira » / « Hai Aira » with phonetically tuned Whisper and Parakeet matcher.
+  - Feature rebrand: Pomodoro timer renamed to **Airadoro** across 16 supported languages.
 
 ### Added
 - Ongoing improvements for cross-device mobile synchronization and pairing.

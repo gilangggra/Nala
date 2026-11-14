@@ -30,7 +30,7 @@ const T = {
   get longestSession() { return t("Longest session"); },
   get approved() { return t("Approved"); },
   get denied() { return t("Denied"); },
-  footer: "Nala · github.com/gilangggra/Nala",
+  footer: "Aira · github.com/gilangggra/Aira",
 };
 
 /**
@@ -175,7 +175,7 @@ export function renderShareImage(s: WeeklySummary, hideProjects: boolean): HTMLC
   const MOCHI = 220;
   const MOCHI_DRAW = 320;
   const blockH =
-    MOCHI + 20 + 62 + 6 + 36 + 14 + 29 + 80 + // Mochi, Nala, title, range
+    MOCHI + 20 + 62 + 6 + 36 + 14 + 29 + 80 + // Mochi, Aira, title, range
     110 + 6 + 26 + // time + caption
     56 + 94 + // stat row
     (hasLines ? 24 + 34 : 0) +
@@ -191,7 +191,7 @@ export function renderShareImage(s: WeeklySummary, hideProjects: boolean): HTMLC
   x.fillStyle = INK;
   x.textAlign = "center";
   font(x, 900, 52);
-  x.fillText("Nala", cx, y);
+  x.fillText("Aira", cx, y);
   y += 62 + 6;
 
   x.fillStyle = DIM;

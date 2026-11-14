@@ -105,7 +105,9 @@ test("the launcher keeps its projects and the chosen folder in the webview's sto
   assert.deepEqual(b.projects, a.projects);
   assert.equal(b.folder, "/opt/picked");
 
-  storage.set("nala.launch.projects", "{not json");
+  storage.set("aira.launch.projects", "{not json");
+  storage.delete("aira.launch.folder");
+  storage.delete("nala.launch.projects");
   storage.delete("nala.launch.folder");
   const c = new Launcher(false);
   assert.deepEqual(c.projects, []);

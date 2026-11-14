@@ -26,7 +26,8 @@ export interface WhatsNewHost {
 }
 
 /** The last version this install saw. A convenience of this install, like the plan usage. */
-const LAST_KEY = "nala.whatsNew.lastVersion";
+const LAST_KEY = "aira.whatsNew.lastVersion";
+const LEGACY_LAST_KEY = "nala.whatsNew.lastVersion";
 
 /** After the greeting, so the two never meet; then every few seconds while the island is busy. */
 const FIRST_DELAY_MS = 3000;
@@ -38,7 +39,7 @@ const QUIET_VIEWS: ReadonlySet<IslandViewName> = new Set(["overview", "empty"]);
 
 function readLast(): string | null {
   try {
-    return window.localStorage?.getItem(LAST_KEY) ?? null;
+    return window.localStorage?.getItem(LAST_KEY) ?? window.localStorage?.getItem(LEGACY_LAST_KEY) ?? null;
   } catch {
     return null;
   }

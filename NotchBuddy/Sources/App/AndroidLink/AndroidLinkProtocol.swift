@@ -45,7 +45,7 @@ enum AndroidLinkProtocol {
     ]
 
     /// The DNS-SD service type the phone browses for.
-    static let serviceType = "_nala._tcp"
+    static let serviceType = "_aira._tcp"
     /// How many hex characters of the certificate fingerprint go into the TXT record.
     static let fingerprintIdLength = 16
     /// The protocol version in the TXT record.
@@ -110,9 +110,9 @@ enum AndroidLinkProtocol {
         return out
     }
 
-    /// `nala://pair?v=1&host=…&port=…&fp=…&token=…&name=…`
+    /// `aira://pair?v=1&host=…&port=…&fp=…&token=…&name=…`
     static func pairingLink(host: String, port: UInt16, fingerprint: String, token: String, name: String) -> String {
-        "nala://pair?v=1&host=\(percentEncode(host))&port=\(port)&fp=\(fingerprint)&token=\(token)&name=\(percentEncode(name))"
+        "aira://pair?v=1&host=\(percentEncode(host))&port=\(port)&fp=\(fingerprint)&token=\(token)&name=\(percentEncode(name))"
     }
 
     // MARK: Discovery (Bonjour)
@@ -133,11 +133,11 @@ enum AndroidLinkProtocol {
         return ["v": txtVersion, "fp": id]
     }
 
-    /// The service's instance name: the computer's name, at most 48 characters, "Nala" if empty.
+    /// The service's instance name: the computer's name, at most 48 characters, "Aira" if empty.
     static func instanceName(_ name: String) -> String {
         let trimmed = String(name.trimmingCharacters(in: .whitespacesAndNewlines).prefix(48))
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? "Nala" : trimmed
+        return trimmed.isEmpty ? "Aira" : trimmed
     }
 
     /// The name the phone shows for this Mac.

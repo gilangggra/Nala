@@ -1,5 +1,5 @@
-// « OK Nala »'s multi-provider conversational brain: answers open-ended voice
-// questions and orchestrates Nala's tools (pills, music, service_info, open_app,
+// « OK Aira »'s multi-provider conversational brain: answers open-ended voice
+// questions and orchestrates Aira's tools (pills, music, service_info, open_app,
 // prepare_email, web_search) across whichever AI backend the user has configured:
 //   1. Cloud API keys: Anthropic Claude, OpenAI, Google Gemini, OpenRouter
 //   2. Local / self-hosted servers: Ollama, LM Studio, or any OpenAI-compatible server (vLLM, llama.cpp…)
@@ -43,7 +43,7 @@ pub struct Reply {
     pub acted: bool,
 }
 
-/// Which AI backend will answer a conversational « OK Nala » turn.
+/// Which AI backend will answer a conversational « OK Aira » turn.
 enum VoiceBackend {
     Anthropic {
         model: String,
@@ -249,7 +249,7 @@ fn tools() -> Vec<Value> {
         }),
         json!({
             "name": "service_info",
-            "description": "Read the user's real data that Nala already has, as JSON: the active pills, the agent sessions (Claude Code, Codex…) and what they are doing, Claude or Codex plan usage, Spotify now playing, and the services' latest data (Stripe, GitHub, Vercel, Resend, n8n, Notion, Cal.com).",
+            "description": "Read the user's real data that Aira already has, as JSON: the active pills, the agent sessions (Claude Code, Codex…) and what they are doing, Claude or Codex plan usage, Spotify now playing, and the services' latest data (Stripe, GitHub, Vercel, Resend, n8n, Notion, Cal.com).",
             "input_schema": { "type": "object", "properties": {} }
         }),
         json!({
@@ -274,7 +274,7 @@ fn tools() -> Vec<Value> {
     ]
 }
 
-/// Converts Nala's canonical Anthropic tool definitions into the OpenAI-compatible
+/// Converts Aira's canonical Anthropic tool definitions into the OpenAI-compatible
 /// Function Calling format supported by OpenAI, Google Gemini, OpenRouter, Ollama,
 /// LM Studio, and vLLM. Server-side Anthropic tools (`web_search_20250305`) are skipped.
 pub fn openai_tools(anthropic_tools: &[Value]) -> Vec<Value> {
@@ -452,7 +452,7 @@ fn system_prompt(pills: &str) -> String {
     let t = crate::platform::local_time();
     let os = if cfg!(windows) { "Windows" } else { "Linux" };
     format!(
-        "You are Nala, a voice assistant living at the top of the screen of the user's {os} computer, a bit like Jarvis: \
+        "You are Aira, a voice assistant living at the top of the screen of the user's {os} computer, a bit like Jarvis: \
 quick, warm, a little playful. It is {:04}-{:02}-{:02} {:02}:{:02}.\n\
 Everything you write is read aloud: answer in the language the user spoke, in one or two short sentences, \
 no markdown, no lists, no emojis, no links.\n\
@@ -711,7 +711,7 @@ async fn post_openai_json(
 }
 
 /// Executes a voice brain turn through an installed CLI subscription (`cli_relay`),
-/// supporting structured `<tool_call>` blocks when the model invokes one of Nala's tools.
+/// supporting structured `<tool_call>` blocks when the model invokes one of Aira's tools.
 async fn cli_relay_voice_turn(
     provider: &str,
     model: &str,
@@ -722,7 +722,7 @@ async fn cli_relay_voice_turn(
     let tool_specs = openai_tools(anthropic_tools);
     let augmented_system = format!(
         "{system}\n\n\
-If you need to invoke one of Nala's local tools (pills, music, service_info, open_app, prepare_email), \
+If you need to invoke one of Aira's local tools (pills, music, service_info, open_app, prepare_email), \
 output ONLY a JSON tool call wrapped in <tool_call></tool_call> tags, for example:\n\
 <tool_call>{{\"name\":\"service_info\",\"input\":{{}}}}</tool_call>\n\
 Available tools: {}",

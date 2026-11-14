@@ -22,22 +22,22 @@ const PACKAGES = {
     {
       dir: "nsis",
       suffix: "-setup.exe",
-      names: [`Nala-Windows-${version}-setup.exe`, "Nala-Windows-setup.exe"],
+      names: [`Aira-Windows-${version}-setup.exe`, "Aira-Windows-setup.exe"],
     },
     {
       dir: "msi",
       suffix: ".msi",
-      names: [`Nala-Windows-${version}.msi`, "Nala-Windows.msi"],
+      names: [`Aira-Windows-${version}.msi`, "Aira-Windows.msi"],
     },
   ],
   linux: [
     {
       dir: "appimage",
       suffix: ".AppImage",
-      names: [`Nala-Linux-${version}-${arch}.AppImage`, `Nala-Linux-${arch}.AppImage`],
+      names: [`Aira-Linux-${version}-${arch}.AppImage`, `Aira-Linux-${arch}.AppImage`],
     },
-    { dir: "deb", suffix: ".deb", names: [`Nala-Linux-${version}-${debArch}.deb`] },
-    { dir: "rpm", suffix: ".rpm", names: [`Nala-Linux-${version}-${arch}.rpm`] },
+    { dir: "deb", suffix: ".deb", names: [`Aira-Linux-${version}-${debArch}.deb`] },
+    { dir: "rpm", suffix: ".rpm", names: [`Aira-Linux-${version}-${arch}.rpm`] },
   ],
 };
 

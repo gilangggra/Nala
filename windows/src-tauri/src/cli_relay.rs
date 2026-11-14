@@ -527,7 +527,7 @@ pub async fn send(
 }
 
 /// Runs a single prompt through the installed CLI tool for `provider` (used by
-/// « OK Nala » voice fallback when a user relies on a CLI subscription).
+/// « OK Aira » voice fallback when a user relies on a CLI subscription).
 pub async fn ask_prompt(
     provider: &str,
     model: &str,

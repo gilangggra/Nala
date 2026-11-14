@@ -1,6 +1,6 @@
-# Contributing to Nala
+# Contributing to Aira
 
-Thanks for wanting to help Mochi and Nala grow! 🫶
+Thanks for wanting to help Mochi and Aira grow! 🫶
 
 ## Getting started
 

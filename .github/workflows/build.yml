@@ -236,7 +236,7 @@ jobs:
         run: |
           xcodebuild \
             -project NotchBuddy/NotchBuddy.xcodeproj \
-            -scheme CoucouAppStore \
+            -scheme AiraAppStore \
             -configuration Debug \
             build \
             CODE_SIGNING_ALLOWED=NO \
@@ -266,7 +266,7 @@ jobs:
         run: |
           xcodebuild \
             -project NotchBuddy/NotchBuddy.xcodeproj \
-            -scheme CoucouPhone \
+            -scheme AiraPhone \
             -destination 'generic/platform=iOS' \
             build \
             CODE_SIGNING_ALLOWED=NO

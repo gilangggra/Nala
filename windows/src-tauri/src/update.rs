@@ -214,14 +214,16 @@ pub fn install_kind(exe: &str, has_uninstaller: bool, local_app_data: Option<&st
     if let Some(local) = local_app_data.filter(|l| !l.trim().is_empty()) {
         let l_coucou = format!("{}\\coucou", win_path(local));
         let l_nala = format!("{}\\nala", win_path(local));
-        if dir == l_coucou || dir == l_nala {
+        let l_aira = format!("{}\\aira", win_path(local));
+        if dir == l_coucou || dir == l_nala || dir == l_aira {
             return if has_uninstaller { InstallKind::Setup } else { InstallKind::Manual };
         }
     }
     if program_files.iter().filter(|p| !p.trim().is_empty()).any(|p| {
         let p_coucou = format!("{}\\coucou", win_path(p));
         let p_nala = format!("{}\\nala", win_path(p));
-        dir == p_coucou || dir == p_nala
+        let p_aira = format!("{}\\aira", win_path(p));
+        dir == p_coucou || dir == p_nala || dir == p_aira
     }) {
         return InstallKind::Msi;
     }
@@ -233,8 +235,8 @@ pub fn install_kind(exe: &str, has_uninstaller: bool, local_app_data: Option<&st
 #[allow(dead_code)]
 pub fn asset_name(kind: InstallKind, version: &str) -> Option<String> {
     match kind {
-        InstallKind::Setup => Some(format!("Nala-Windows-{version}-setup.exe")),
-        InstallKind::Msi => Some(format!("Nala-Windows-{version}.msi")),
+        InstallKind::Setup => Some(format!("Aira-Windows-{version}-setup.exe")),
+        InstallKind::Msi => Some(format!("Aira-Windows-{version}.msi")),
         InstallKind::Manual => None,
     }
 }
@@ -243,10 +245,12 @@ pub fn pick_asset(release: &Release, kind: InstallKind) -> Option<&Asset> {
     let version = &release.version;
     let expected: Vec<String> = match kind {
         InstallKind::Setup => vec![
+            format!("Aira-Windows-{version}-setup.exe"),
             format!("Nala-Windows-{version}-setup.exe"),
             format!("Coucou-Windows-{version}-setup.exe"),
         ],
         InstallKind::Msi => vec![
+            format!("Aira-Windows-{version}.msi"),
             format!("Nala-Windows-{version}.msi"),
             format!("Coucou-Windows-{version}.msi"),
         ],
@@ -396,7 +400,7 @@ fn load_prefs() -> Prefs {
 fn save_prefs(prefs: &Prefs) {
     let path = prefs_path();
     let Some(dir) = path.parent() else { return };
-    let temp = path.with_extension(format!("json.nala-{}", std::process::id()));
+    let temp = path.with_extension(format!("json.aira-{}", std::process::id()));
     let written = crate::platform::ensure_private_dir(dir)
         .and_then(|()| serde_json::to_vec(prefs).map_err(std::io::Error::other))
         .and_then(|json| std::fs::write(&temp, json))
@@ -610,7 +614,7 @@ fn remove_old_downloads() {
     let Ok(entries) = std::fs::read_dir(std::env::temp_dir()) else { return };
     for entry in entries.flatten() {
         let name = entry.file_name().to_string_lossy().to_string();
-        if name.starts_with("nala-update-") || name.starts_with("coucou-update-") {
+        if name.starts_with("aira-update-") || name.starts_with("nala-update-") || name.starts_with("coucou-update-") {
             let _ = std::fs::remove_dir_all(entry.path());
         }
     }
@@ -662,7 +666,7 @@ async fn run(app: &AppHandle, release: &Release, kind: InstallKind) -> Result<()
         return Err(t("The download isn't the file GitHub published for this version, so nothing was installed."));
     }
     let nonce = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.subsec_nanos()).unwrap_or(0);
-    let dir = std::env::temp_dir().join(format!("nala-update-{}-{nonce}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("aira-update-{}-{nonce}", std::process::id()));
     std::fs::create_dir_all(&dir).map_err(|_| t("The download failed. Try again, or get the new version on GitHub."))?;
     let path = dir.join(&asset.name);
 
@@ -947,11 +951,13 @@ mod tests {
         let kind = |exe: &str, uninst: bool| install_kind(exe, uninst, local, &pf);
         assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Coucou\coucou.exe", true), InstallKind::Setup);
         assert_eq!(kind(r"c:\users\ana\appdata\local\COUCOU\Coucou.exe", true), InstallKind::Setup);
+        assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Aira\aira.exe", true), InstallKind::Setup);
         assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Nala\nala.exe", true), InstallKind::Setup);
         // A portable exe copied there: no NSIS uninstaller next to it.
         assert_eq!(kind(r"C:\Users\Ana\AppData\Local\Coucou\coucou.exe", false), InstallKind::Manual);
         assert_eq!(kind(r"C:\Program Files\Coucou\coucou.exe", false), InstallKind::Msi);
         assert_eq!(kind(r"C:\Program Files (x86)\Coucou\coucou.exe", false), InstallKind::Msi);
+        assert_eq!(kind(r"C:\Program Files\Aira\aira.exe", false), InstallKind::Msi);
         assert_eq!(kind(r"C:\Program Files\Nala\nala.exe", false), InstallKind::Msi);
         // The portable exe, a build, a folder that only looks alike.
         assert_eq!(kind(r"C:\Users\Ana\Downloads\coucou.exe", true), InstallKind::Manual);

@@ -15,11 +15,12 @@ enum LaunchScript {
     /// quits, the shell stays open in the project.
     static func script(prompt: String, folder: String) -> String {
         let trimmed = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
-        let run = trimmed.isEmpty ? "claude" : "claude \"$COUCOU_PROMPT\""
+        let run = trimmed.isEmpty ? "claude" : "claude \"${AIRA_PROMPT:-$COUCOU_PROMPT}\""
         return """
         #!/bin/sh
         rm -f "$0"
         cd \(quote(folder)) || exit 1
+        export AIRA_PROMPT=\(quote(trimmed))
         export COUCOU_PROMPT=\(quote(trimmed))
         exec "${SHELL:-/bin/zsh}" -lic \(quote(run + "; exec $SHELL -l"))
 

@@ -54,7 +54,7 @@ fn pending() -> &'static Mutex<HashMap<u64, mpsc::Sender<String>>> {
 }
 static NEXT_ID: AtomicU64 = AtomicU64::new(1);
 
-/// Whether « OK Nala » can run: the offline speech model is downloaded AND the
+/// Whether « OK Aira » can run: the offline speech model is downloaded AND the
 /// user has at least one AI backend configured — a cloud API key (Anthropic,
 /// OpenAI, Google Gemini, OpenRouter), a local server (Ollama, LM Studio, or
 /// OpenAI-compatible), or an active CLI Relay subscription.
@@ -71,10 +71,10 @@ pub fn sync(app: &AppHandle) {
             let stop = Arc::new(AtomicBool::new(false));
             let app2 = app.clone();
             let stop2 = stop.clone();
-            std::thread::Builder::new().name("coucou-voice".into()).spawn(move || run(app2, stop2)).ok();
+            std::thread::Builder::new().name("aira-voice".into()).spawn(move || run(app2, stop2)).ok();
             *running = Some(Running { stop });
             speech::preload();
-            crate::log::line("voice: « OK Nala » listening");
+            crate::log::line("voice: « OK Aira » listening");
         }
         (false, true) => {
             if let Some(r) = running.take() {
@@ -84,7 +84,7 @@ pub fn sync(app: &AppHandle) {
             if !dictation && !crate::notes::is_recording(app) {
                 speech::unload();
             }
-            crate::log::line("voice: « OK Nala » off");
+            crate::log::line("voice: « OK Aira » off");
         }
         _ => {}
     }
@@ -164,7 +164,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             }
             _ => {}
         }
-        // Dictation and calls have the microphone: Nala doesn't listen meanwhile.
+        // Dictation and calls have the microphone: Aira doesn't listen meanwhile.
         if pill::dictating(&app) || crate::notes::is_recording(&app) {
             vad.reset();
             continue;
@@ -186,7 +186,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             let question = match &mut mode {
                 Mode::Wake => match wake::after_wake(&heard) {
                     Some(rest) => {
-                        crate::log::line("voice: « OK Nala » heard");
+                        crate::log::line("voice: « OK Aira » heard");
                         hide_at = None;
                         if crate::flow::text::word_count(&rest) >= 2 || intent::parse(&rest).is_some() {
                             Some(rest)
@@ -229,7 +229,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
                 show(&app, Some(VoiceView {
                     phase: "speaking".into(),
                     heard: question,
-                    answer: if done { "✓".into() } else { crate::i18n::t("Nala couldn't answer: check your Claude key in Notch → Chat.") },
+                    answer: if done { "✓".into() } else { crate::i18n::t("Aira couldn't answer: check your Claude key in Notch → Chat.") },
                 }));
                 hide_at = Some(Instant::now() + Duration::from_secs(5));
                 continue;
@@ -237,7 +237,7 @@ fn run(app: AppHandle, stop: Arc<AtomicBool>) {
             show(&app, Some(VoiceView { phase: "speaking".into(), heard: question.clone(), answer: answer.clone() }));
             speak(&app, &answer);
             vad.reset();
-            // Drop what the microphone heard of Nala's own voice.
+            // Drop what the microphone heard of Aira's own voice.
             while rx.try_recv().is_ok() {}
             if answer.trim_end().ends_with('?') {
                 mode = Mode::FollowUp { until: Instant::now() + Duration::from_secs(speech::config::FOLLOWUP_TIMEOUT_SECS) };

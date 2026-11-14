@@ -1,4 +1,4 @@
-// Deterministic local intent parser for « OK Nala » (Tahap 1 — Fast Path).
+// Deterministic local intent parser for « OK Aira » (Tahap 1 — Fast Path).
 //
 // Everyday voice commands (music playback, volume control, opening local apps,
 // managing island pills, and cancelling a voice prompt) are parsed and executed
@@ -420,7 +420,7 @@ pub fn respond(app: &AppHandle, question: &str) -> Option<Reply> {
     Some(execute(app, intent, lang))
 }
 
-/// Executes a parsed `LocalIntent` against Nala's local tools and formats a
+/// Executes a parsed `LocalIntent` against Aira's local tools and formats a
 /// concise, natural response in the user's spoken language (`"id-ID"`, `"fr-FR"`, or English).
 pub fn execute(app: &AppHandle, intent: LocalIntent, lang: Option<&'static str>) -> Reply {
     match intent {

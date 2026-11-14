@@ -17,11 +17,12 @@ import { updateWaiting, type Later } from "../whats-new/whats-new";
  * whether Mochi stays blue and a click opens on the update. A per-install
  * convenience, so the webview's storage is enough: lost, Mochi is blue again.
  */
-const LATER_KEY = "nala.update.later";
+const LATER_KEY = "aira.update.later";
+const LEGACY_LATER_KEY = "nala.update.later";
 
 function readLater(): Later | null {
   try {
-    const raw = window.localStorage?.getItem(LATER_KEY);
+    const raw = window.localStorage?.getItem(LATER_KEY) ?? window.localStorage?.getItem(LEGACY_LATER_KEY);
     if (!raw) return null;
     const v = JSON.parse(raw) as Partial<Later>;
     return typeof v.version === "string" && typeof v.at === "number" ? { version: v.version, at: v.at } : null;

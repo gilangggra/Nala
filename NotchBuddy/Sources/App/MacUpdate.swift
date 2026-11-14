@@ -6,10 +6,10 @@ import Foundation
 // `vX.Y.Z` with a `Coucou.zip`; Windows, Linux and Android have their own prefixed tags.
 
 enum MacUpdate {
-    static let owner = "Louis-CFM"
-    static let repo = "coucou"
+    static let owner = "gilangggra"
+    static let repo = "Aira"
     static let releasesURL = URL(string: "https://api.github.com/repos/\(owner)/\(repo)/releases?per_page=20")!
-    /// What the downloaded app must be signed as: Coucou's bundle id, Louis's Developer ID team.
+    /// What the downloaded app must be signed as: Aira's bundle id.
     static let bundleId = "fr.louisraille.NotchBuddy"
     static let teamId = "256AUJ9555"
     static var codeRequirement: String {
@@ -33,7 +33,10 @@ enum MacUpdate {
             guard r["draft"] as? Bool != true, r["prerelease"] as? Bool != true,
                   let tag = r["tag_name"] as? String, let version = macVersion(tag),
                   let assets = r["assets"] as? [[String: Any]],
-                  let zip = assets.first(where: { $0["name"] as? String == "Coucou.zip" }),
+                  let zip = assets.first(where: {
+                      let name = $0["name"] as? String
+                      return name == "Aira.zip" || name == "Coucou.zip"
+                  }),
                   let s = zip["browser_download_url"] as? String, let url = URL(string: s),
                   let page = (r["html_url"] as? String).flatMap(URL.init(string:)) else { return nil }
             return Release(version: version, tag: tag, zipURL: url, size: (zip["size"] as? Int) ?? 0,
@@ -121,7 +124,9 @@ enum MacUpdate {
 
     /// The app in the zip is the one announced: right bundle id, the release's version.
     static func matches(infoPlist: [String: Any], version: String) -> Bool {
-        infoPlist["CFBundleIdentifier"] as? String == bundleId
-            && infoPlist["CFBundleShortVersionString"] as? String == version
+        let id = infoPlist["CFBundleIdentifier"] as? String
+        let v = infoPlist["CFBundleShortVersionString"] as? String
+        return (id == bundleId || id == "fr.louisraille.NotchBuddy" || id == "com.aira.mac")
+            && v == version
     }
 }

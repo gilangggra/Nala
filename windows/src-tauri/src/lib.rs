@@ -168,7 +168,7 @@ fn set_system_languages(app: AppHandle, languages: Vec<String>) {
 fn language_changed(app: &AppHandle) {
     tray::retitle(app);
     if let Some(window) = app.get_webview_window(HUB_LABEL) {
-        let _ = window.set_title("Nala");
+        let _ = window.set_title("Aira");
     }
     if flow::get(app).is_some_and(|f| {
         let p = &f.store.lock().unwrap().prefs;
@@ -778,7 +778,7 @@ fn create_settings_window(app: &AppHandle) {
     let url = settings_page_url(app);
     match WebviewWindowBuilder::new(app, HUB_LABEL, url)
         .additional_browser_args(BROWSER_ARGS)
-        .title("Nala")
+        .title("Aira")
         .inner_size(1100.0, 720.0)
         .min_inner_size(820.0, 560.0)
         .resizable(true)

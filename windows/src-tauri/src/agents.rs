@@ -17,12 +17,13 @@ use serde_json::{json, Map, Value};
 use crate::config_file::{self, FileEdit, Plan};
 use crate::{platform, settings};
 
-/// Marker that identifies a Nala (or legacy Coucou) entry: the relay's file name.
-const MARKER: &str = "nala-hook";
-const LEGACY_MARKER: &str = "coucou-hook";
+/// Marker that identifies an Aira (or legacy Nala/Coucou) entry: the relay's file name.
+const MARKER: &str = "aira-hook";
+const LEGACY_MARKER: &str = "nala-hook";
+const UPSTREAM_MARKER: &str = "coucou-hook";
 
 fn is_relay_marker(c: &str) -> bool {
-    c.contains(MARKER) || c.contains(LEGACY_MARKER)
+    c.contains(MARKER) || c.contains(LEGACY_MARKER) || c.contains(UPSTREAM_MARKER)
 }
 
 // ── The relay command line ────────────────────────────────────────────────────
@@ -374,7 +375,7 @@ fn apply_in(agent: Agent, home: &Path, relay: &Relay, install: bool, fingerprint
 // ── Shared JSON helpers ───────────────────────────────────────────────────────
 
 fn unexpected(what: &str) -> String {
-    crate::i18n::tf("{what} has an unexpected type — Nala has not touched it.", &[("what", what)])
+    crate::i18n::tf("{what} has an unexpected type — Aira has not touched it.", &[("what", what)])
 }
 
 /// `root[key]` as an object to edit: absent is empty, anything else is refused.
@@ -559,7 +560,7 @@ fn antigravity_is_ours(group: &Value) -> bool {
 fn antigravity_install(root: &Value, block: &Value) -> Result<Value, String> {
     let mut root = root.as_object().cloned().unwrap_or_default();
     if root.get("coucou").is_some_and(|g| !antigravity_is_ours(g)) {
-        return Err(crate::i18n::t("A hook group named \"coucou\" that Nala did not write is already there — Nala has not touched it."));
+        return Err(crate::i18n::t("A hook group named \"coucou\" that Aira did not write is already there — Aira has not touched it."));
     }
     root.insert("coucou".into(), block.clone());
     Ok(Value::Object(root))
@@ -757,7 +758,7 @@ fn plugin_edit(path: PathBuf, content: String, install: bool) -> FileEdit<'stati
     let name = label.clone();
     let edit = config_file::text_edit(label, move |current| match (install, current) {
         (_, Some(text)) if !is_our_plugin(text) => {
-            Err(crate::i18n::tf("{name} wasn't written by Nala — Nala has not touched it.", &[("name", &name.to_string())]))
+            Err(crate::i18n::tf("{name} wasn't written by Aira — Aira has not touched it.", &[("name", &name.to_string())]))
         }
         (true, _) => Ok(Some(content.clone())),
         (false, _) => Ok(None),
@@ -1039,15 +1040,15 @@ mod tests {
     use crate::config_file::tests::scratch;
 
     fn linux() -> Relay {
-        Relay { exe: "/home/me/.local/share/nala/bin/nala-hook".into(), windows: false }
+        Relay { exe: "/home/me/.local/share/aira/bin/aira-hook".into(), windows: false }
     }
 
     fn windows(exe: &str) -> Relay {
         Relay { exe: exe.into(), windows: true }
     }
 
-    const WIN: &str = r"C:\Users\me\AppData\Local\Nala\bin\nala-hook.exe";
-    const WIN_SPACE: &str = r"C:\Users\Jane O'Neil\AppData\Local\Nala\bin\nala-hook.exe";
+    const WIN: &str = r"C:\Users\me\AppData\Local\Aira\bin\aira-hook.exe";
+    const WIN_SPACE: &str = r"C:\Users\Jane O'Neil\AppData\Local\Aira\bin\aira-hook.exe";
 
     /// Installs then uninstalls `agent` in a fresh home holding `existing` in
     /// its first file, and returns (installed file, uninstalled file).
@@ -1083,12 +1084,12 @@ mod tests {
     fn the_command_is_quoted_for_the_shell_that_runs_it() {
         assert_eq!(
             linux().command(Shell::Cmd, "--agent codex"),
-            "'/home/me/.local/share/nala/bin/nala-hook' --agent codex"
+            "'/home/me/.local/share/aira/bin/aira-hook' --agent codex"
         );
         let w = windows(WIN);
         assert_eq!(
             w.command(Shell::Sh, "Stop"),
-            "\"C:/Users/me/AppData/Local/Nala/bin/nala-hook.exe\" Stop"
+            "\"C:/Users/me/AppData/Local/Aira/bin/aira-hook.exe\" Stop"
         );
         assert_eq!(
             w.command(Shell::PowerShell, "--agent gemini Stop"),
@@ -1101,7 +1102,7 @@ mod tests {
         assert_eq!(spaced.command(Shell::Cmd, "x"), format!("\"{WIN_SPACE}\" x"));
         assert_eq!(
             spaced.command(Shell::PowerShell, "x"),
-            r"& 'C:\Users\Jane O''Neil\AppData\Local\Nala\bin\nala-hook.exe' x"
+            r"& 'C:\Users\Jane O''Neil\AppData\Local\Aira\bin\aira-hook.exe' x"
         );
     }
 
@@ -1286,7 +1287,7 @@ mod tests {
         assert_eq!(entry["powershell"], format!("& '{WIN}' --agent copilot preToolUse"));
         assert_eq!(
             entry["bash"],
-            "\"C:/Users/me/AppData/Local/Nala/bin/nala-hook.exe\" --agent copilot preToolUse"
+            "\"C:/Users/me/AppData/Local/Aira/bin/aira-hook.exe\" --agent copilot preToolUse"
         );
     }
 
@@ -1325,7 +1326,7 @@ mod tests {
             let main = std::fs::read_to_string(&agent.files(&home)[0]).unwrap();
             // The relay itself, at this machine's path, as a string literal: no
             // shell, no macOS path.
-            assert!(main.contains(r#""/home/me/.local/share/nala/bin/nala-hook""#), "{agent:?}");
+            assert!(main.contains(r#""/home/me/.local/share/aira/bin/aira-hook""#), "{agent:?}");
             assert!(!main.contains("/bin/sh") && !main.contains("nb-hook"), "{agent:?}");
             assert!(main.contains(&format!("'--agent', '{}'", agent.id())), "{agent:?}");
             // Never a verdict for the agent.
@@ -1368,7 +1369,7 @@ mod tests {
         std::fs::write(&file, "export const Mine = async () => ({});\n").unwrap();
         for install in [true, false] {
             let err = config_file::preview(&Agent::OpenCode.edits(&home, &linux(), install)).unwrap_err();
-            assert!(err.contains("wasn't written by Nala") || err.contains("wasn't written by Coucou"), "{err}");
+            assert!(err.contains("wasn't written by Aira") || err.contains("wasn't written by Nala") || err.contains("wasn't written by Coucou"), "{err}");
         }
         assert_eq!(std::fs::read_to_string(&file).unwrap(), "export const Mine = async () => ({});\n");
         let _ = std::fs::remove_dir_all(home);

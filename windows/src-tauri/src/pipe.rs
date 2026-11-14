@@ -65,12 +65,12 @@ pub struct Pending(pub Mutex<HashMap<String, mpsc::Sender<Reply>>>);
 
 static COUNTER: AtomicU64 = AtomicU64::new(1);
 
-/// `\\.\pipe\nala-<sid>` — must match coucou-hook's `pipe_path()` exactly.
+/// `\\.\pipe\aira-<sid>` — must match aira-hook's `pipe_path()` exactly.
 #[cfg(windows)]
 pub fn pipe_name() -> String {
     let key = crate::platform::current_user_sid()
         .unwrap_or_else(|| std::env::var("USERNAME").unwrap_or_else(|_| "user".into()));
-    format!(r"\\.\pipe\nala-{key}")
+    format!(r"\\.\pipe\aira-{key}")
 }
 
 #[cfg(windows)]

@@ -44,7 +44,7 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npm test
-      - run: cargo build --release -p nala-hook
+      - run: cargo build --release -p aira-hook
       - run: cargo test --workspace --locked
 
   interop:
@@ -68,7 +68,7 @@ jobs:
       - name: Rust tests (Linux)
         working-directory: windows
         run: |
-          cargo build --release -p nala-hook
+          cargo build --release -p aira-hook
           cargo test --workspace --locked
       - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: '17' }
@@ -76,6 +76,7 @@ jobs:
       - name: Kotlin client against the Rust desktop
         working-directory: android
         env:
+          AIRA_RUST_INTEROP: '1'
           NALA_RUST_INTEROP: '1'
           COUCOU_RUST_INTEROP: '1'
         run: ./gradlew testDebugUnitTest --tests '*RustDesktopInteropTest' --console=plain
@@ -128,7 +129,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - name: The hook binary the Tauri build expects (a cold cache does not have it)
         working-directory: windows
-        run: cargo build --release -p nala-hook
+        run: cargo build --release -p aira-hook
       - name: End to end through the Worker (workerd)
         env: { WRANGLER_SEND_METRICS: "false" }
         run: android/relay/tools/e2e.sh worker
@@ -155,6 +156,7 @@ jobs:
         run: npm ci
       - name: Tests, debug build, lint
         env:
+          AIRA_NODE_RELAY: '1'
           NALA_NODE_RELAY: '1'
           COUCOU_NODE_RELAY: '1'
         run: ./gradlew test assembleDebug lint --console=plain

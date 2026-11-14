@@ -83,7 +83,7 @@ enum AndroidLinkTests {
     static func pairing(_ P: AndroidLinkProtocol.Type) {
         let link = P.pairingLink(host: "192.168.1.20", port: 47821, fingerprint: String(repeating: "ab", count: 32),
                                  token: "tok_en-1234567890abcd", name: "Léa's PC & co")
-        check(link == "nala://pair?v=1&host=192.168.1.20&port=47821&fp=\(String(repeating: "ab", count: 32))&token=tok_en-1234567890abcd&name=L%C3%A9a%27s%20PC%20%26%20co",
+        check(link == "aira://pair?v=1&host=192.168.1.20&port=47821&fp=\(String(repeating: "ab", count: 32))&token=tok_en-1234567890abcd&name=L%C3%A9a%27s%20PC%20%26%20co",
               "pairing link vector (pairing.rs)")
         check(P.isToken(String(repeating: "a", count: 16)), "16 chars")
         check(P.isToken(String(repeating: "A-_9", count: 32)), "128 chars of the alphabet")
@@ -108,9 +108,9 @@ enum AndroidLinkTests {
         check(P.fingerprintId("abcd") == nil && P.fingerprintId("") == nil, "too short")
         check(P.txtRecord(fingerprint: fp) == ["v": "1", "fp": "ab12cd34ef56ab78"], "TXT: v and fp, nothing else")
         check(P.txtRecord(fingerprint: "not a fingerprint") == nil, "no TXT without a fingerprint")
-        check(P.serviceType == "_nala._tcp", "service type")
+        check(P.serviceType == "_aira._tcp", "service type")
         check(P.instanceName("Rhytam's Mac") == "Rhytam's Mac", "instance is the name")
-        check(P.instanceName("   ") == "Nala", "empty name")
+        check(P.instanceName("   ") == "Aira", "empty name")
         check(P.instanceName(String(repeating: "x", count: 100)).count == 48, "name cut at 48")
     }
 

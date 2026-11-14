@@ -60,7 +60,8 @@ export function closePlanCard(): void {
 
 // ── Claude numbers ────────────────────────────────────────────────────────────
 
-const STORE_KEY = "nala.claudePlanUsage";
+const STORE_KEY = "aira.claudePlanUsage";
+const LEGACY_STORE_KEY = "nala.claudePlanUsage";
 
 /** New numbers from the status line; kept so they survive a restart, as on the Mac. */
 export function setClaudePlanUsage(usage: PlanUsage): void {
@@ -82,7 +83,7 @@ export function setClaudePlanUsage(usage: PlanUsage): void {
 /** The last numbers seen, if any were kept. */
 export function storedClaudePlanUsage(): string | null {
   try {
-    return window.localStorage?.getItem(STORE_KEY) ?? null;
+    return window.localStorage?.getItem(STORE_KEY) ?? window.localStorage?.getItem(LEGACY_STORE_KEY) ?? null;
   } catch {
     return null;
   }

@@ -42,17 +42,26 @@ enum PhoneSettings {
 /// Notification categories and their actions.
 enum NotificationActions {
     // Approvals: Allow and Deny answer right there (iOS asks to unlock first).
-    static let approvalCategory = "COUCOU_APPROVAL"
-    static let allow = "COUCOU_ALLOW"
-    static let review = "COUCOU_REVIEW"
-    static let deny = "COUCOU_DENY"
+    static let approvalCategory = "AIRA_APPROVAL"
+    static let legacyApprovalCategory = "COUCOU_APPROVAL"
+    static let allow = "AIRA_ALLOW"
+    static let legacyAllow = "COUCOU_ALLOW"
+    static let review = "AIRA_REVIEW"
+    static let legacyReview = "COUCOU_REVIEW"
+    static let deny = "AIRA_DENY"
+    static let legacyDeny = "COUCOU_DENY"
     // An agent finished: reply with the next instruction.
-    static let doneReplyCategory = "COUCOU_DONE_REPLY"
-    static let doneCategory = "COUCOU_DONE"
-    static let reply = "COUCOU_REPLY"
+    static let doneReplyCategory = "AIRA_DONE_REPLY"
+    static let legacyDoneReplyCategory = "COUCOU_DONE_REPLY"
+    static let doneCategory = "AIRA_DONE"
+    static let legacyDoneCategory = "COUCOU_DONE"
+    static let reply = "AIRA_REPLY"
+    static let legacyReply = "COUCOU_REPLY"
     // A question: one button per choice when it is a single question.
-    static let questionCategory = "COUCOU_QUESTION"
-    static let pickPrefix = "COUCOU_PICK_"
+    static let questionCategory = "AIRA_QUESTION"
+    static let legacyQuestionCategory = "COUCOU_QUESTION"
+    static let pickPrefix = "AIRA_PICK_"
+    static let legacyPickPrefix = "COUCOU_PICK_"
 
     /// Categories made for the latest questions, kept next to the fixed ones.
     @MainActor private static var questionCategories: [UNNotificationCategory] = []
@@ -67,25 +76,36 @@ enum NotificationActions {
                                         options: [.destructive, .authenticationRequired])
         let approval = UNNotificationCategory(identifier: approvalCategory, actions: [allow, review, deny],
                                               intentIdentifiers: [], options: [])
-        let reply = UNTextInputNotificationAction(identifier: reply, title: "Reply",
+
+        // Legacy approval category for backwards compatibility
+        let legacyApproval = UNNotificationCategory(identifier: legacyApprovalCategory, actions: [allow, review, deny],
+                                                    intentIdentifiers: [], options: [])
+
+        let replyAction = UNTextInputNotificationAction(identifier: reply, title: "Reply",
                                                   options: [.authenticationRequired],
                                                   icon: UNNotificationActionIcon(systemImageName: "arrowshape.turn.up.left"),
                                                   textInputButtonTitle: "Send",
                                                   textInputPlaceholder: "Tell Claude what to do next…")
-        let doneReply = UNNotificationCategory(identifier: doneReplyCategory, actions: [reply],
+        let doneReply = UNNotificationCategory(identifier: doneReplyCategory, actions: [replyAction],
                                                intentIdentifiers: [], options: [])
+        let legacyDoneReply = UNNotificationCategory(identifier: legacyDoneReplyCategory, actions: [replyAction],
+                                                     intentIdentifiers: [], options: [])
         let done = UNNotificationCategory(identifier: doneCategory, actions: [], intentIdentifiers: [], options: [])
+        let legacyDone = UNNotificationCategory(identifier: legacyDoneCategory, actions: [], intentIdentifiers: [], options: [])
         let question = UNNotificationCategory(identifier: questionCategory, actions: [],
                                               intentIdentifiers: [], options: [])
+        let legacyQuestion = UNNotificationCategory(identifier: legacyQuestionCategory, actions: [],
+                                                    intentIdentifiers: [], options: [])
+
         UNUserNotificationCenter.current().setNotificationCategories(
-            Set([approval, doneReply, done, question] + questionCategories))
+            Set([approval, legacyApproval, doneReply, legacyDoneReply, done, legacyDone, question, legacyQuestion] + questionCategories))
     }
 
     /// A category with one button per choice of this question; nil when it
     /// has several questions or allows several picks (answered in the app).
     @MainActor static func category(for payload: QuestionPayload) -> String? {
         guard payload.items.count == 1, let item = payload.items.first, !item.multiSelect else { return nil }
-        let id = "COUCOU_Q_\(payload.fingerprint.prefix(16))"
+        let id = "AIRA_Q_\(payload.fingerprint.prefix(16))"
         let actions = item.options.prefix(4).enumerated().map { index, option in
             UNNotificationAction(identifier: "\(pickPrefix)\(index)", title: option.label,
                                  options: [.authenticationRequired])

@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="NotchBuddy/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="96" alt="Nala icon">
+<img src="NotchBuddy/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="96" alt="Aira icon">
 
-# Nala
+# Aira
 
 **The intelligent notch companion & dynamic island for AI coding agents.**  
 *Available on macOS, Windows, Linux, iOS, and Android.*
@@ -11,18 +11,18 @@ Approve permissions, monitor agent sessions in real-time, inspect diffs, drop fi
 
 Hold a key anywhere to dictate with offline AI speech recognition, or record meeting calls locally to get automated transcripts, summaries, and action items — free, open-source, and private.
 
-[![Releases](https://img.shields.io/github/v/release/gilangggra/Nala?label=release&color=0A84FF)](https://github.com/gilangggra/Nala/releases)
+[![Releases](https://img.shields.io/github/v/release/gilangggra/Aira?label=release&color=0A84FF)](https://github.com/gilangggra/Aira/releases)
 ![macOS](https://img.shields.io/badge/macOS-15%2B-black?logo=apple)
 ![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4?logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-AppImage%20%7C%20deb%20%7C%20rpm-FCC624?logo=linux&logoColor=black)
 ![iOS](https://img.shields.io/badge/iOS-18%2B-black?logo=apple)
 ![Android](https://img.shields.io/badge/Android-11%2B-3DDC84?logo=android&logoColor=white)
 ![Code: MIT](https://img.shields.io/badge/code-MIT-green)
-![GitHub stars](https://img.shields.io/github/stars/gilangggra/Nala?style=social)
+![GitHub stars](https://img.shields.io/github/stars/gilangggra/Aira?style=social)
 
 <br>
 
-<img src="docs/media/demo.gif" width="760" alt="Nala in action">
+<img src="docs/media/demo.gif" width="760" alt="Aira in action">
 
 </div>
 
@@ -30,13 +30,13 @@ Hold a key anywhere to dictate with offline AI speech recognition, or record mee
 
 ## 📑 Table of Contents
 
-- [Why Nala?](#why-nala)
+- [Why Aira?](#why-aira)
 - [Meet Mochi](#meet-mochi)
 - [Flow: Voice Dictation & Call Notetaker](#flow-voice-dictation--call-notetaker)
 - [Core Features](#core-features)
 - [Mobile Companions](#mobile-companions)
-  - [Nala on iPhone](#nala-on-iphone)
-  - [Nala for Android](#nala-for-android)
+  - [Aira on iPhone](#aira-on-iphone)
+  - [Aira for Android](#aira-for-android)
 - [Interactive Gestures](#interactive-gestures)
 - [Demo Mode](#demo-mode)
 - [Installation](#installation)
@@ -57,13 +57,13 @@ Hold a key anywhere to dictate with offline AI speech recognition, or record mee
 
 ---
 
-## Why Nala?
+## Why Aira?
 
 Some studios showed off gorgeous notch companions… and never let anyone use them.
 
-**Nala is the open-source alternative.** Every line of code is open source under the MIT License: read it, fork it, customize it, and learn from it.
+**Aira is the open-source alternative.** Every line of code is open source under the MIT License: read it, fork it, customize it, and learn from it.
 
-Developers spend their days interacting with autonomous AI coding agents like Claude Code, Codex, Cursor, Gemini CLI, and Antigravity. Constantly switching context to your terminal just to click "Allow" breaks your creative focus. Nala brings your agents into your peripheral vision through a native notch companion or smooth desktop island that lets you approve commands, watch progress, and take action with zero friction.
+Developers spend their days interacting with autonomous AI coding agents like Claude Code, Codex, Cursor, Gemini CLI, and Antigravity. Constantly switching context to your terminal just to click "Allow" breaks your creative focus. Aira brings your agents into your peripheral vision through a native notch companion or smooth desktop island that lets you approve commands, watch progress, and take action with zero friction.
 
 ---
 
@@ -81,10 +81,10 @@ Developers spend their days interacting with autonomous AI coding agents like Cl
 ## Flow: Voice Dictation & Call Notetaker
 
 <div align="center">
-<img src="docs/media/hub-dictation.png" width="760" alt="The Nala window: Dictation page">
+<img src="docs/media/hub-dictation.png" width="760" alt="The Aira window: Dictation page">
 </div>
 
-Nala includes a complete desktop voice suite built right in:
+Aira includes a complete desktop voice suite built right in:
 
 - 🎙️ **Flow Dictation** — Hold a hotkey anywhere on your system (Right ⌥, fn, Right Ctrl, etc.), speak naturally, and release: your words are instantly pasted into whichever app is active. Includes one-tap/double-tap hands-free mode, Esc to cancel, and clipboard preservation.
 - 💊 **Floating Pill** — A subtle, translucent pill resting on your screen edge. Hover to access quick actions: dictate, record, or open settings. Nine reactive dots dance to your voice as you speak.
@@ -116,7 +116,7 @@ Nala includes a complete desktop voice suite built right in:
 - 📎 **Drag-and-Drop Ingestion** — Drop any file onto Mochi to summarize it, ask questions, or attach it to an email. Drag Mochi onto an app window to include it as context.
 - 🔌 **Productivity Integrations** — Dedicated pills for GitHub (PRs, reviews, CI status), Stripe revenue, Vercel deployments, Resend, Notion, and Cal.com.
 - 🎵 **Media Controller** — Apple Music and Spotify pills with album artwork, interactive seek bars, and playback controls while Mochi dances along.
-- 🗣️ **« OK Nala » Voice Control** — Multilingual voice interaction (including Bahasa Indonesia, English, and French) for system control, querying service balances, controlling music, and drafting emails, with localized speech synthesis (`id-ID`, `en-US`, `fr-FR`) and ElevenLabs support.
+- 🗣️ **« OK Aira » Voice Control** — Multilingual voice interaction (including Bahasa Indonesia, English, and French) for system control, querying service balances, controlling music, and drafting emails, with localized speech synthesis (`id-ID`, `en-US`, `fr-FR`) and ElevenLabs support.
 - 🌍 **Internationalization** — Native localization in 16 languages, including English, 简体中文, 繁體中文, हिन्दी, Español, العربية, Français, বাংলা, Português, Русский, Bahasa Indonesia, Deutsch, Türkçe, ไทย, 한국어, and 日本語.
 - 🔒 **Zero Telemetry, Private by Design** — No user accounts, no tracking. Credentials stay in your OS Keychain, Windows Credential Manager, or Linux Secret Service.
 
@@ -124,9 +124,9 @@ Nala includes a complete desktop voice suite built right in:
 
 ## Mobile Companions
 
-### Nala on iPhone
+### Aira on iPhone
 
-When you step away from your desk, Nala transfers your active sessions to your iPhone:
+When you step away from your desk, Aira transfers your active sessions to your iPhone:
 
 <table>
 <tr>
@@ -149,7 +149,7 @@ When you step away from your desk, Nala transfers your active sessions to your i
 
 ---
 
-### Nala for Android
+### Aira for Android
 
 The native Android app brings Mochi and your agents to Android devices:
 
@@ -185,16 +185,16 @@ The native Android app brings Mochi and your agents to Android devices:
 | Drop a file onto the island | Transforms into a box and swallows the file |
 | Drag Mochi onto an app window *(macOS)* | Attaches window context to chat |
 | Click AI model name in chat | Switches AI provider or model |
-| Say « OK Nala » | Activates listening mode |
+| Say « OK Aira » | Activates listening mode |
 | Hold dictation hotkey and speak | Transcribes voice and pastes into active app |
 
 ---
 
 ## Demo Mode
 
-Want to test Nala without setting up API keys or coding agents?
+Want to test Aira without setting up API keys or coding agents?
 
-Open **Settings → General → Demo** and click **Try demo mode**. Nala will run a fully interactive scripted preview showcasing:
+Open **Settings → General → Demo** and click **Try demo mode**. Aira will run a fully interactive scripted preview showcasing:
 - Live Claude Code session with real-time diffs and terminal steps.
 - Interactive permission requests and user question dialogs.
 - Pre-populated GitHub, Stripe, and Vercel integration pills.
@@ -211,65 +211,65 @@ No files, keys, or hooks are modified during demo mode.
 #### Homebrew (Recommended)
 
 ```bash
-brew tap gilangggra/nala https://github.com/gilangggra/Nala
-brew install --cask nala
+brew tap gilangggra/aira https://github.com/gilangggra/Aira
+brew install --cask aira
 ```
 
 To update in the future:
 ```bash
-brew upgrade --cask --greedy nala
+brew upgrade --cask --greedy aira
 ```
 
 #### Direct Download
 
-1. Download the latest `Nala.zip` from [GitHub Releases](https://github.com/gilangggra/Nala/releases).
-2. Unzip and drag `Nala.app` to your `/Applications` directory.
+1. Download the latest `Aira.zip` from [GitHub Releases](https://github.com/gilangggra/Aira/releases).
+2. Unzip and drag `Aira.app` to your `/Applications` directory.
 3. Launch the app and grant Accessibility/Microphone permissions when prompted for Flow dictation.
 
 ---
 
 ### Windows
 
-Download the latest installer from [GitHub Releases](https://github.com/gilangggra/Nala/releases):
+Download the latest installer from [GitHub Releases](https://github.com/gilangggra/Aira/releases):
 
-- **[Nala-Windows.msi](https://github.com/gilangggra/Nala/releases/download/windows-latest/Nala-Windows.msi)** — System-wide Windows Installer.
-- **[Nala-Windows-setup.exe](https://github.com/gilangggra/Nala/releases/download/windows-latest/Nala-Windows-setup.exe)** — Per-user installer (no administrative elevation needed).
+- **[Aira-Windows.msi](https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows.msi)** — System-wide Windows Installer.
+- **[Aira-Windows-setup.exe](https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows-setup.exe)** — Per-user installer (no administrative elevation needed).
 
 > [!NOTE]
-> **SmartScreen Prompt**: If Windows displays an "Unknown publisher" warning, click **More info** → **Run anyway**. Nala is open source and cleanly verified by Microsoft Defender.
+> **SmartScreen Prompt**: If Windows displays an "Unknown publisher" warning, click **More info** → **Run anyway**. Aira is open source and cleanly verified by Microsoft Defender.
 
 ---
 
 ### Linux
 
-Download the latest Linux packages from [GitHub Releases](https://github.com/gilangggra/Nala/releases):
+Download the latest Linux packages from [GitHub Releases](https://github.com/gilangggra/Aira/releases):
 
 - **AppImage (Universal)**:
   ```bash
-  chmod +x Nala-Linux-*.AppImage
-  ./Nala-Linux-*.AppImage
+  chmod +x Aira-Linux-*.AppImage
+  ./Aira-Linux-*.AppImage
   ```
 - **Debian / Ubuntu (.deb)**:
   ```bash
-  sudo apt install ./Nala-Linux-*.deb
+  sudo apt install ./Aira-Linux-*.deb
   ```
 - **Fedora / openSUSE (.rpm)**:
   ```bash
-  sudo dnf install ./Nala-Linux-*.rpm
+  sudo dnf install ./Aira-Linux-*.rpm
   ```
 - **Arch Linux**: Build using the included [PKGBUILD](linux/arch/PKGBUILD).
 
-On Wayland compositors supporting `gtk-layer-shell` (KDE Plasma, Hyprland, Sway, COSMIC), Nala docks seamlessly to the screen edge. On GNOME, it runs via XWayland as a top dock.
+On Wayland compositors supporting `gtk-layer-shell` (KDE Plasma, Hyprland, Sway, COSMIC), Aira docks seamlessly to the screen edge. On GNOME, it runs via XWayland as a top dock.
 
 ---
 
 ### NixOS
 
-Nala provides a native Nix flake for `x86_64-linux` and `aarch64-linux`.
+Aira provides a native Nix flake for `x86_64-linux` and `aarch64-linux`.
 
 **Run directly:**
 ```bash
-nix run github:gilangggra/Nala
+nix run github:gilangggra/Aira
 ```
 
 **Add to configuration.nix:**
@@ -277,16 +277,16 @@ nix run github:gilangggra/Nala
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nala.url = "github:gilangggra/Nala";
+    aira.url = "github:gilangggra/Aira";
   };
 
-  outputs = { nixpkgs, nala, ... }: {
+  outputs = { nixpkgs, aira, ... }: {
     nixosConfigurations.my-machine = nixpkgs.lib.nixosSystem {
       modules = [
         ./configuration.nix
         ({ pkgs, ... }: {
           environment.systemPackages = [
-            nala.packages.${pkgs.stdenv.hostPlatform.system}.default
+            aira.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
         })
       ];
@@ -300,7 +300,7 @@ nix run github:gilangggra/Nala
 ### iPhone
 
 1. Install [TestFlight](https://apps.apple.com/app/testflight/id899247664) from the App Store.
-2. [Join the Nala TestFlight Beta](https://testflight.apple.com/join/3GpeHv2b).
+2. [Join the Aira TestFlight Beta](https://testflight.apple.com/join/3GpeHv2b).
 3. On your Mac: Open **Settings → General → iPhone** and enable **Show my agent sessions on my iPhone**.
 4. Ensure both devices share the same iCloud Apple Account.
 
@@ -308,8 +308,8 @@ nix run github:gilangggra/Nala
 
 ### Android
 
-1. Download the latest signed `Nala-Android.apk` from [GitHub Releases](https://github.com/gilangggra/Nala/releases).
-2. On your computer: Open Nala **Settings → Android phone** and toggle **Phone link**.
+1. Download the latest signed `Aira-Android.apk` from [GitHub Releases](https://github.com/gilangggra/Aira/releases).
+2. On your computer: Open Aira **Settings → Android phone** and toggle **Phone link**.
 3. Scan the generated pairing QR code with the Android app on the same local Wi-Fi network.
 
 ---
@@ -320,8 +320,8 @@ nix run github:gilangggra/Nala
 Requires macOS 15+, Xcode 16+, and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 ```bash
 brew install xcodegen
-git clone https://github.com/gilangggra/Nala.git
-cd Nala/NotchBuddy
+git clone https://github.com/gilangggra/Aira.git
+cd Aira/NotchBuddy
 xcodegen
 open NotchBuddy.xcodeproj
 ```
@@ -329,8 +329,8 @@ open NotchBuddy.xcodeproj
 #### Windows (Tauri 2 + Rust)
 Requires [Rust](https://rustup.rs), Node.js 20+, and C++ Build Tools.
 ```powershell
-git clone https://github.com/gilangggra/Nala.git
-cd Nala/windows
+git clone https://github.com/gilangggra/Aira.git
+cd Aira/windows
 npm install
 npm run pack
 ```
@@ -342,8 +342,8 @@ sudo apt install build-essential pkg-config \
   libwebkit2gtk-4.1-dev libgtk-layer-shell-dev libayatana-appindicator3-dev \
   librsvg2-dev libssl-dev libdbus-1-dev patchelf \
   gstreamer1.0-plugins-base gstreamer1.0-plugins-good
-git clone https://github.com/gilangggra/Nala.git
-cd Nala/windows
+git clone https://github.com/gilangggra/Aira.git
+cd Aira/windows
 npm install
 npm run pack
 ```
@@ -351,8 +351,8 @@ npm run pack
 #### Android
 Requires JDK 17 and Android SDK (API 35).
 ```bash
-git clone https://github.com/gilangggra/Nala.git
-cd Nala/android
+git clone https://github.com/gilangggra/Aira.git
+cd Aira/android
 ./gradlew assembleDebug
 ```
 
@@ -377,7 +377,7 @@ Access the settings window via the Dock/menu bar on macOS (⌘,), or via the sys
 | **Services** | GitHub, Stripe, Vercel, Resend, Notion | Settings → Active pills |
 
 > [!TIP]
-> If Nala is closed, hook scripts exit immediately with zero latency. **Your CLI coding sessions are never blocked.**
+> If Aira is closed, hook scripts exit immediately with zero latency. **Your CLI coding sessions are never blocked.**
 
 ---
 
@@ -451,7 +451,7 @@ Messages are processed entirely in memory, verified with HMAC-SHA256, and never 
 
 Detailed release logs and change history are maintained in:
 - [CHANGELOG.md](CHANGELOG.md) — Complete human-readable changelog.
-- [GitHub Releases](https://github.com/gilangggra/Nala/releases) — Downloadable binary packages, hashes, and release notes.
+- [GitHub Releases](https://github.com/gilangggra/Aira/releases) — Downloadable binary packages, hashes, and release notes.
 
 ---
 
@@ -477,6 +477,6 @@ Created and maintained by **[Gilang Ramadan](https://github.com/gilangggra)**.
 
 <div align="center">
 
-**If Nala brightens your day, please consider giving the repository a ⭐!**
+**If Aira brightens your day, please consider giving the repository a ⭐!**
 
 </div>
