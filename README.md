@@ -1,482 +1,372 @@
 <div align="center">
 
-<img src="NotchBuddy/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="96" alt="Aira icon">
+<img src="docs/media/aira.png" width="112" alt="Aira Icon" style="border-radius: 26px; box-shadow: 0 12px 36px rgba(0,0,0,0.18);">
 
-# Aira
+# AIRA
 
-**The intelligent notch companion & dynamic island for AI coding agents.**  
-*Available on macOS, Windows, Linux, iOS, and Android.*
-
-Approve permissions, monitor agent sessions in real-time, inspect diffs, drop files, and chat with AI models — all without breaking your flow. Step away from your desk, and your companion seamlessly follows you to your phone with live updates, widgets, and biometric approvals.
-
-Hold a key anywhere to dictate with offline AI speech recognition, or record meeting calls locally to get automated transcripts, summaries, and action items — free, open-source, and private.
-
-[![Releases](https://img.shields.io/github/v/release/gilangggra/Aira?label=release&color=0A84FF)](https://github.com/gilangggra/Aira/releases)
-![macOS](https://img.shields.io/badge/macOS-15%2B-black?logo=apple)
-![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4?logo=windows&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-AppImage%20%7C%20deb%20%7C%20rpm-FCC624?logo=linux&logoColor=black)
-![iOS](https://img.shields.io/badge/iOS-18%2B-black?logo=apple)
-![Android](https://img.shields.io/badge/Android-11%2B-3DDC84?logo=android&logoColor=white)
-![Code: MIT](https://img.shields.io/badge/code-MIT-green)
-![GitHub stars](https://img.shields.io/github/stars/gilangggra/Aira?style=social)
+### The Ambient Intelligence Island & Mobile Relay for Autonomous AI Coding Agents
+**Keep agent diffs in your peripheral vision, approve actions remotely with biometrics, dictate offline, and stay in deep flow.**
 
 <br>
 
-<img src="docs/media/demo.gif" width="760" alt="Aira in action">
+[![Latest Release](https://img.shields.io/github/v/release/gilangggra/Aira?style=for-the-badge&color=0A84FF&label=Release)](https://github.com/gilangggra/Aira/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-34C759?style=for-the-badge)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/gilangggra/Aira?style=for-the-badge&color=F59E0B)](https://github.com/gilangggra/Aira)
+[![Offline Speech](https://img.shields.io/badge/Speech-100%25%20Offline-7C3AED?style=for-the-badge)](docs/VOICE.md)
+[![Privacy](https://img.shields.io/badge/Telemetry-Zero-111827?style=for-the-badge)](docs/privacy.html)
+
+<br>
+
+<p align="center">
+  <img src="docs/media/demo.gif" width="820" alt="Aira Ambient Island in Action" style="border-radius: 14px; box-shadow: 0 18px 48px rgba(0,0,0,0.28);">
+</p>
+
+<br>
+
+<table>
+  <tr>
+    <td align="center">
+      <b>🍎 macOS</b><br>
+      <code>brew tap gilangggra/aira https://github.com/gilangggra/Aira</code><br>
+      <code>brew install --cask aira</code>
+    </td>
+    <td align="center">
+      <b>🪟 Windows</b><br>
+      <a href="https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows-setup.exe"><b>Download Aira-Windows-setup.exe</b></a><br>
+      <sub>Per-user installer • Windows 10 & 11 (64-bit)</sub>
+    </td>
+    <td align="center">
+      <b>🐧 Linux</b><br>
+      <a href="https://github.com/gilangggra/Aira/releases"><b>Download AppImage / .deb / .rpm</b></a><br>
+      <sub>Wayland Layer-Shell & X11</sub>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+[✨ Overview](#-what-is-aira) •
+[🤖 Agent Hub](#-1-autonomous-coding-agent-hub) •
+[🍅 Airadoro](#-2-airadoro--smart-focus-companion) •
+[📱 Mobile Relay](#-3-mobile-biometric-handoff) •
+[🎙️ Flow Voice](#-4-flow-voice-suite--meeting-notetaker) •
+[🧸 Meet Mochi](#-5-meet-mochi--your-desktop-companion) •
+[🚀 Installation](#-installation--downloads)
 
 </div>
 
 ---
 
-## 📑 Table of Contents
+## 💡 What is Aira?
 
-- [Why Aira?](#why-aira)
-- [Meet Mochi](#meet-mochi)
-- [Flow: Voice Dictation & Call Notetaker](#flow-voice-dictation--call-notetaker)
-- [Core Features](#core-features)
-- [Mobile Companions](#mobile-companions)
-  - [Aira on iPhone](#aira-on-iphone)
-  - [Aira for Android](#aira-for-android)
-- [Interactive Gestures](#interactive-gestures)
-- [Demo Mode](#demo-mode)
-- [Installation](#installation)
-  - [macOS](#macos)
-  - [Windows](#windows)
-  - [Linux](#linux)
-  - [NixOS](#nixos)
-  - [iPhone](#iphone)
-  - [Android](#android)
-  - [Build from Source](#build-from-source)
-- [Setup & Hooks](#setup--hooks)
-  - [Supported Agents](#supported-agents)
-  - [WhatsApp Integration](#whatsapp-experimental)
-- [How It Works](#how-it-works)
-- [Release Notes](#release-notes)
-- [Contributing](#contributing)
-- [License](#license)
+Working with autonomous AI coding agents like **Claude Code, Antigravity (`agy`), Cursor, Codex, and Gemini CLI** is the future of development—but the context-switching is painful. Constantly flipping between IDE windows just to approve tool permissions, verify bash commands, or check progress fragments your focus.
+
+**Aira turns your hardware notch or desktop edge into an ambient intelligence center:**
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       AIRA SUITE                                       │
+└───────────┬───────────────────────────────┬────────────────────────────┬───────────────┘
+            │                               │                            │
+ ┌──────────▼──────────┐         ┌──────────▼──────────┐      ┌──────────▼──────────┐
+ │  🖥️ DESKTOP ISLAND   │         │   📱 MOBILE RELAY   │      │ 🎙️ FLOW & AIRADORO  │
+ ├─────────────────────┤         ├─────────────────────┤      ├─────────────────────┤
+ │ • Real-Time Diffs   │         │ • iPhone Dynamic Is.│      │ • Offline Whisper   │
+ │ • 1-Click Approvals │         │ • Android Island    │      │ • Parakeet Engine   │
+ │ • Jump to Terminal  │         │ • Face ID / Fingerp.│      │ • Meeting Notetaker │
+ │ • Mochi Mascot      │         │ • Encrypted P2P Sync│      │ • Pomodoro Timer    │
+ └─────────────────────┘         └─────────────────────┘      └─────────────────────┘
+```
+
+- **In Your Peripheral Vision**: Aira hugs your MacBook notch or hovers as a sleek transparent island on Windows and Linux. Watch code line additions (`+N / -M`) scroll by without interrupting your typing.
+- **Biometric Remote Handoff**: Grab a drink or take a walk while your agent handles long refactors. Aira sends approvals directly to your **iPhone** (Dynamic Island & Face ID) or **Android** phone (Fingerprint).
+- **Private Voice Superpowers**: Push a single hotkey to dictate anywhere on your OS with **Whisper Large-v3 Turbo** linked 100% locally. Zero telemetry, zero cloud fees, zero audio leaving your machine.
 
 ---
 
-## Why Aira?
+## 🤖 1. Autonomous Coding Agent Hub
 
-Some studios showed off gorgeous notch companions… and never let anyone use them.
-
-**Aira is the open-source alternative.** Every line of code is open source under the MIT License: read it, fork it, customize it, and learn from it.
-
-Developers spend their days interacting with autonomous AI coding agents like Claude Code, Codex, Cursor, Gemini CLI, and Antigravity. Constantly switching context to your terminal just to click "Allow" breaks your creative focus. Aira brings your agents into your peripheral vision through a native notch companion or smooth desktop island that lets you approve commands, watch progress, and take action with zero friction.
-
----
-
-## Meet Mochi
-
-**Mochi** is your desktop companion: a soft little squircle with big, curious eyes that lives in your notch (or slides out from the top of your screen on Windows and Linux).
-
-- 👋 **Alive and responsive** — waves hello on launch, blinks, breathes, and follows your cursor across the display.
-- 🎯 **Agent-aware** — celebrates when your agent finishes a task, gets dizzy when clicked repeatedly, and raises alerts when input is needed.
-- 🖥️ **Desktop freedom** — drag Mochi out of the notch to float anywhere on your desktop as an interactive desktop pet.
-- 👗 **Wardrobe & themes** — customize Mochi's appearance with outfits, accessories, and seasonal costumes.
-
----
-
-## Flow: Voice Dictation & Call Notetaker
+Aira hooks directly into your terminal tools using lightning-fast local sockets and named pipes:
 
 <div align="center">
-<img src="docs/media/hub-dictation.png" width="760" alt="The Aira window: Dictation page">
+  <table>
+    <tr>
+      <td width="55%" align="center">
+        <b>Live Agent Session Tracking</b><br>
+        <img src="docs/media/claude-code.png" alt="Claude Code Live Session" style="border-radius: 10px; margin-top: 6px;"><br>
+        <sub>Real-time diff tracking, active step indicators, and progress meters.</sub>
+      </td>
+      <td width="45%" align="center">
+        <b>1-Click Approvals & Questions</b><br>
+        <img src="design/captures/04_approval.png" alt="Tool Permission Approval" style="border-radius: 10px; margin-top: 6px;"><br>
+        <img src="design/captures/05_question.png" alt="Interactive CLI Questions" style="border-radius: 10px; margin-top: 8px;"><br>
+        <sub>Approve bash commands or answer multi-select choices without touching the terminal.</sub>
+      </td>
+    </tr>
+  </table>
 </div>
 
-Aira includes a complete desktop voice suite built right in:
+- **Instant 1-Click Permissions**: Authorize tool executions with **Allow**, **Deny**, or **Always** directly from the island.
+- **Interactive Multi-Choice Dialogs**: Answer agent questions (`AskUserQuestion`) with clickable single and multi-select options.
+- **Jump to Active Terminal**: Click the terminal badge next to any agent to immediately bring the exact terminal window and working directory to the foreground.
+- **Subscription Tunneling**: Send AI chat queries through the official CLI tools you already pay for (Claude Code, Antigravity, Codex) without maintaining separate API keys or paying extra per-token fees.
 
-- 🎙️ **Flow Dictation** — Hold a hotkey anywhere on your system (Right ⌥, fn, Right Ctrl, etc.), speak naturally, and release: your words are instantly pasted into whichever app is active. Includes one-tap/double-tap hands-free mode, Esc to cancel, and clipboard preservation.
-- 💊 **Floating Pill** — A subtle, translucent pill resting on your screen edge. Hover to access quick actions: dictate, record, or open settings. Nine reactive dots dance to your voice as you speak.
-- 🦜 **Dual Offline Speech Engines (Whisper Large-v3 Turbo & Parakeet)** — Run **OpenAI Whisper Large-v3 Turbo (INT8)** for high-accuracy Bahasa Indonesia and 99+ multilingual support, or **NVIDIA Parakeet TDT** across 25 Western languages — 100% locally on your device via `sherpa-onnx` and neural hardware acceleration with zero audio ever leaving your machine.
-- ✍️ **Intelligent Text Polishing** — Configure a custom dictionary of names and technical terms, define snippet expansions, and optionally polish text with AI (as said, natural, or professional).
-- 📝 **Private Call Notetaker** — Record your microphone and computer audio with zero awkward third-party meeting bots. Generates speaker-separated transcripts, summaries, and actionable to-do lists locally or via your preferred AI provider. Audio is deleted once the transcript is complete.
-- 📊 **Local Analytics** — Track dictated word counts, time saved, typing speed (WPM), and app usage — all calculated locally and never synced externally.
+---
+
+## 🍅 2. Airadoro — Smart Focus Companion
+
+High-intensity AI coding sessions require rhythm and intentional rest. **Airadoro** embeds an ergonomic Pomodoro timer right inside the island:
+
+<div align="center">
+  <img src="docs/media/hub-settings.png" width="720" alt="Airadoro Settings" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);">
+</div>
+
+- **Dual Work & Rest Cycles**: Configurable intervals (default 25 min work, 5 min rest) adjustable from 1 to 60 minutes in Settings.
+- **Zero-Drift Timestamp Engine**: Calculates deadlines via `Date.now() + remainingMs`. Time never drifts or loses accuracy even when your laptop sleeps or background threads throttle.
+- **Non-Intrusive Presence**: When collapsed, remaining time rests gently next to your agent status pill.
+- **Auto-Surfacing & Ambient Chimes**: Plays subtle harmonic chimes and gently expands the island when work ends so you take well-deserved breaks.
+
+---
+
+## 📱 3. Mobile Biometric Handoff
+
+Never let an autonomous agent stall waiting for permissions while you are away from your desk:
 
 <table>
-<tr>
-<td width="33%"><img src="docs/media/hub-statistics.png" alt="Statistics: words dictated, time saved, speed, words per day"></td>
-<td width="33%"><img src="docs/media/hub-styles.png" alt="Styles: AI text clean-up per app"></td>
-<td width="33%"><img src="docs/media/hub-settings.png" alt="Settings: hotkey, positioning, hands-free"></td>
-</tr>
+  <tr>
+    <th width="50%"><h3>🍎 Aira on iPhone (iOS 18+)</h3></th>
+    <th width="50%"><h3>🤖 Aira for Android (Android 11+)</h3></th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/media/iphone-live-activity.jpg" width="320" alt="iPhone Live Activity" style="border-radius: 14px;"><br><br>
+      <img src="docs/media/iphone-approval.jpg" width="155" alt="Face ID Approval">
+      <img src="docs/media/iphone-session.jpg" width="155" alt="iPhone Session Screen">
+    </td>
+    <td align="center">
+      <img src="docs/media/android-island.jpg" width="320" alt="Android Island" style="border-radius: 14px;"><br><br>
+      <img src="docs/media/android-allow-deny.jpg" width="155" alt="Android Fingerprint Approval">
+      <img src="docs/media/android-home.jpg" width="155" alt="Android Custom Widgets">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li>🏝️ <b>Dynamic Island & Live Activities</b>: Stream real-time agent output right on your Lock Screen.</li>
+        <li>🔐 <b>Face ID Approvals</b>: Approve bash execution with a simple biometric glance.</li>
+        <li>☁️ <b>End-to-End iCloud Sync</b>: Synchronizes privately through your personal CloudKit database.</li>
+        <li>🧩 <b>Home Screen Widgets & Siri</b>: Follow status and trigger actions with Siri voice commands.</li>
+      </ul>
+      <p align="center"><a href="docs/IPHONE.md"><b>Read iPhone Documentation →</b></a></p>
+    </td>
+    <td>
+      <ul>
+        <li>🏝️ <b>Camera Punch-Hole Island</b>: Dynamic floating overlay docked to your front camera hole.</li>
+        <li>🔐 <b>Biometric Approvals</b>: Fingerprint confirmation over any app or lock screen.</li>
+        <li>📶 <b>Local Wi-Fi Pairing</b>: Offline direct pairing with TLS pinned certificates.</li>
+        <li>🧩 <b>9 Custom Widgets</b>: Agent meters, plan usage gauges, and quick action buttons.</li>
+      </ul>
+      <p align="center"><a href="android/README.md"><b>Read Android Documentation →</b></a></p>
+    </td>
+  </tr>
 </table>
 
 ---
 
-## Core Features
+## 🎙️ 4. Flow Voice Suite & Meeting Notetaker
 
-- 🤖 **Universal Coding Agent Hub** — Live monitoring for **Claude Code, Cursor, Codex, Gemini CLI, Antigravity, Copilot CLI, Muse Code, OpenCode, Amp, Hermes, Claude Desktop**, and custom agents. Watch file edits step-by-step with real-time `+N / -M` line counts and diffs.
-- ✅ **One-Click Approvals** — Claude Code permission prompts display directly in the island with **Allow / Deny / Always**. Interactive `AskUserQuestion` prompts support single and multi-select choices right from the notch.
-- 🧑‍💻 **Jump to Terminal** — Instantly bring the exact terminal window running your active session to the front.
-- 💬 **Multi-Model AI Chat** — Chat with Claude, Gemini, OpenAI, DeepSeek, Qwen, Moonshot, or local models via Ollama and LM Studio.
-- 💳 **Subscription Tunneling (No API Key Required)** — Route chat requests through the official CLI tools you already pay for (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Copilot) without needing individual paid API keys.
-- 📈 **Crypto Portfolio Pill** — Track assets across 16 blockchains and 5 major exchanges with live balances, 7-day sparklines, and 24-hour price deltas. Uses read-only public keys — completely private.
-- 📊 **Plan Usage Gauges** — Monitor your Claude and Codex rate limits and reset countdowns at a glance.
-- ✉️ **Integrated Mail** — Search inboxes, apply smart filters (Unread, Important, Today), and trigger AI-assisted email sorting and drafting (Apple Mail on macOS, classic Outlook on Windows).
-- 📎 **Drag-and-Drop Ingestion** — Drop any file onto Mochi to summarize it, ask questions, or attach it to an email. Drag Mochi onto an app window to include it as context.
-- 🔌 **Productivity Integrations** — Dedicated pills for GitHub (PRs, reviews, CI status), Stripe revenue, Vercel deployments, Resend, Notion, and Cal.com.
-- 🎵 **Media Controller** — Apple Music and Spotify pills with album artwork, interactive seek bars, and playback controls while Mochi dances along.
-- 🗣️ **« OK Aira » Voice Control** — Multilingual voice interaction (including Bahasa Indonesia, English, and French) for system control, querying service balances, controlling music, and drafting emails, with localized speech synthesis (`id-ID`, `en-US`, `fr-FR`) and ElevenLabs support.
-- 🌍 **Internationalization** — Native localization in 16 languages, including English, 简体中文, 繁體中文, हिन्दी, Español, العربية, Français, বাংলা, Português, Русский, Bahasa Indonesia, Deutsch, Türkçe, ไทย, 한국어, and 日本語.
-- 🔒 **Zero Telemetry, Private by Design** — No user accounts, no tracking. Credentials stay in your OS Keychain, Windows Credential Manager, or Linux Secret Service.
+Speak thoughts faster than you type. Aira includes a complete offline speech intelligence suite:
 
----
+<div align="center">
+  <img src="docs/media/hub-dictation.png" width="760" alt="Flow Dictation Suite" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);">
+</div>
 
-## Mobile Companions
-
-### Aira on iPhone
-
-When you step away from your desk, Aira transfers your active sessions to your iPhone:
+- **Global Push-to-Talk**: Hold your shortcut anywhere (`Right ⌥`, `fn`, or `Right Ctrl`), speak naturally, and release: words are instantly pasted into the active application.
+- **Dual Offline Speech Engines**:
+  - 🧠 **OpenAI Whisper Large-v3 Turbo (INT8)**: State-of-the-art accuracy across 99+ languages, including native Indonesian support.
+  - ⚡ **NVIDIA Parakeet TDT**: Sub-second latency speech-to-text across 25 Western languages.
+  - *100% on-device inference via `sherpa-onnx` and hardware acceleration. Audio never touches external servers.*
+- **Private Call Notetaker**: Record calls and conferences directly through your microphone and loopback audio without third-party meeting bots. Generates speaker-separated transcripts and action items locally.
+- **Context-Aware AI Formatting**: Automatically strips filler words ("um", "uh") and adjusts formatting based on the destination app (code comments, Slack chat, or professional email).
 
 <table>
-<tr>
-<td colspan="3" align="center"><img src="docs/media/iphone-live-activity.jpg" width="520" alt="Mochi on the Lock Screen, waiting for approval"></td>
-</tr>
-<tr>
-<td width="33%"><img src="docs/media/iphone-approval.jpg" alt="A permission request on iPhone, Allow with Face ID"></td>
-<td width="33%"><img src="docs/media/iphone-session.jpg" alt="A Claude Code session on iPhone"></td>
-<td width="33%"><img src="docs/media/iphone-widgets.jpg" alt="Home Screen widgets"></td>
-</tr>
-</table>
-
-- 🏝️ **Live Activities & Dynamic Island** — Locking your Mac transitions Mochi to your iPhone's Dynamic Island and Lock Screen.
-- 🔐 **Face ID Biometric Approvals** — Approve or deny agent execution with Face ID confirmation. Your Mac only executes decisions matching active requests.
-- 💬 **Live Session Control** — Inspect terminal diffs, answer questions, and submit follow-up prompts using text or voice.
-- 🧩 **Widgets & Siri Shortcuts** — Home Screen widgets, Control Center tiles, and full Siri integration.
-- 🔒 **End-to-End iCloud Sync** — Sessions sync privately through your personal CloudKit database with client-side encryption. No third-party servers involved.
-
-*Full iPhone guide and configuration: [docs/IPHONE.md](docs/IPHONE.md).*
-
----
-
-### Aira for Android
-
-The native Android app brings Mochi and your agents to Android devices:
-
-- 🔐 **Remote Biometric Approvals** — Permission requests appear over any screen or lock screen; approve with your fingerprint or device PIN.
-- 🏝️ **Floating Camera Island** — Dynamic overlay dropped from the camera punch-hole during active tasks, with a persistent quick-settings tile.
-- 🧩 **Custom Home Screen Widgets** — 9 distinct widgets providing agent status indicators, plan usage meters, and quick actions.
-- 🔒 **Direct Local Wi-Fi Pairing** — Connects directly to your computer over local Wi-Fi with QR pairing and pinned TLS certificates. Completely offline.
-
-*Full Android guide and setup: [android/README.md](android/README.md).*
-
-<table>
-<tr>
-<td><img src="docs/media/claude-code.png" alt="Claude Code session"></td>
-<td><img src="docs/media/stripe.png" alt="Stripe payments"></td>
-</tr>
-<tr>
-<td><img src="docs/media/chat.png" alt="Chat with Claude"></td>
-<td><img src="docs/media/dizzy.png" alt="Too many hits"></td>
-</tr>
+  <tr>
+    <td width="33%" align="center">
+      <img src="docs/media/hub-statistics.png" alt="Local Stats" style="border-radius: 8px;"><br>
+      <sub><b>Local Analytics</b>: Word count, speed (WPM), time saved.</sub>
+    </td>
+    <td width="33%" align="center">
+      <img src="docs/media/hub-styles.png" alt="App Styles" style="border-radius: 8px;"><br>
+      <sub><b>App-Specific Styles</b>: AI text cleaning adapted per app.</sub>
+    </td>
+    <td width="33%" align="center">
+      <img src="docs/media/hub-settings.png" alt="Settings" style="border-radius: 8px;"><br>
+      <sub><b>Hardware Tuning</b>: Model selector, hotkeys, mic gain.</sub>
+    </td>
+  </tr>
 </table>
 
 ---
 
-## Interactive Gestures
+## 🧸 5. Meet Mochi — Your Desktop Companion
 
-| Action | Mochi's Reaction |
-|---|---|
-| Hover the notch / top screen edge | Peeks out and waves 👋 |
-| Click the island | Expands overview panel |
-| Hover over Mochi | Blinks and eyes enlarge |
-| Click Mochi | Squishes with an annoyed emote |
-| Rapid triple-click | 😵‍💫 Becomes dizzy temporarily |
-| Drop a file onto the island | Transforms into a box and swallows the file |
-| Drag Mochi onto an app window *(macOS)* | Attaches window context to chat |
-| Click AI model name in chat | Switches AI provider or model |
-| Say « OK Aira » | Activates listening mode |
-| Hold dictation hotkey and speak | Transcribes voice and pastes into active app |
+Resting at the center of the island is **Mochi**—a charming squircle that brings your workstation to life:
+
+<div align="center">
+  <img src="design/outfits/mochi-outfits-reference.png" width="720" alt="Mochi Outfits and Emotes" style="border-radius: 12px; margin-bottom: 16px;">
+  
+  <table>
+    <tr>
+      <td align="center" width="33%">
+        <img src="design/captures/07_finished.png" width="220" alt="Task Finished"><br>
+        <sub><b>Celebrates Success</b>: Happy dances when agent tasks finish</sub>
+      </td>
+      <td align="center" width="33%">
+        <img src="docs/media/chat.png" width="220" alt="Chat Drawer"><br>
+        <sub><b>Contextual Chat</b>: Query models with open diff context</sub>
+      </td>
+      <td align="center" width="33%">
+        <img src="docs/media/dizzy.png" width="220" alt="Playful Reactions"><br>
+        <sub><b>Expressive Life</b>: Blinks, follows cursor, reacts to taps</sub>
+      </td>
+    </tr>
+  </table>
+</div>
+
+- **Reactive Mascot Physics**: Mochi's eyes follow your mouse cursor across screens, blinks naturally, and squishes when tapped.
+- **Detachable Desktop Pet**: Click and drag Mochi away from the notch to let him float anywhere on your desktop.
+- **Drop-and-Ask**: Drag any file onto Mochi to immediately summarize documents, inspect code, or attach files to active prompts.
 
 ---
 
-## Demo Mode
+## 🔌 Supported Agent Integrations
 
-Want to test Aira without setting up API keys or coding agents?
+Aira hooks into your developer environment with zero runtime latency:
 
-Open **Settings → General → Demo** and click **Try demo mode**. Aira will run a fully interactive scripted preview showcasing:
-- Live Claude Code session with real-time diffs and terminal steps.
-- Interactive permission requests and user question dialogs.
-- Pre-populated GitHub, Stripe, and Vercel integration pills.
-- Streamed AI chat responses and weekly recap visualizations.
-
-No files, keys, or hooks are modified during demo mode.
+| Agent / Tool | Capability | Supported OS | Setup Path |
+|---|---|---|---|
+| **Claude Code** | Live diffs, bash approvals & question prompts | macOS • Windows • Linux | Settings → Claude Code → **Install hooks** |
+| **Antigravity (`agy`)** | Island alerts, execution tracking & approvals | macOS • Windows • Linux | Settings → Antigravity → **Install hooks** |
+| **Cursor** | Automatic background hook detection | macOS • Windows • Linux | Automatically hooked on launch |
+| **Codex CLI** | Step-by-step diff tracking & approvals | macOS • Windows • Linux | Settings → Codex → **Install hooks** |
+| **Gemini CLI** | Session progress & execution monitoring | macOS • Windows • Linux | Settings → Gemini CLI → **Install hooks** |
+| **Copilot CLI** | Tool execution tracking | macOS • Windows • Linux | Run with `--agent copilot` |
+| **Custom Agents** | Open JSON relay socket / pipe | macOS • Windows • Linux | See [docs/AGENTS.md](docs/AGENTS.md) |
 
 ---
 
-## Installation
+## 🌐 Platform Support Matrix
+
+| Feature | macOS (15+) | Windows (10/11) | Linux (X11/Wayland) | iOS (18+) | Android (11+) |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Island Interface** | Hardware Notch | Floating Island | Layer-Shell / Island | Dynamic Island | Punch-Hole Island |
+| **Agent Monitoring & Diffs** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **1-Click Approvals** | ✅ | ✅ | ✅ | ✅ *(Face ID)* | ✅ *(Fingerprint)* |
+| **Airadoro Focus Timer** | ✅ | ✅ | ✅ | ✅ *(Widget)* | ✅ *(Widget)* |
+| **Flow Voice Dictation** | ✅ | ✅ | ✅ | — | — |
+| **Offline Speech Inference** | ✅ *(Whisper/Parakeet)* | ✅ *(Whisper/Parakeet)* | ✅ *(Whisper/Parakeet)* | — | — |
+| **Private Call Notetaker** | ✅ | ✅ | ✅ | — | — |
+| **Subscription Tunneling** | ✅ | ✅ | ✅ | — | — |
+| **Interactive Mochi Mascot** | Full Physics | Desktop Float | Desktop Float | Avatar | Avatar |
+
+---
+
+## 🚀 Installation & Downloads
 
 ### macOS
-
-#### Homebrew (Recommended)
+Requirements: macOS 15.0+ (Apple Silicon or Intel 64-bit)
 
 ```bash
+# Install via Homebrew Cask
 brew tap gilangggra/aira https://github.com/gilangggra/Aira
 brew install --cask aira
 ```
-
-To update in the future:
-```bash
-brew upgrade --cask --greedy aira
-```
-
-#### Direct Download
-
-1. Download the latest `Aira.zip` from [GitHub Releases](https://github.com/gilangggra/Aira/releases).
-2. Unzip and drag `Aira.app` to your `/Applications` directory.
-3. Launch the app and grant Accessibility/Microphone permissions when prompted for Flow dictation.
+*Or download `Aira.zip` from [GitHub Releases](https://github.com/gilangggra/Aira/releases).*
 
 ---
 
 ### Windows
+Requirements: Windows 10 / 11 (64-bit)
 
-Download the latest installer from [GitHub Releases](https://github.com/gilangggra/Aira/releases):
-
-- **[Aira-Windows.msi](https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows.msi)** — System-wide Windows Installer.
-- **[Aira-Windows-setup.exe](https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows-setup.exe)** — Per-user installer (no administrative elevation needed).
-
-> [!NOTE]
-> **SmartScreen Prompt**: If Windows displays an "Unknown publisher" warning, click **More info** → **Run anyway**. Aira is open source and cleanly verified by Microsoft Defender.
+- **[Aira-Windows-setup.exe](https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows-setup.exe)** — Portable / User-level installer (no administrator privileges needed).
+- **[Aira-Windows.msi](https://github.com/gilangggra/Aira/releases/download/windows-latest/Aira-Windows.msi)** — System-wide enterprise installer.
 
 ---
 
 ### Linux
-
-Download the latest Linux packages from [GitHub Releases](https://github.com/gilangggra/Aira/releases):
+Requirements: X11 or Wayland (supports `gtk-layer-shell` on KDE Plasma, Hyprland, Sway, COSMIC)
 
 - **AppImage (Universal)**:
   ```bash
-  chmod +x Aira-Linux-*.AppImage
-  ./Aira-Linux-*.AppImage
+  chmod +x Aira-Linux-*.AppImage && ./Aira-Linux-*.AppImage
   ```
-- **Debian / Ubuntu (.deb)**:
-  ```bash
-  sudo apt install ./Aira-Linux-*.deb
-  ```
-- **Fedora / openSUSE (.rpm)**:
-  ```bash
-  sudo dnf install ./Aira-Linux-*.rpm
-  ```
-- **Arch Linux**: Build using the included [PKGBUILD](linux/arch/PKGBUILD).
-
-On Wayland compositors supporting `gtk-layer-shell` (KDE Plasma, Hyprland, Sway, COSMIC), Aira docks seamlessly to the screen edge. On GNOME, it runs via XWayland as a top dock.
+- **Debian / Ubuntu**: `sudo apt install ./Aira-Linux-*.deb`
+- **Fedora / openSUSE**: `sudo dnf install ./Aira-Linux-*.rpm`
+- **NixOS**: Run directly via `nix run github:gilangggra/Aira`
 
 ---
 
-### NixOS
-
-Aira provides a native Nix flake for `x86_64-linux` and `aarch64-linux`.
-
-**Run directly:**
-```bash
-nix run github:gilangggra/Aira
-```
-
-**Add to configuration.nix:**
-```nix
-{
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    aira.url = "github:gilangggra/Aira";
-  };
-
-  outputs = { nixpkgs, aira, ... }: {
-    nixosConfigurations.my-machine = nixpkgs.lib.nixosSystem {
-      modules = [
-        ./configuration.nix
-        ({ pkgs, ... }: {
-          environment.systemPackages = [
-            aira.packages.${pkgs.stdenv.hostPlatform.system}.default
-          ];
-        })
-      ];
-    };
-  };
-}
-```
+### Mobile Apps
+- **iPhone (iOS 18+)**: Join the [TestFlight Public Beta](https://testflight.apple.com/join/3GpeHv2b).
+- **Android (11+)**: Download `Aira-Android.apk` from [GitHub Releases](https://github.com/gilangggra/Aira/releases).
 
 ---
 
-### iPhone
-
-1. Install [TestFlight](https://apps.apple.com/app/testflight/id899247664) from the App Store.
-2. [Join the Aira TestFlight Beta](https://testflight.apple.com/join/3GpeHv2b).
-3. On your Mac: Open **Settings → General → iPhone** and enable **Show my agent sessions on my iPhone**.
-4. Ensure both devices share the same iCloud Apple Account.
-
----
-
-### Android
-
-1. Download the latest signed `Aira-Android.apk` from [GitHub Releases](https://github.com/gilangggra/Aira/releases).
-2. On your computer: Open Aira **Settings → Android phone** and toggle **Phone link**.
-3. Scan the generated pairing QR code with the Android app on the same local Wi-Fi network.
-
----
-
-### Build from Source
-
-#### macOS (XcodeGen)
-Requires macOS 15+, Xcode 16+, and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
-```bash
-brew install xcodegen
-git clone https://github.com/gilangggra/Aira.git
-cd Aira/NotchBuddy
-xcodegen
-open NotchBuddy.xcodeproj
-```
-
-#### Windows (Tauri 2 + Rust)
-Requires [Rust](https://rustup.rs), Node.js 20+, and C++ Build Tools.
-```powershell
-git clone https://github.com/gilangggra/Aira.git
-cd Aira/windows
-npm install
-npm run pack
-```
-
-#### Linux
-Requires [Rust](https://rustup.rs), Node.js 20+, WebKitGTK, and layer-shell development headers.
-```bash
-sudo apt install build-essential pkg-config \
-  libwebkit2gtk-4.1-dev libgtk-layer-shell-dev libayatana-appindicator3-dev \
-  librsvg2-dev libssl-dev libdbus-1-dev patchelf \
-  gstreamer1.0-plugins-base gstreamer1.0-plugins-good
-git clone https://github.com/gilangggra/Aira.git
-cd Aira/windows
-npm install
-npm run pack
-```
-
-#### Android
-Requires JDK 17 and Android SDK (API 35).
-```bash
-git clone https://github.com/gilangggra/Aira.git
-cd Aira/android
-./gradlew assembleDebug
-```
-
----
-
-## Setup & Hooks
-
-Access the settings window via the Dock/menu bar on macOS (⌘,), or via the system tray on Windows and Linux.
-
-| Integration | Purpose | Configuration Path |
-|---|---|---|
-| **Claude Code** | Live sessions & approvals | **Install hooks** — safely backs up `~/.claude/settings.json` and inserts relay hooks |
-| **Antigravity (agy)** | Live sessions & notch approvals | Settings → Antigravity → **Install hooks** |
-| **Gemini CLI** | Live sessions | Settings → Gemini CLI → **Install hooks** |
-| **Codex CLI** | Live sessions & approvals | Settings → Codex → **Install hooks** |
-| **API Keys** | AI Chat (Claude, OpenAI, Gemini, etc.) | Settings → Chat (stored in OS Credential Vault) |
-| **Local LLMs** | Ollama / LM Studio connection | Settings → Chat → Local models → **Connect** |
-| **Flow Dictation** | Speech-to-text hotkey & language | Settings → Flow → Settings |
-| **Offline Speech Models** | Local voice recognition (Whisper Large-v3 Turbo / Parakeet) | Settings → Flow → Recognition → **Download** |
-| **iPhone Link** | iOS Live Activity & approvals | Settings → General → iPhone (iCloud CloudKit) |
-| **Android Link** | Android approvals & widgets | Settings → Android phone (Local Wi-Fi pairing) |
-| **Services** | GitHub, Stripe, Vercel, Resend, Notion | Settings → Active pills |
-
-> [!TIP]
-> If Aira is closed, hook scripts exit immediately with zero latency. **Your CLI coding sessions are never blocked.**
-
----
-
-### Supported Agents
-
-| Agent | Connection Method | Platforms |
-|---|---|---|
-| **Claude Code** | Native settings hook | macOS, Windows, Linux |
-| **Antigravity** | Native config hook | macOS, Windows, Linux |
-| **Gemini CLI** | Native settings hook | macOS, Windows, Linux |
-| **Cursor** | Automatic hook detection | macOS, Windows, Linux |
-| **Codex** | `--agent codex` flag / hook | macOS, Windows, Linux |
-| **Copilot CLI** | `--agent copilot` flag | macOS, Windows, Linux |
-| **Muse Code** | `--agent muse` flag | macOS, Windows, Linux |
-| **OpenCode** | Plugin: Settings → OpenCode Plugin | macOS, Windows, Linux |
-| **Amp** | Plugin: Settings → Amp Plugin | macOS, Windows, Linux |
-| **Hermes** | Plugin: Settings → Hermes | macOS, Windows, Linux |
-| **Custom Agents** | Generic `--agent <name>` flag (see [docs/AGENTS.md](docs/AGENTS.md)) | macOS, Windows, Linux |
-
-*For agents running on remote servers or SSH containers, see [docs/REMOTE.md](docs/REMOTE.md).*
-
----
-
-### WhatsApp (Experimental)
-
-*Available on macOS (GitHub build), Windows, and Linux.*
-
-Monitor conversations and send replies directly from your notch or dynamic island via an open-source local gateway ([GOWA](https://github.com/aldinokemal/go-whatsapp-web-multidevice)).
-
-1. Open **Settings → Integrations → WhatsApp**.
-2. Click **Install WhatsApp** to automatically configure the local gateway binary.
-3. Scan the QR code using WhatsApp on your phone (**Linked devices → Link a device**).
-
-Messages are processed entirely in memory, verified with HMAC-SHA256, and never written to disk or sent to external servers.
-
----
-
-## How It Works
+## 🔒 Security & Privacy Architecture
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│                      User Action                       │
-│    (Notch Hover, Flow Hotkey, File Drop, Approvals)    │
+│                   Aira Desktop App                     │
+│  (macOS: Swift 6 / SwiftUI • Win/Linux: Tauri 2 / Rust)│
 └───────────────────────────┬────────────────────────────┘
                             │
-            ┌───────────────┴───────────────┐
-            ▼                               ▼
-┌───────────────────────┐       ┌───────────────────────┐
-│     macOS Engine      │       │ Windows/Linux Engine  │
-│  (Swift 6 / AppKit /  │       │  (Tauri 2 / Rust /    │
-│       SwiftUI)        │       │      TypeScript)      │
-└───────────┬───────────┘       └───────────┬───────────┘
-            │                               │
-            ├───────────────┬───────────────┤
+            ┌───────────────┼───────────────┐
             ▼               ▼               ▼
 ┌───────────────────┐ ┌───────────┐ ┌───────────────────┐
-│ Agent IPC Relays  │ │ Flow Voice│ │  Mobile Link      │
-│ (Unix Sockets /   │ │ (Whisper /│ │ (iCloud CloudKit /│
-│   Named Pipes)    │ │  Parakeet)│ │  Local TLS Wi-Fi) │
+│ Local Agent Pipes │ │ Flow Voice│ │  Mobile Sync      │
+│  Unix Sockets /   │ │ Whisper / │ │ (iCloud CloudKit /│
+│   Named Pipes     │ │  Parakeet │ │  TLS Local P2P)   │
 └───────────────────┘ └───────────┘ └───────────────────┘
 ```
 
-- **macOS**: Built with native Swift 6 and SwiftUI. The notch interface is rendered with borderless AppKit `NSPanel` elements and custom `Canvas` physics running at a smooth 60–120 fps.
-- **Windows & Linux**: Built with Tauri 2 and Rust. Uses transparent, click-through, always-on-top overlays that never steal window focus.
-- **iPhone**: Native SwiftUI application communicating through private, end-to-end encrypted iCloud CloudKit databases with APNs-driven Live Activities.
-- **Android**: Native Kotlin and Jetpack Compose application with hardware-backed biometric verification, pairing over local TLS with pinned certificates.
+- **Local IPC Communication**: Agents communicate via local Unix Domain Sockets (`/tmp/aira.sock`) or Windows Named Pipes (`\\.\pipe\aira-*`). Code diffs are never broadcast outside your machine.
+- **Hardware Vault Encryption**: Credentials and tokens stay protected inside your native operating system vault: **Apple Keychain**, **Windows Credential Manager**, or **Linux Secret Service**.
+- **100% On-Device Voice**: Speech models run completely offline on your device's CPU/GPU/NPU.
+- **Zero Telemetry**: No tracking cookies, telemetry SDKs, or background analytics.
 
 ---
 
-## Release Notes
+## 🎮 Interactive Cheat Sheet
 
-Detailed release logs and change history are maintained in:
-- [CHANGELOG.md](CHANGELOG.md) — Complete human-readable changelog.
-- [GitHub Releases](https://github.com/gilangggra/Aira/releases) — Downloadable binary packages, hashes, and release notes.
-
----
-
-## Contributing
-
-Contributions from the community are warmly welcome! Whether you are interested in creating new service integrations, adding expressive character emotes, writing translations, or fixing bugs:
-
-- Check out our [CONTRIBUTING.md](CONTRIBUTING.md) guide.
-- Translations can be added or updated directly in `NotchBuddy/Resources/Localizable.xcstrings`.
+| Action | Result |
+|---|---|
+| **Hover Notch / Top Edge** | Peeks out and waves 👋 |
+| **Click Island** | Expands full overview & diff inspection panel |
+| **Click Mochi** | Squishes with an expressive animated reaction |
+| **Triple-Click Mochi** | 😵‍💫 Becomes dizzy temporarily |
+| **Drag & Drop File onto Island** | Ingests file and opens prompt drawer |
+| **Hold Dictation Hotkey** | Starts offline voice capture; pastes upon release |
+| **Say « OK Aira »** | Activates voice assistant mode |
 
 ---
 
-## Author
+## 🤝 Contributing & Community
 
-Created and maintained by **[Gilang Ramadan](https://github.com/gilangggra)**.
+Aira is open source and proudly built with the community. We welcome contributions, bug reports, and localizations:
+
+- Read our [CONTRIBUTING.md](CONTRIBUTING.md) guide.
+- Contribute translations in `NotchBuddy/Resources/Localizable.xcstrings` (macOS) and `windows/src/i18n/` (Windows & Linux).
+- Share feedback and feature requests on [GitHub Issues](https://github.com/gilangggra/Aira/issues).
 
 ---
 
-## License
+## 📄 License & Credits
 
-- **Source Code**: [MIT License](LICENSE) © 2026 Gilang Ramadan.
-- **Character, Name, Icons & Audio Assets**: © Gilang Ramadan, all rights reserved (see [LICENSE-ASSETS.md](LICENSE-ASSETS.md)).
+- **Source Code**: Released under the [MIT License](LICENSE) © 2026 Gilang Ramadan.
+- **Character Mascot, Artwork & Audio Assets**: © Gilang Ramadan, all rights reserved (see [LICENSE-ASSETS.md](LICENSE-ASSETS.md)).
 
 <div align="center">
 
-**If Aira brightens your day, please consider giving the repository a ⭐!**
+**If Aira brings focus and joy to your coding flow, please give us a ⭐ on GitHub!**
 
 </div>
