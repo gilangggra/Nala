@@ -73,8 +73,8 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             windows/target
-          key: linux-cargo-${{ hashFiles('windows/Cargo.lock') }}
-          restore-keys: linux-cargo-
+          key: linux-cargo-aira-${{ hashFiles('windows/Cargo.lock') }}
+          restore-keys: linux-cargo-aira-
 
       - name: Install dependencies
         run: npm ci

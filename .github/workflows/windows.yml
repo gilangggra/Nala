@@ -43,8 +43,8 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             windows/target
-          key: windows-cargo-${{ hashFiles('windows/Cargo.lock') }}
-          restore-keys: windows-cargo-
+          key: windows-cargo-aira-${{ hashFiles('windows/Cargo.lock') }}
+          restore-keys: windows-cargo-aira-
 
       - name: Install dependencies
         run: npm ci
