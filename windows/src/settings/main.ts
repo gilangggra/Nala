@@ -1003,10 +1003,12 @@ function integrationsSection(present: Record<string, boolean>): HTMLElement {
 
       rows.append(
         h("div", { class: "row", style: "align-items:center;gap:8px" },
-          h("label", { style: "min-width:104px", text: t("Work (min)") }),
+          h("label", { style: "min-width:104px", text: t("Work") }),
           workInput,
-          h("label", { style: "margin-left:12px", text: t("Rest (min)") }),
+          h("span", { style: "font-size:11px;color:var(--dim-2)", text: t("min") }),
+          h("label", { style: "margin-left:16px", text: t("Rest") }),
           restInput,
+          h("span", { style: "font-size:11px;color:var(--dim-2)", text: t("min") }),
         ),
       );
     }
