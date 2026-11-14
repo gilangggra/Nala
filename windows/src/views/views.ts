@@ -30,6 +30,8 @@ import { buildWhatsAppCard } from "./whatsapp";
 import { WHATSAPP_ID } from "../core/whatsapp";
 import { MAIL_ID } from "../core/mail";
 import { buildMailCard } from "./mail";
+import { buildAiradoroCard, buildAiradoroPill, type AiradoroPillHost } from "./airadoro";
+import { AIRADORO_ID } from "../core/airadoro";
 import type { Outfit, OutfitSelection } from "../mochi/wardrobe";
 import { language, t, tl, type Msg } from "../i18n/i18n";
 import type { ViewCommand } from "../island/shortcuts";
@@ -223,6 +225,8 @@ function buildOverview(actions: ViewActions): ViewHost {
   // runs on, and a slider being dragged must not be rebuilt under the pointer.
   const spotifyCard = buildSpotifyCard();
   let spotifyPill: SpotifyPillHost | null = null;
+  const airadoroCard = buildAiradoroCard();
+  let airadoroPill: AiradoroPillHost | null = null;
   // WhatsApp's card too: its reply field keeps the draft and the keyboard while messages arrive.
   // Mail's card too (classic Outlook): the search field keeps its text and the keyboard.
   const mailCard = buildMailCard({ keyboard: (on) => actions.keyboard(on) });
@@ -240,7 +244,7 @@ function buildOverview(actions: ViewActions): ViewHost {
   let pillIds = "";
   let detailOpen = false;
   let lastFocus: string | null = null;
-  let mode: "ticker" | "card" | "plan" | "diff" | "spotify" | "whatsapp" | "mail" | null = null;
+  let mode: "ticker" | "card" | "plan" | "diff" | "spotify" | "whatsapp" | "mail" | "airadoro" | null = null;
   let cardKey = "";
   /** The list row highlighted at the last sync, to scroll only when it moves. */
   let shownSelection: number | null = null;
@@ -414,6 +418,14 @@ function buildOverview(actions: ViewActions): ViewHost {
           cardKey = "";
         }
         whatsappCard.sync();
+      } else if (task && task.id === AIRADORO_ID) {
+        if (mode !== "airadoro") {
+          clear(leftBody);
+          leftBody.append(airadoroCard.el);
+          mode = "airadoro";
+          cardKey = "";
+        }
+        airadoroCard.sync();
       } else if (task) {
         const info = State.integrations[task.id];
         const key = [
@@ -429,7 +441,7 @@ function buildOverview(actions: ViewActions): ViewHost {
         }
       }
 
-      jump.style.display = detailOpen || mode === "plan" || mode === "diff" ? "none" : "";
+      jump.style.display = detailOpen || mode === "plan" || mode === "diff" || mode === "airadoro" ? "none" : "";
 
       // Ctrl+↓ Ctrl+↑ walk the open GitHub list (cardItemCount / cardSelection).
       const rows = mode === "card" ? listRows(leftBody) : [];
@@ -444,10 +456,14 @@ function buildOverview(actions: ViewActions): ViewHost {
         pillIds = pillKey;
         clear(pills);
         spotifyPill = null;
+        airadoroPill = null;
         for (const t of others) {
           if (t.id === SPOTIFY_ID) {
             spotifyPill = buildSpotifyPill(t, () => actions.setFocus(t.id));
             pills.append(spotifyPill.el);
+          } else if (t.id === AIRADORO_ID) {
+            airadoroPill = buildAiradoroPill(t, () => actions.setFocus(t.id));
+            pills.append(airadoroPill.el);
           } else {
             pills.append(buildPill(t, actions));
           }
@@ -455,6 +471,7 @@ function buildOverview(actions: ViewActions): ViewHost {
         pruneMiniBots();
       }
       spotifyPill?.sync();
+      airadoroPill?.sync();
     },
   };
 }
