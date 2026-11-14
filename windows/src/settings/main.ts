@@ -26,6 +26,10 @@ import { agentsSection } from "./agents";
 import { phoneSection } from "./phone";
 import { whatsappSection } from "./whatsapp";
 import { WHATSAPP_ID } from "../core/whatsapp";
+import {
+  AIRADORO_STORAGE_REST, AIRADORO_STORAGE_WORK, DEFAULT_REST_MINUTES, DEFAULT_WORK_MINUTES,
+  loadStoredMinutes, saveStoredMinutes,
+} from "../core/airadoro";
 import { updateRows, updatesListener } from "./updates";
 import { colorDot } from "./colors";
 import { renderDiff, statusDot } from "./parts";
@@ -888,6 +892,9 @@ const INTEGRATIONS: IntegrationDef[] = [
     fields: [{ key: "calcom-api-key", label: N_("API key"), placeholder: "cal_…", secret: true }] },
   // Nothing to enter: Spotify is read from the OS (src-tauri/src/spotify.rs).
   { id: "integration_spotify", name: "Spotify", color: "#1DB954", fields: [] },
+  // Local countdown: work, then rest, until the user stops. No account, no network.
+  { id: "integration_airadoro", name: "Airadoro", color: "#0EA5E9", fields: [],
+    hint: N_("Work, then rest, on repeat, until you stop. Turn the Airadoro pill on to use it.") },
 ];
 
 const MAX_ACTIVE = MAX_DECLARED;
@@ -965,6 +972,45 @@ function integrationsSection(present: Record<string, boolean>): HTMLElement {
       void Bridge.spotifyInstalled().then((ok) => {
         hint.textContent = ok === false ? t("Not installed") : "";
       });
+    }
+    if (def.id === "integration_airadoro") {
+      const workM = loadStoredMinutes(AIRADORO_STORAGE_WORK, DEFAULT_WORK_MINUTES);
+      const restM = loadStoredMinutes(AIRADORO_STORAGE_REST, DEFAULT_REST_MINUTES);
+
+      const workInput = h("input", {
+        type: "number",
+        min: "1",
+        max: "60",
+        value: String(workM),
+        style: "width:52px;text-align:center",
+      }) as HTMLInputElement;
+
+      const restInput = h("input", {
+        type: "number",
+        min: "1",
+        max: "60",
+        value: String(restM),
+        style: "width:52px;text-align:center",
+      }) as HTMLInputElement;
+
+      workInput.addEventListener("change", () => {
+        saveStoredMinutes(AIRADORO_STORAGE_WORK, parseInt(workInput.value, 10));
+      });
+
+      restInput.addEventListener("change", () => {
+        saveStoredMinutes(AIRADORO_STORAGE_REST, parseInt(restInput.value, 10));
+      });
+
+      rows.append(
+        h("div", { class: "row", style: "align-items:center;gap:8px" },
+          h("label", { style: "min-width:104px", text: t("Work") }),
+          workInput,
+          h("span", { style: "font-size:11px;color:var(--dim-2)", text: t("min") }),
+          h("label", { style: "margin-left:16px", text: t("Rest") }),
+          restInput,
+          h("span", { style: "font-size:11px;color:var(--dim-2)", text: t("min") }),
+        ),
+      );
     }
 
     list.append(

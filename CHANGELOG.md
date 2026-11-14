@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Feature rebrand: Pomodoro timer renamed to **Airadoro** across 16 supported languages.
 
 ### Added
+- **Airadoro for Windows**: Full Pomodoro timer companion pill and overview card with zero-CPU background scheduling, phase audio cues, and customizable work/rest intervals in Settings.
 - Ongoing improvements for cross-device mobile synchronization and pairing.
 - Extended agent integrations and custom hook presets.
 
